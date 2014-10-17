@@ -1,1 +1,17 @@
-/* Empty. Add your own CSS if you like */
+#login {
+	background-image: url("../img/party2.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed; 	
+}
+
+#goter-logo {
+	margin-top: 3px;
+	height: 50px;
+}
+
+#test {
+	text-align: center;
+}
+
