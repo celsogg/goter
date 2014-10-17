@@ -1,0 +1,10 @@
+{
+    "name": "goter-server",
+    "version": "0.0.1",
+    "description": "goter",
+    "main": "server.js",
+    "dependencies": {
+        "express": "4.0",
+        "mongoose": "latest"
+    }
+}
