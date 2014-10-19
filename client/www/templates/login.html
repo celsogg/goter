@@ -8,17 +8,17 @@
 				<div class="list">
 					<label class="item item-input">
 						<span class="input-label">E-mail</span>
-						<input type="text">
+						<input type="text" ng-model="user.email">
 					</label>
 					
 					<label class="item item-input">
 						<span class="input-label">Contraseña</span>
-						<input type="password">
+						<input type="password" ng-model="user.password">
 					</label>
 				</div>
 				
 				<div class="button-bar">
-					<a class="button button-full icon-left ion-log-in button-positive">
+					<a class="button button-full icon-left ion-log-in button-positive" ng-click="login()">
 						Entrar
 					</a>
 					
