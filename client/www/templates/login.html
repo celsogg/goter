@@ -9,17 +9,20 @@
 				<form>
 				<div  class="list">
 					<label class="item item-input">
-						<input type="text" class="input-label" placeholder="Ingresa tu email" ng-model="formData.name">
+						
+						<input type="text" class="input-label" placeholder="Ingresa tu email" ng-model="user.email">
 					</label>
 					
 					<label class="item item-input">
-						<input type="password" class="input-label" placeholder="Ingresa tu contraseña" ng-model="formData.password">
+				
+						<input  class="input-label" placeholder="Ingresa tu contraseña" type="password" ng-model="user.password">
+
 					</label>
 				</div>
 				</form>
 
 				<div class="button-bar">
-					<a class="button button-full icon-left ion-log-in button-positive">
+					<a class="button button-full icon-left ion-log-in button-positive" ng-click="login()">
 						Entrar
 					</a>
 					
