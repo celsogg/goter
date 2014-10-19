@@ -35,16 +35,6 @@ angular.module('goter', ['ionic', 'goter.controllers'])
 
     // Each tab has its own nav history stack:
 
-    .state('login', {
-      url: '/login',
-      views: {
-        'login': {
-          templateUrl: 'templates/login.html',
-          controller: 'LoginController'
-        }
-      }
-    })
-
     .state('tab.dash', {
       url: '/dash',
       views: {

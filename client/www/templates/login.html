@@ -5,18 +5,19 @@
   		</div>
 	    <div class="card">
 			<div class="item item-text-wrap">
-				<div class="list">
+
+				<form>
+				<div  class="list">
 					<label class="item item-input">
-						<span class="input-label">E-mail</span>
-						<input type="text">
+						<input type="text" class="input-label" placeholder="Ingresa tu email" ng-model="formData.name">
 					</label>
 					
 					<label class="item item-input">
-						<span class="input-label">Contraseña</span>
-						<input type="password">
+						<input type="password" class="input-label" placeholder="Ingresa tu contraseña" ng-model="formData.password">
 					</label>
 				</div>
-				
+				</form>
+
 				<div class="button-bar">
 					<a class="button button-full icon-left ion-log-in button-positive">
 						Entrar
