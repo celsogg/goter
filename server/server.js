@@ -1,7 +1,7 @@
 var restify     =   require('restify');
 var mongojs     =   require('mongojs');
 var	morgan  	= 	require('morgan');
-var db          =   mongojs('bucketlistapp', ['appUsers','bucketLists']);
+var db          =   mongojs('goter', ['users','bucketLists']);
 var server      =   restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));
