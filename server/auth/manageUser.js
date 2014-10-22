@@ -10,8 +10,10 @@ module.exports = function (server, db) {
 
     server.post('/api/v1/goter/auth/register', function (req, res, next) {
         var user = req.params;
+
         pwdMgr.cryptPassword(user.password, function (err, hash) {
             user.password = hash;
+
             db.appUsers.insert(user,
                 function (err, dbUser) {
                     if (err) { // duplicate key error
@@ -33,6 +35,7 @@ module.exports = function (server, db) {
                     }
                 });
         });
+        
         return next();
     });
 
