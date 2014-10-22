@@ -4,15 +4,17 @@
   "description": "goter",
   "main": "server.js",
   "dependencies": {
+    "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.1",
-    "express": "4.0",
-    "mongoose": "latest",
-    "passport": "^0.2.1",
-    "passport-local" : "~0.1.6",  
-    "connect-flash" : "~0.1.1",
-    "morgan": "latest",
+    "connect-flash": "~0.1.1",
     "cookie-parser": "latest",
+    "express": "4.0",
     "express-session": "latest",
-    "bcrypt-nodejs" : "latest"
+    "mongojs": "^0.15.1",
+    "mongoose": "latest",
+    "morgan": "^1.4.0",
+    "passport": "^0.2.1",
+    "passport-local": "~0.1.6",
+    "restify": "^2.8.3"
   }
 }
