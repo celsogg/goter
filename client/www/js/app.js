@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('goter', ['ionic', 'goter.controllers'])
+angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -27,13 +27,38 @@ angular.module('goter', ['ionic', 'goter.controllers'])
   $stateProvider
 
     // setup an abstract state for the tabs directive
+  
+    .state('auth', {
+      url: "/auth",
+      abstract: true,
+      templateUrl: "templates/auth.html"
+    })
+
+    .state('auth.signin', {
+      url: '/signin',
+      views: {
+        'auth-signin': {
+          templateUrl: 'templates/auth-signin.html',
+          controller: 'SignInCtrl'
+        }
+      }
+    })
+    .state('auth.signup', {
+      url: '/signup',
+      views: {
+        'auth-signup': {
+          templateUrl: 'templates/auth-signup.html',
+          controller: 'SignUpCtrl'
+        }
+      }
+    })
+
+
     .state('tab', {
       url: "/tab", 
       abstract: true,
       templateUrl: "templates/tabs.html"
     })
-
-    // Each tab has its own nav history stack:
 
     .state('tab.dash', {
       url: '/dash',
@@ -43,21 +68,13 @@ angular.module('goter', ['ionic', 'goter.controllers'])
           controller: 'DashController'
         }
       }
-    })
-
-    .state("login",{
-      url: "/login",
-      templateUrl: "templates/login.html",
-      controller: 'LoginCtrl'
-    })
-
-    ;
+    });
 
 
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/auth/signin');
 
 });
 
