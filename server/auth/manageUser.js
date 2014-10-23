@@ -63,6 +63,7 @@ module.exports = function (server, db) {
                     // remove password hash before sending to the client
                     dbUser.password = "";
                     res.end(JSON.stringify(dbUser));
+
                 } else {
                     res.writeHead(403, {
                         'Content-Type': 'application/json; charset=utf-8'
@@ -74,6 +75,7 @@ module.exports = function (server, db) {
 
             });
         });
+
         return next();
     });
 };

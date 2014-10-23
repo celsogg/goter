@@ -1,7 +1,9 @@
 angular.module('goter.controllers', ['goter.services'])
 
 
-.controller('DashController', function($scope) {
+.controller('DashController', function ($rootScope, $scope) {
+
+    $scope.name = $rootScope.getToken();
 })
 
 
@@ -9,6 +11,7 @@ angular.module('goter.controllers', ['goter.services'])
 .controller('SignInCtrl', function ($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
     if ($rootScope.isSessionActive()) {
+        
         $window.location.href = ('#/tab/dash');
     }
  
@@ -63,7 +66,7 @@ angular.module('goter.controllers', ['goter.services'])
         }).success(function (data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            $window.location.href = ('#/bucket/list');
+            $window.location.href = ('#/tab/dash');
         }).error(function (error) {
             $rootScope.hide();
         	if(error.error && error.error.code == 11000)

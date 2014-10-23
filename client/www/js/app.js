@@ -78,24 +78,4 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 
 });
 
-function mainController($scope, $http) {
-    $scope.formData = {};
-
-    // Cuando se cargue la página, pide del API todos los TODOs
-   
-    // Cuando se añade un nuevo TODO, manda el texto a la API
-    $scope.createTodo = function(){
-        $http.post('/api/todos', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {};
-                $scope.todos = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error:' + data);
-            });
-    };
-
-}
-
 
