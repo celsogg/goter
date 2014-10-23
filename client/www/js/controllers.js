@@ -1,9 +1,10 @@
 angular.module('goter.controllers', ['goter.services'])
 
 
-.controller('DashController', function ($rootScope, $scope) {
+.controller('DashController', function ($rootScope, $scope, $window) {
 
-    $scope.name = $rootScope.getToken();
+    $scope.name = $window.localStorage.token;
+    
 })
 
 
