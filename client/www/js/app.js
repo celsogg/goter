@@ -69,7 +69,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           controller: 'HomeController'
         }
       }
-    });
+    })
 
 /*		.state('offer-new',{
 			url: "/offer/new",
@@ -77,7 +77,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			templateUrl: "templates/offer-new-tabs.html"
 		})*/
 
-		.state('offer-new-type',{
+		.state('offer-new-type', {
 			url: '/offer/new/type',
 			templateUrl: 'templates/offer-new-type.html'
 /*			views: {
