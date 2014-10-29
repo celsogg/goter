@@ -1,27 +1,36 @@
 <ion-view>
 	<ion-content>
-	<br>
-	<h3>¿Donde quieres ubicar tu oferta?</h3>
-	<div class="row">
-		<div class="col">
-			<label class="item item-input">
-				<i class="icon ion-search placeholder-icon"></i>
-				<input type="text" placeholder="Localización">
-			</label>
+		<div class="button-bar">
+			<a class="button" href="#/offer/new/type">Oferta</a>
+			<a class="button" href="#/offer/new/description">Descripción</a>
+			<a class="button" href="#/offer/new/location">Ubicación</a>
 		</div>
-		<div class="col">
-			<button class="button btn-block button-stable">Ubicar</button>
+		<br>
+		<h3>¿Donde quieres ubicar tu oferta?</h3>
+		<div class="row">
+			<div class="col">
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="Localización">
+				</label>
+			</div>
+			<div class="col">
+				<button class="button button-stable">Ubicar</button>
+			</div>
 		</div>
-	</div>
-	<div class="row">	
-		<div class="col">
-			<label class="item item-input">
-				<input type="text" placeholder="" disabled>
-			</label>
+		<div class="row">	
+			<div class="col">
+				<label class="item item-input">
+					<input type="text" placeholder="" disabled>
+				</label>
+			</div>
+			<div class="col">
+				<button class="button button-stable">Posición Actual</button>
+			</div>
 		</div>
-		<div class="col">
-			<button class="button  btn-block button-stable">Posición Actual</button>
+		<div class="row">
+			<div class="col"><a class="button" href="">Cancelar</a></div>
+			<div class="col"><a class="button disabled" href="">Publicar</a></div>
 		</div>
-	</div>
 	</ion-content>
 </ion-view>
