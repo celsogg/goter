@@ -60,12 +60,12 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       templateUrl: "templates/tabs.html"
     })
 
-    .state('tab.dash', {
-      url: '/dash',
+    .state('tab.home', {
+      url: '/home',
       views: {
-        'dash': {
-          templateUrl: 'templates/dash.html',
-          controller: 'DashController'
+        'home': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'
         }
       }
     });
