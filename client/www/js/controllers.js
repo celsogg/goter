@@ -5,6 +5,10 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 
+.controller('OfferNewTypeCtrl', function($scope) {
+    console.log("OfferNewTypeCtrl cargado");
+})
+
 
 .controller('SignInCtrl', function ($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
