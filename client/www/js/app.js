@@ -54,7 +54,6 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			}
 		})
 
-
 		.state('tab', {
 			url: "/tab", 
 			abstract: true,
