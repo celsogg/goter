@@ -16,8 +16,10 @@ angular.module('goter.services', [])
         };
 
         $rootScope.logout = function () {
+
             $rootScope.setToken("");
             $window.location.href = '#/auth/signin';
+
         };
 
         $rootScope.notify =function(text){
