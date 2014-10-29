@@ -62,30 +62,18 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 		})
 
 		.state('tab.home', {
-      url: '/home',
-      views: {
-        'home': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        }
-      }
-    })
-
-/*		.state('offer-new',{
-			url: "/offer/new",
-			abstract: true,
-			templateUrl: "templates/offer-new-tabs.html"
-		})*/
+			url: '/home',
+			views: {
+				'home': {
+				templateUrl: 'templates/home.html',
+				controller: 'HomeController'
+				}
+			}
+		})
 
 		.state('offer-new-type', {
 			url: '/offer/new/type',
 			templateUrl: 'templates/offer-new-type.html'
-/*			views: {
-				'offer-new-type':{
-					templateUrl: 'templates/offer-new-type.html',
-					controller: 'OfferNewTypeCtrl'
-				}
-			}*/
 		})
 
 		.state('offer-new-description',{
@@ -97,7 +85,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			url: '/offer/new/location',
 			templateUrl: 'templates/offer-new-location.html'
 		})
-		
+
 		;
 
 	// if none of the above states are matched, use this as the fallback
