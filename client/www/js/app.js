@@ -96,27 +96,46 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       templateUrl: "templates/new.html"
     })
 
-    .state('new.offer', {
-      url: '/offer',
+    .state('new.offer-type', {
+      url: '/offer/type',
       views: {
         'goter-options': {
           templateUrl: 'templates/goter-options.html'
         },
-        'offer-new-type': {
-          templateUrl: 'templates/offer-new-type.html'
-        },
-        'offer-new-description': {
-          templateUrl: 'templates/offer-new-type.html'
-        },
-        'offer-new-location': {
+        'offer': {
           templateUrl: 'templates/offer-new-type.html'
         }
-
       }
     })
-		
 
-		;
+    .state('new.offer-description', {
+      url: '/offer/description',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer': {
+          templateUrl: 'templates/offer-new-description.html'
+        }
+      }
+    })
+
+    .state('new.offer-location', {
+      url: '/offer/location',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer': {
+          templateUrl: 'templates/offer-new-location.html'
+        }
+      }
+    })
+
+
+
+
+    ;
 
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/auth/signin');
