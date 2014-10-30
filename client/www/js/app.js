@@ -55,13 +55,13 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 		})
 
 
-		.state('tab', {
+/*		.state('tab', {
 			url: "/tab", 
 			abstract: true,
 			templateUrl: "templates/tabs.html"
-		})
+		})*/
 
-		.state('tab.home', {
+  /*.state('tab.home', {
       url: '/home',
       views: {
         'home': {
@@ -69,37 +69,36 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           controller: 'HomeController'
         }
       }
+    })*/
+
+    .state('default', {
+      url: "/default", 
+      abstract: true,
+      templateUrl: "templates/default.html"
     })
 
-		.state('tab.offer-new-type', {
-			url: '/offer/new/type',
-			views: {
-				'offer-new-type':{
-					templateUrl: 'templates/offer-new-type.html',
-					controller: 'OfferNewTypeCtrl'
-				}
-			}
-		})
-
-		.state('tab.offer-new-description',{
-			url: '/offer/new/description',
+    .state('default.home', {
+      url: '/home',
       views: {
-        'offer-new-type':{
-          templateUrl: 'templates/offer-new-description.html'
+        'home': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'
+        },
+        'notifications': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'
+        },
+        'publications': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'
+        },
+        'offer': {
+          templateUrl: 'templates/offer-new-type.html',
+          controller: 'OfferNewTypeCtrl'
         }
       }
-			
-		})
-
-		.state('tab.offer-new-location',{
-			url: '/offer/new/location',
-      views: {
-        'offer-new-type':{
-          templateUrl: 'templates/offer-new-location.html'
-        }
-      }
-			
-		})
+    })
+		
 
 		;
 

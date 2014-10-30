@@ -17,7 +17,7 @@ angular.module('goter.controllers', ['goter.services'])
     // if the user is already logged in, take him to his bucketlist
     if ($rootScope.isSessionActive()) {
         
-        $window.location.href = ('#/tab/home');
+        $window.location.href = ('#/default/home');
     }
  
     $scope.user = {
@@ -39,7 +39,7 @@ angular.module('goter.controllers', ['goter.services'])
         }).success(function (data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            $window.location.href = ('#/tab/home');
+            $window.location.href = ('#/default/home');
         }).error(function (error) {
             $rootScope.hide();
             $rootScope.notify("Invalid Username or password");
@@ -71,7 +71,7 @@ angular.module('goter.controllers', ['goter.services'])
         }).success(function (data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            $window.location.href = ('#/tab/home');
+            $window.location.href = ('#/default/home');
         }).error(function (error) {
             $rootScope.hide();
         	if(error.error && error.error.code == 11000)
