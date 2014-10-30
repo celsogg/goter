@@ -80,22 +80,38 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
     .state('default.home', {
       url: '/home',
       views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
         'home': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        },
-        'notifications': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        },
-        'publications': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        },
-        'offer': {
-          templateUrl: 'templates/offer-new-type.html',
-          controller: 'OfferNewTypeCtrl'
+          templateUrl: 'templates/home.html'
+         
         }
+      }
+    })
+
+    .state('new', {
+      url: "/new", 
+      abstract: true,
+      templateUrl: "templates/new.html"
+    })
+
+    .state('new.offer', {
+      url: '/offer',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer-new-type': {
+          templateUrl: 'templates/offer-new-type.html'
+        },
+        'offer-new-description': {
+          templateUrl: 'templates/offer-new-type.html'
+        },
+        'offer-new-location': {
+          templateUrl: 'templates/offer-new-type.html'
+        }
+
       }
     })
 		
