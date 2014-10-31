@@ -54,13 +54,14 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			}
 		})
 
-		.state('tab', {
+/*		.state('tab', {
+>>>>>>> f0623db099bafaa6fbfc298c6c76f85d4bba347e
 			url: "/tab", 
 			abstract: true,
 			templateUrl: "templates/tabs.html"
-		})
+		})*/
 
-		.state('tab.home', {
+  /*.state('tab.home', {
       url: '/home',
       views: {
         'home': {
@@ -68,39 +69,73 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           controller: 'HomeController'
         }
       }
+    })*/
+
+    .state('default', {
+      url: "/default", 
+      abstract: true,
+      templateUrl: "templates/default.html"
     })
 
-		.state('tab.offer-new-type', {
-			url: '/offer/new/type',
-			views: {
-				'offer-new-type':{
-					templateUrl: 'templates/offer-new-type.html',
-					controller: 'OfferNewTypeCtrl'
-				}
-			}
-		})
-
-		.state('tab.offer-new-description',{
-			url: '/offer/new/description',
+    .state('default.home', {
+      url: '/home',
       views: {
-        'offer-new-type':{
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'home': {
+          templateUrl: 'templates/home.html'
+         
+        }
+      }
+    })
+
+    .state('new', {
+      url: "/new", 
+      abstract: true,
+      templateUrl: "templates/new.html"
+    })
+
+    .state('new.offer-type', {
+      url: '/offer/type',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer': {
+          templateUrl: 'templates/offer-new-type.html'
+        }
+      }
+    })
+
+    .state('new.offer-description', {
+      url: '/offer/description',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer': {
           templateUrl: 'templates/offer-new-description.html'
         }
       }
-			
-		})
+    })
 
-		.state('tab.offer-new-location',{
-			url: '/offer/new/location',
+    .state('new.offer-location', {
+      url: '/offer/location',
       views: {
-        'offer-new-type':{
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'offer': {
           templateUrl: 'templates/offer-new-location.html'
         }
       }
-			
-		})
+    })
 
-		;
+
+
+
+    ;
 
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/auth/signin');
