@@ -1,17 +1,14 @@
 angular.module('goter.controllers', ['goter.services'])
 
-
 .controller('HomeController', function ($rootScope, $scope, $window) {
 
     $scope.name = $window.localStorage.token;
     
 })
 
-
 .controller('OfferNewTypeCtrl', function($scope) {
     console.log("OfferNewTypeCtrl cargado");
 })
-
 
 .controller('SignInCtrl', function ($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
@@ -85,6 +82,19 @@ angular.module('goter.controllers', ['goter.services'])
             
         });
     }
+})
+
+.controller('myOffersCtrl', function ($rootScope, $scope, API, $window) {
+    API.getOffers($rootScope.getToken()).success(function (data, status, headers, config) {
+        $scope.offers = data; 
+    }).error(function (data, status, headers, config) {
+        $rootScope.hide();
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    });
+})
+
+.controller('newOfferCtrl', function ($rootScope, $scope, API, $window) {
+    
 })
 
 ;

@@ -65,6 +65,14 @@ angular.module('goter.services', [])
                         token: email
                     }
                 });
-            }     
+            },
+            getOffers: function (email) {
+                return $http.get(base+'/api/v1/goter/offers', {
+                    method: 'GET',
+                    params: {
+                        token: email
+                    }
+                });
+            }
         }
     });
