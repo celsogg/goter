@@ -54,23 +54,6 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			}
 		})
 
-
-/*		.state('tab', {
-			url: "/tab", 
-			abstract: true,
-			templateUrl: "templates/tabs.html"
-		})*/
-
-  /*.state('tab.home', {
-      url: '/home',
-      views: {
-        'home': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        }
-      }
-    })*/
-
     .state('default', {
       url: "/default", 
       abstract: true,
@@ -83,12 +66,37 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         'goter-options': {
           templateUrl: 'templates/goter-options.html'
         },
-        'home': {
-          templateUrl: 'templates/home.html'
-         
+        'current-option': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'  
         }
       }
     })
+
+    .state('default.my-searchs', {
+      url: '/my-publications/searchs',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-searchs.html'
+        }
+      }
+    })
+
+    .state('default.my-offers', {
+      url: '/my-publications/offers',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-offers.html'
+        }
+      }
+    })
+
 
     .state('new', {
       url: "/new", 
@@ -131,7 +139,6 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         }
       }
     })
-
 
 
 
