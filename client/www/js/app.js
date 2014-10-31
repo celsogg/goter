@@ -97,6 +97,29 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    .state('default.my-results', {
+      url: '/my-notifications/results',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-results.html'
+        }
+      }
+    })
+
+    .state('default.my-comments', {
+      url: '/my-notifications/comments',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-comments.html'
+        }
+      }
+    })
 
     .state('new', {
       url: "/new", 
@@ -139,8 +162,6 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         }
       }
     })
-
-
 
     ;
 

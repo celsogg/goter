@@ -1,17 +1,24 @@
-<ion-view title="Mis Publicaciones > Ofertas">
+<ion-view title="Mis Ofertas">
 
 <div class="bar bar-header bar-dark">
-	<h1 class="title">Mis Publicaciones</h1>
+	<h1 class="title">Mis Publicaciones > Ofertas</h1>
 </div>
 
 <ion-content>
 
 <div class="button-bar">
-	<a class="button" href="#/default/my-publications/searchs">Busquedas</a>
 	<a class="button" href="#/default/my-publications/offers">Ofertas</a>
+	<a class="button" href="#/default/my-publications/searchs">Busquedas</a>
 </div>
 <br>
 
+<div class="list">		
+	<a class="item item-avatar" ng-repeat="offer in offers" hrerf = "#">
+		<img  style="display:inline;"  src="{{ offer.image }}"><img/>
+		<h2  style="display:inline;">{{ offer.offer_name }} </h2>
+		<h2  style="display:inline;">{{ offer.valoration }} </h2>
+	</a>
+</div>
 
 </ion-content>
 
