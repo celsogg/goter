@@ -22,8 +22,9 @@
 }
 .scroll {
   display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  /*vertical-align: middle;
+  text-align: center;*/
+  padding-top: 94px;
 }
 
 
