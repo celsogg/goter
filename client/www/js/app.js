@@ -29,6 +29,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 
 		// setup an abstract state for the tabs directive
 	
+    //AUTH
 		.state('auth', {
 			url: "/auth",
 			abstract: true,
@@ -54,6 +55,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			}
 		})
 
+
+    //TABS
     .state('default', {
       url: "/default", 
       abstract: true,
@@ -122,6 +125,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+
+    //Offer
     .state('new', {
       url: "/new", 
       abstract: true,
@@ -167,7 +172,33 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
-    ;
+    //Search
+    .state('default.search', {
+      url: '/search',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/search.html',
+          controller: 'HomeController'  
+        }
+      }
+    })
+
+    //Offer
+    .state('default.offer', {
+      url: '/offer',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/offer.html',
+          
+        }
+      }
+    })
 
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/auth/signin');

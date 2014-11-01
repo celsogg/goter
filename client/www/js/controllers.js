@@ -3,6 +3,22 @@ angular.module('goter.controllers', ['goter.services'])
 .controller('HomeController', function ($rootScope, $scope, $window) {
 
     $scope.name = $window.localStorage.token;
+
+    $scope.search_word = "";
+
+    $scope.search = function () {
+
+        var search_word = this.search_word;
+        console.log(search_word);
+        //aca manda la palabra al server
+        $window.location.href = ('#/default/search');
+    }
+
+    $scope.getOffer = function (id) {
+    
+        //aca manda la id al server para obtener la oferta
+        $window.location.href = ('#/default/offer');
+    }
     
 })
 
