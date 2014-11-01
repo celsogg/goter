@@ -16,5 +16,8 @@
     "passport": "^0.2.1",
     "passport-local": "~0.1.6",
     "restify": "^2.8.3"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
