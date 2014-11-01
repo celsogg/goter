@@ -1,7 +1,8 @@
 var restify     =   require('restify');
 var mongojs     =   require('mongojs');
 var	morgan  	= 	require('morgan');
-var db          =   mongojs('goter', ['appUsers','offers']);
+//var db          =   mongojs('goter', ['appUsers','offers']);
+var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', ['appUsers','offers']);
 var server      =   restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));
