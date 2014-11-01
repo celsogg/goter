@@ -4,30 +4,39 @@
 	<h1 class="title">Home</h1>
 </div>
 
-<ion-content>
+ <ion-content
+         has-bouncing="false"
+         start-y="55"
+         padding="true"
+         has-tabs="true"
+         has-header="true"
+         >
 
 <h4 >Bienvenido {{name}}</h4>
 
 <h5 align="center">¿Que quieres hacer?</h5>
 
 <div class="list">
+	<form>
 
-	<div class="item item-input-inset" style="border: 0px">
-		<label class="item-input-wrapper">
-			<i class="icon ion-search placeholder-icon"></i>
-			<input type="text" placeholder="Buscar">
-		</label>
-		<button class="button button-small">
-			Filtros
-		</button>
-	</div>
-
+		<div class="item item-input-inset" style="border: 0px">
+			<label class="item-input-wrapper">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Buscar" ng-model="search_word">
+			</label>
+			<button class="button button-small">
+				Filtros
+			</button>
+		</div>
+	</form>
 
 	<div align="center" style="margin-top:5px;">
 
-		<button class="button ">
+
+		<a class="button" ng-click="search()">
 			Buscar
-		</button>
+		</a>
+
 		<a class="button button-dark" href="#/new/offer/type">
 			Ofrecer
 		</a>
@@ -38,7 +47,6 @@
 
 
 </ion-content>
-<multiple-views-support width="70%" />
 </ion-view>
 
 
