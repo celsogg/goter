@@ -95,7 +95,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'current-option': {
-          templateUrl: 'templates/my-offers.html'
+          templateUrl: 'templates/my-offers.html',
+          controller: "myOffersCtrl"
         }
       }
     })
@@ -139,7 +140,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-type.html'
+          templateUrl: 'templates/offer-new-type.html',
+          controller: "newOfferCtrl"
         }
       }
     })
@@ -151,7 +153,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-description.html'
+          templateUrl: 'templates/offer-new-description.html',
+          controller: "newOfferCtrl"
         }
       }
     })
@@ -163,7 +166,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-location.html'
+          templateUrl: 'templates/offer-new-location.html',
+          controller: "newOfferCtrl"
         }
       }
     })
