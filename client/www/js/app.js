@@ -195,6 +195,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         },
         'current-option': {
           templateUrl: 'templates/offer.html',
+          controller:'offerCtrl'
           
         }
       }

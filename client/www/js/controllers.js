@@ -9,7 +9,7 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.search = function () {
 
         var search_word = this.search_word;
-        console.log(search_word);
+    
         //aca manda la palabra al server
         $window.location.href = ('#/default/search');
     }
@@ -101,12 +101,43 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('myOffersCtrl', function ($rootScope, $scope, API, $window) {
+
+    $scope.getOffer = function (offer) {
+
+        var idOffer = this.offer._id;
+        var email = $window.localStorage.token;
+        
+        API.getOffer(idOffer,email).success(function (data) {
+
+            
+            $scope.offer = data; 
+            $rootScope.set(data);
+            $window.location.href = ('#/default/offer');
+            
+
+        }).error(function (error) {
+            $rootScope.hide();
+            $rootScope.notify("Invalid Username or password");
+        });
+    }
+
     API.getOffers($rootScope.getToken()).success(function (data, status, headers, config) {
-        $scope.offers = data; 
+        $scope.offers = data;
     }).error(function (data, status, headers, config) {
         $rootScope.hide();
         $rootScope.notify("Oops something went wrong!! Please try again later");
     });
+})
+
+.controller('offerCtrl', function ($rootScope, $scope) {
+   
+   
+
+    $scope.offer = $rootScope.get();
+
+    console.log($rootScope.get());
+    
+    
 })
 
 .controller('newOfferCtrl', function ($rootScope, $scope, API, $window) {
