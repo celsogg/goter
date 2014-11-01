@@ -2,6 +2,7 @@ angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
         //http://10.0.2.2:<hostport> para emular
        var base = "http://localhost:9804";
+       //var base = "http://goter.herokuapp.com";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
                 content: text ? text : 'Loading',
