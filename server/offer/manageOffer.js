@@ -19,16 +19,20 @@ module.exports = function (server, db) {
         return next();
     });
 
-    server.get('/api/v1/goter/offers/item/:id', function (req, res, next) {
+    server.get('/api/v1/goter/offer/:id', function (req, res, next) {
+
+        
         validateRequest.validate(req, res, db, function () {
-            db.bucketLists.find({
+            db.offers.find({
                 _id: db.ObjectId(req.params.id)
             }, function (err, data) {
                 res.writeHead(200, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
                 res.end(JSON.stringify(data));
+                
             });
+
         });
         return next();
     });
@@ -54,7 +58,7 @@ module.exports = function (server, db) {
         return next();
     });
 
-    server.put('/api/v1/goter/data/item/:id', function (req, res, next) {
+    /*server.put('/api/v1/goter/data/item/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
             db.bucketLists.findOne({
                 _id: db.ObjectId(req.params.id)
@@ -83,9 +87,9 @@ module.exports = function (server, db) {
             });
         });
         return next();
-    });
+    });*/
 
-    server.del('/api/v1/goter/data/item/:id', function (req, res, next) {
+    /*server.del('/api/v1/goter/data/item/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
             db.bucketLists.remove({
                 _id: db.ObjectId(req.params.id)
@@ -97,6 +101,6 @@ module.exports = function (server, db) {
             });
             return next();
         });
-    });
+    });*/
 
 }

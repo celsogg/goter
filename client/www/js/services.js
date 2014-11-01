@@ -1,7 +1,10 @@
 angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
+
+
+
         //http://10.0.2.2:<hostport> para emular
-       var base = "http://localhost:9804";
+        var base = "http://localhost:9804";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
                 content: text ? text : 'Loading',
@@ -11,6 +14,19 @@ angular.module('goter.services', [])
                 showDelay: 0
             });
         };
+
+        var savedData = {}
+
+        $rootScope.set = function (data) { 
+           savedData = data;
+        }
+       
+        $rootScope.get = function () { 
+          return savedData;
+        }
+
+
+
 
         $rootScope.hide = function () {
             $ionicLoading.hide();
@@ -52,6 +68,7 @@ angular.module('goter.services', [])
         }
 
         return {
+
             signin: function (form) {
                 return $http.post(base+'/api/v1/goter/auth/login', form);
             },
@@ -67,6 +84,18 @@ angular.module('goter.services', [])
                     }
                 });
             },
+            getOffer: function(id,email){
+                return $http.get(base+'/api/v1/goter/offer/' + id, {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        id:id
+                    }
+                    
+                });
+
+            },
+
             getOffers: function (email) {
                 return $http.get(base+'/api/v1/goter/offers', {
                     method: 'GET',
