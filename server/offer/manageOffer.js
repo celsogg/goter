@@ -23,7 +23,7 @@ module.exports = function (server, db) {
 
         
         validateRequest.validate(req, res, db, function () {
-            db.offers.find({
+            db.offers.findOne({
                 _id: db.ObjectId(req.params.id)
             }, function (err, data) {
                 res.writeHead(200, {

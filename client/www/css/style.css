@@ -16,15 +16,35 @@
 }
 
 .scroll-content {
-	display: table !important;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	margin-top: -1px;
+	padding-top: 1px;
 	width: 100% !important;
 	height: 100% !important;
 }
+	
+
 .scroll {
-	display: table-cell;
-	/*vertical-align: middle;
-	text-align: center;*/
 	padding-top: 94px;
-}
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-transform-origin: left top;
+  -moz-transform-origin: left top;
+  transform-origin: left top; }
+
+::-webkit-scrollbar {
+  display: none; }
 
 

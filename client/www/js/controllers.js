@@ -130,14 +130,24 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('offerCtrl', function ($rootScope, $scope) {
-   
-   
+
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.isReadonly = false;
+
+    $scope.hoveringOver = function(value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+  };
+
+
 
     $scope.offer = $rootScope.get();
+    
 
-    console.log($rootScope.get());
-    
-    
+    console.log($scope.rate);
+
+
 })
 
 .controller('newOfferCtrl', function ($rootScope, $scope, API, $window) {

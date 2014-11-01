@@ -7,18 +7,29 @@
 <ion-content>
 
 <div class="button-bar">
-	<a class="button" href="#/default/my-publications/offers">Ofertas</a>
+	<a class="button activated" href="#/default/my-publications/offers">Ofertas</a>
 	<a class="button" href="#/default/my-publications/searchs">Busquedas</a>
 </div>
-<br>
 
-<div class="list">		
-	<a class="item item-avatar" ng-repeat="offer in offers" hrerf = "" ng-click="getOffer({{offer}})">
-		<img  style="display:inline;"  src="{{ offer.image }}"><img/>
-		<h2  style="display:inline;">{{ offer.title }} </h2>
-		<h2  style="display:inline;">{{ offer.rating }} </h2>
-	</a>
+
+<div class="list">	
+
+
+		<a class="row item item-avatar" ng-repeat="offer in offers" hrerf = "" ng-click="getOffer({{offer}})">
+			
+			<img  src="img/no-mini-image.jpg"><img/>
+			
+			<div class="col">
+				<h2 style="margin-left:70px; margin-top:15px;" >{{ offer.title }} </h2>
+			</div>
+			<div class="col">
+				<img style="margin-top:10px;border: solid gray 1px;width:144; height:29px;" src="img/default-rate.png" ><img/>
+			</div>
+
+			<!-- <h2  style="display:inline;">{{ offer.rating }} </h2> -->
+		</a>
 </div>
+
 
 </ion-content>
 
