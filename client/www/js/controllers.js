@@ -94,7 +94,62 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('newOfferCtrl', function ($rootScope, $scope, API, $window) {
-    
+    if (!$rootScope.offer) $rootScope.offer = {};
+    $rootScope.offer.user = $window.localStorage.token;
+    $scope.offer = $rootScope.offer;
+
+    $scope.saveForm = function (offer) {
+        $rootScope.offer = this.offer;
+    }
+    $scope.getPos = function () {
+        var onSuccess = function(position) {
+        /*alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');*/
+            $rootScope.offer.location = {lat: position.coords.latitude, lng: position.coords.longitude};
+            $scope.offer.location = $rootScope.offer.location;
+        };
+
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+    $scope.publishOffer = function(){
+        if (
+            $scope.offer.title && $scope.offer.type && $scope.offer.title && $scope.offer.description &&
+            $scope.offer.tags && $scope.offer.length && $scope.offer.location  
+            )
+        {
+            var form = {
+                offer: $scope.offer
+            }
+            API.saveOffer(form.offer.user, form)
+                .success(function (data, status, headers, config) {
+                    //$rootScope.setToken(email); // create a session kind of thing on the client side
+                    delete $rootScope.offer;
+                    $rootScope.hide();
+                    $window.location.href = ('#/default/home');
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+            });
+        }
+        else{
+            alert('Faltan campos por rellenar ;D');
+            console.log("offer "+JSON.stringify($scope.offer));
+        }
+    }
 })
 
 ;

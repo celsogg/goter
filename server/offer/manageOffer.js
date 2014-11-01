@@ -33,15 +33,22 @@ module.exports = function (server, db) {
         return next();
     });
 
-    server.post('/api/v1/goter/offer/item', function (req, res, next) {
+    server.post('/api/v1/goter/offers', function (req, res, next) {
+        console.log("validate: ");
         validateRequest.validate(req, res, db, function () {
-            var offer = req.params;
-            db.bucketLists.save(item,
+            var offer = req.params.offer;
+            db.offers.save(offer,
                 function (err, data) {
-                    res.writeHead(200, {
-                        'Content-Type': 'application/json; charset=utf-8'
-                    });
-                    res.end(JSON.stringify(data));
+                    if (err){
+                        console.log("err "+err );
+                    }
+                    else{
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        });
+
+                        res.end(JSON.stringify(data));
+                    }
                 });
         });
         return next();

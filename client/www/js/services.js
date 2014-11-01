@@ -1,5 +1,6 @@
 angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
+        //http://10.0.2.2:<hostport> para emular
        var base = "http://localhost:9804";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
@@ -69,6 +70,14 @@ angular.module('goter.services', [])
             getOffers: function (email) {
                 return $http.get(base+'/api/v1/goter/offers', {
                     method: 'GET',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            saveOffer: function (email, offer) {
+                return $http.post(base+'/api/v1/goter/offers', offer, {
+                    method: 'POST',
                     params: {
                         token: email
                     }

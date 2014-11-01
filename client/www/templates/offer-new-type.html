@@ -8,8 +8,8 @@
 
 	<div class="button-bar">
 		<a class="button" href="#/new/offer/type">Oferta</a>
-		<a class="button" href="#/new/offer/description">Descripción</a>
-		<a class="button" href="#/new/offer/location">Ubicación</a>
+		<a class="button" href="#/new/offer/description" ng-click="saveForm(offer)">Descripción</a>
+		<a class="button" href="#/new/offer/location" ng-click="saveForm(offer)">Ubicación</a>
 	</div>
 	<br>
 	<h3>¿Qué quieres ofrecer?</h3>
@@ -17,24 +17,22 @@
 			<div class="col">
 				<div class="list">
 					<label class="item item-radio">
-						<input type="radio" name="group">
+						<input type="radio" name="group" value="product" ng-model="offer.type">
 						<div class="item-content">Producto</div>
 						<i class="radio-icon ion-checkmark"></i>
 					</label>
 					<label class="item item-radio">
-				    <input type="radio" name="group">
+				    <input type="radio" name="group" value="event" ng-model="offer.type">
 				    <div class="item-content">Evento</div>
 				    <i class="radio-icon ion-checkmark"></i>
 				  </label>
 				  <label class="item item-radio">
-				    <input type="radio" name="group">
-				    <div class="item-content">
-				      Servicio
-				    </div>
+				    <input type="radio" name="group" value="service" ng-model="offer.type">
+				    <div class="item-content">Servicio</div>
 				    <i class="radio-icon ion-checkmark"></i>
 				  </label>
 				  <label class="item item-radio">
-				    <input type="radio" name="group">
+				    <input type="radio" name="group" value="tip" ng-model="offer.type">
 				    <div class="item-content">Dato</div>
 				    <i class="radio-icon ion-checkmark"></i>
 				  </label>
@@ -43,8 +41,7 @@
 			<div class="col">foto aqui?</div>
 		</div>
 		<div class="row">
-			<div class="col"><a class="button" href="">Cancelar</a></div>
-			<div class="col"><a class="button disabled" href="">Publicar</a></div>
+			<div class="col"><a class="button " href="#/new/offer/description" ng-click="saveForm(offer)">Siguiente</a></div>
 		</div>
 	</ion-content>
 </ion-view>
