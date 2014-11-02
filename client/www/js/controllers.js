@@ -214,8 +214,9 @@ angular.module('goter.controllers', ['goter.services'])
             //alert('code: '    + error.code    + '\n' +
             //      'message: ' + error.message + '\n');
         }
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
 
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        navigator.geolocation.getCurrentPosition(onSuccess, onError,options);
 
     }
 
@@ -229,6 +230,8 @@ angular.module('goter.controllers', ['goter.services'])
             content: 'Getting current location...',
             showBackdrop: false
         });
+
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
 
         navigator.geolocation.getCurrentPosition(function(pos) {
 
@@ -252,7 +255,7 @@ angular.module('goter.controllers', ['goter.services'])
 
         }, function(error) {
             alert('Unable to get location: ' + error.message);
-        });
+        },options);
 
 
     };
@@ -397,6 +400,10 @@ angular.module('goter.controllers', ['goter.services'])
 
 .controller('locationCtrl', function($scope, $ionicLoading, $compile, $rootScope, API, $window) {
 
+    
+
+
+
     /*function initialize() {*/
     $scope.offer = $rootScope.get();
 
@@ -429,6 +436,7 @@ angular.module('goter.controllers', ['goter.services'])
 
     $scope.map = map;
 
+
     /*}
 
     google.maps.event.addDomListener(window, 'load', initialize);*/
@@ -443,12 +451,14 @@ angular.module('goter.controllers', ['goter.services'])
             showBackdrop: false
         });
 
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
+        
         navigator.geolocation.getCurrentPosition(function(pos) {
             $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
             $scope.loading.hide();
         }, function(error) {
             alert('Unable to get location: ' + error.message);
-        });
+        },options);
     };
 
     $scope.clickTest = function() {
