@@ -129,28 +129,28 @@ angular.module('goter.controllers', ['goter.services'])
     });
 })
 
-.controller('offerCtrl', function ($rootScope, $scope) {
+.controller('offerCtrl', function ($rootScope, $scope, API, $window) {
 
-    $scope.rate = 7;
+    $scope.offer = $rootScope.get();
+    /*$scope.rate = 7;
     $scope.max = 10;
     $scope.isReadonly = false;
 
     $scope.hoveringOver = function(value) {
         $scope.overStar = value;
         $scope.percent = 100 * (value / $scope.max);
-  };
+    };*/
 
-
-
-    $scope.offer = $rootScope.get();
-    
-
-    console.log($scope.rate);
-
+    $scope.getLocation = function (offer) {
+            
+        $rootScope.set(offer);
+        $window.location.href = ("#/default/offer/location");
+        
+    }
 
 })
 
-.controller('newOfferCtrl', function ($rootScope, $scope, API, $window) {
+.controller('newOfferCtrl', function ($rootScope, $scope, API, $window, $ionicLoading, $compile) {
     if (!$rootScope.offer) $rootScope.offer = {};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
@@ -170,6 +170,10 @@ angular.module('goter.controllers', ['goter.services'])
               'Timestamp: '         + position.timestamp                + '\n');*/
             $rootScope.offer.location = {lat: position.coords.latitude, lng: position.coords.longitude};
             $scope.offer.location = $rootScope.offer.location;
+
+     
+
+
         };
 
         // onError Callback receives a PositionError object
@@ -181,6 +185,50 @@ angular.module('goter.controllers', ['goter.services'])
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
+
+
+    $scope.centerOnMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.loading.hide();
+
+          $rootScope.offer.location = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+          $scope.offer.location = $rootScope.offer.location;
+         
+          var newLatlng = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+          marker.setMap(null);
+          marker = new google.maps.Marker({
+                position: newLatlng,
+                map: map,
+                draggable:true,
+                title:"Arrastrame!"
+            });;
+
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+
+        
+      };
+
+      $scope.searchPosition = function(){
+
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+            $rootScope.offer.location = {lat: lat, lng: lng};
+            $scope.offer.location = $rootScope.offer.location;
+      };
+
     $scope.publishOffer = function(){
         //if (
         //    $scope.offer.title && $scope.offer.type && $scope.offer.title && $scope.offer.description &&
@@ -205,7 +253,168 @@ angular.module('goter.controllers', ['goter.services'])
         //    alert('Faltan campos por rellenar ;D');
         //    console.log("offer "+JSON.stringify($scope.offer));
         //}
+    };
+
+    var myLatlng = new google.maps.LatLng(-33.448906,-70.681905);
+
+    var mapOptions = {
+        center: myLatlng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(document.getElementById("map-2"),mapOptions);
+
+    //Marker + infowindow + angularjs compiled ng-click
+    var contentString = "<div><a ng-click='clickTest()'>{{offer.title}}</a></div>";
+    var compiled = $compile(contentString)($scope);
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        draggable:true,
+        title:"Arrastrame!"
+    });
+
+  
+
+    var infowindow = new google.maps.InfoWindow({
+        content: compiled[0]
+    });
+
+
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+    });
+
+    $scope.map = map;
+
+   
+    
+ 
+     // Create the search box and link it to the UI element.
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  var searchBox = new google.maps.places.SearchBox(
+    /** @type {HTMLInputElement} */(input));
+
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects an item from the
+  // pick list. Retrieve the matching places for that item.
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
     }
+   
+    
+    /*var lat = marker.getPosition().lat();
+    var lng = marker.getPosition().lng();
+    var newLatlng = new google.maps.LatLng(lat,lng);*/
+    
+
+    // For each place, get the icon, place name, and location.
+   
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, place; place = places[i]; i++) {
+      var image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      marker.setMap(null);
+    marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                draggable:true,
+                title:"Arrastrame!"
+            });
+
+
+      bounds.extend(place.geometry.location);
+    }
+
+    map.fitBounds(bounds);
+  });
+  
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+    var bounds = map.getBounds();
+    searchBox.setBounds(bounds);
+  });
+
+  
+    
+    
+
+
 })
+
+.controller('locationCtrl', function ($scope, $ionicLoading, $compile, $rootScope, API, $window) {
+
+      /*function initialize() {*/
+        $scope.offer = $rootScope.get();
+
+        var myLatlng = new google.maps.LatLng($scope.offer.location.lat,$scope.offer.location.lng);
+        
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+        
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>{{offer.title}}</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+          content: compiled[0]
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Tooltip'
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+
+        $scope.map = map;
+
+      /*}
+
+      google.maps.event.addDomListener(window, 'load', initialize);*/
+      
+      $scope.centerOnMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.loading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+      };
+      
+      $scope.clickTest = function() {
+        alert("Descripción: " + $scope.offer.description);
+      };
+      
+    })
 
 ;

@@ -11,20 +11,27 @@
 		</div>
 		<br>
 		<h3>¿Donde quieres ubicar tu oferta?</h3>
+
+		
+		<div class="row" align="center">
+			<div class="col">
+				<input id="pac-input" class="controls" type="text" placeholder="Busca un lugar o elige tu posición actual">
+				<div id="map-2" data-tap-disabled="true"></div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<label class="item item-input">
 					<i class="icon ion-search placeholder-icon"></i>
-					<input type="text" placeholder="Localización" >{{offer.location.lat}} {{offer.location.lng}}</input>
+					<input type="text" placeholder="Localización" disabled>{{offer.location.lat}} {{offer.location.lng}}</input>
 				</label>
 			</div>
 		</div>
-		<div class="row">	
+
+		<div class="row" >	
+				<button class="button button-stable" ng-click="searchPosition()">Seleccionar</button>
 			<div class="col">
-				<button class="button button-stable">Buscar</button>
-			</div>
-			<div class="col">
-				<button class="button button-stable" ng-click="getPos()">Posición Actual</button>
+				<button class="button button-stable" ng-click="centerOnMe()">Posición Actual</button>
 			</div>
 		</div>
 		<div class="row">

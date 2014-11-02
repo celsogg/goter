@@ -201,6 +201,21 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    //Location
+    .state('default.offer-location', {
+      url: '/offer/location',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/location.html',
+          controller:'locationCtrl'
+          
+        }
+      }
+    })
+
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/auth/signin');
 
