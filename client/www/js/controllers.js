@@ -182,11 +182,11 @@ angular.module('goter.controllers', ['goter.services'])
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
     $scope.publishOffer = function(){
-        if (
-            $scope.offer.title && $scope.offer.type && $scope.offer.title && $scope.offer.description &&
-            $scope.offer.tags && $scope.offer.length && $scope.offer.location  
-            )
-        {
+        //if (
+        //    $scope.offer.title && $scope.offer.type && $scope.offer.title && $scope.offer.description &&
+        //    $scope.offer.tags && $scope.offer.length && $scope.offer.location  
+        //    )
+        //{
             var form = {
                 offer: $scope.offer
             }
@@ -201,11 +201,10 @@ angular.module('goter.controllers', ['goter.services'])
                     $rootScope.hide();
                     $rootScope.notify("Oops something went wrong!! Please try again later");
             });
-        }
-        else{
-            alert('Faltan campos por rellenar ;D');
-            console.log("offer "+JSON.stringify($scope.offer));
-        }
+        //}else{
+        //    alert('Faltan campos por rellenar ;D');
+        //    console.log("offer "+JSON.stringify($scope.offer));
+        //}
     }
 })
 

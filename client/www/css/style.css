@@ -32,6 +32,7 @@
 
 .scroll {
 	padding-top: 94px;
+	/*display: table-cell;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -43,6 +44,7 @@
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
   transform-origin: left top; }
+
 
 ::-webkit-scrollbar {
   display: none; }
