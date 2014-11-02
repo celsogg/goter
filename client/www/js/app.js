@@ -167,7 +167,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         },
         'offer': {
           templateUrl: 'templates/offer-new-location.html',
-          controller: "newOfferCtrl"
+          controller: "newOfferLocationCtrl"
         }
       }
     })
