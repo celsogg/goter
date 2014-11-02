@@ -148,16 +148,34 @@ angular.module('goter.controllers', ['goter.services'])
         
     }
 
+    $scope.saveComment = function () {
+        var ncomment = this.newcomment;
+        this.newcomment = '';
+        API.putOffer($scope.offer._id, { user: $rootScope.getToken(), comment: ncomment }, $rootScope.getToken())
+            .success(function (data, status, headers, config) {
+                if (!$scope.offer.comments) $scope.offer.comments = [];
+                $scope.offer.comments.push({ user: $rootScope.getToken(), comment:ncomment}); 
+                $rootScope.set($scope.offer);
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    };
 })
+
 
 .controller('newOfferCtrl', function ($rootScope, $scope, API, $window, $ionicLoading, $compile) {
     if (!$rootScope.offer) $rootScope.offer = {};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
 
+    if ($rootScope.offer.location) $scope.locationInput = $rootScope.offer.location.lat+" "+$rootScope.offer.location.lng;
+
     $scope.saveForm = function (offer) {
         $rootScope.offer = this.offer;
-    }
+    };
+
     $scope.getPos = function () {
         var onSuccess = function(position) {
         /*alert('Latitude: '          + position.coords.latitude          + '\n' +
@@ -170,20 +188,17 @@ angular.module('goter.controllers', ['goter.services'])
               'Timestamp: '         + position.timestamp                + '\n');*/
             $rootScope.offer.location = {lat: position.coords.latitude, lng: position.coords.longitude};
             $scope.offer.location = $rootScope.offer.location;
-
-     
-
+            $scope.locationInput = $rootScope.offer.location.lat+" "+$rootScope.offer.location.lng;
 
         };
 
-        // onError Callback receives a PositionError object
-        //
         function onError(error) {
-            alert('code: '    + error.code    + '\n' +
-                  'message: ' + error.message + '\n');
+            //alert('code: '    + error.code    + '\n' +
+            //      'message: ' + error.message + '\n');
         }
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
     }
 
 
@@ -212,7 +227,7 @@ angular.module('goter.controllers', ['goter.services'])
                 map: map,
                 draggable:true,
                 title:"Arrastrame!"
-            });;
+            });
 
         }, function(error) {
           alert('Unable to get location: ' + error.message);
@@ -229,6 +244,7 @@ angular.module('goter.controllers', ['goter.services'])
             $scope.offer.location = $rootScope.offer.location;
       };
 
+
     $scope.publishOffer = function(){
         //if (
         //    $scope.offer.title && $scope.offer.type && $scope.offer.title && $scope.offer.description &&
@@ -237,7 +253,8 @@ angular.module('goter.controllers', ['goter.services'])
         //{
             var form = {
                 offer: $scope.offer
-            }
+            };
+
             API.saveOffer(form.offer.user, form)
                 .success(function (data, status, headers, config) {
                     //$rootScope.setToken(email); // create a session kind of thing on the client side
@@ -349,10 +366,6 @@ angular.module('goter.controllers', ['goter.services'])
   });
 
   
-    
-    
-
-
 })
 
 .controller('locationCtrl', function ($scope, $ionicLoading, $compile, $rootScope, API, $window) {

@@ -196,25 +196,44 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         'current-option': {
           templateUrl: 'templates/offer.html',
           controller:'offerCtrl'
-          
         }
       }
     })
+
 
     //Location
     .state('default.offer-location', {
       url: '/offer/location',
       views: {
+
         'goter-options': {
           templateUrl: 'templates/goter-options.html'
         },
         'current-option': {
           templateUrl: 'templates/location.html',
           controller:'locationCtrl'
-          
         }
       }
     })
+  
+
+    //Comments
+    .state('default.offer-comments',{
+      url: '/offer-comments',
+      views: {
+
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/offer-comments.html',
+          controller:'offerCtrl'
+        }
+      }
+    })
+
+    ;
+
 
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/auth/signin');

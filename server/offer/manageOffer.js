@@ -58,36 +58,26 @@ module.exports = function (server, db) {
         return next();
     });
 
-    /*server.put('/api/v1/goter/data/item/:id', function (req, res, next) {
+    server.put('/api/v1/goter/offer/:id/comment', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
-            db.bucketLists.findOne({
-                _id: db.ObjectId(req.params.id)
-            }, function (err, data) {
-                // merge req.params/product with the server/product
-
-                var updProd = {}; // updated products 
-                // logic similar to jQuery.extend(); to merge 2 objects.
-                for (var n in data) {
-                    updProd[n] = data[n];
+            db.offers.findOne(
+                { _id: db.ObjectId(req.params.id) },
+                function (err, data) {
+                    db.offers.update(
+                        { _id: db.ObjectId(req.params.id) },
+                        { $addToSet: { comments: {user: req.params.user , comment: req.params.comment} } },
+                        function (err, data) {
+                            if (!err){
+                                res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                res.end(JSON.stringify(data));
+                            }
+                        }
+                    );
                 }
-                for (var n in req.params) {
-                    if (n != "id")
-                        updProd[n] = req.params[n];
-                }
-                db.bucketLists.update({
-                    _id: db.ObjectId(req.params.id)
-                }, updProd, {
-                    multi: false
-                }, function (err, data) {
-                    res.writeHead(200, {
-                        'Content-Type': 'application/json; charset=utf-8'
-                    });
-                    res.end(JSON.stringify(data));
-                });
-            });
+            );
         });
         return next();
-    });*/
+    });
 
     /*server.del('/api/v1/goter/data/item/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
