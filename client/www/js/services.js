@@ -25,9 +25,6 @@ angular.module('goter.services', [])
           return savedData;
         }
 
-
-
-
         $rootScope.hide = function () {
             $ionicLoading.hide();
         };
@@ -95,10 +92,17 @@ angular.module('goter.services', [])
                 });
 
             },
-
             getOffers: function (email) {
                 return $http.get(base+'/api/v1/goter/offers', {
                     method: 'GET',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            putOffer: function (id, form, email) {
+                return $http.put(base+'/api/v1/goter/offer/'+id+'/comment', form, {
+                    method: 'PUT',
                     params: {
                         token: email
                     }
@@ -112,5 +116,5 @@ angular.module('goter.services', [])
                     }
                 });
             }
-        }
+        };
     });
