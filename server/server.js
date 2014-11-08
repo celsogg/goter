@@ -1,8 +1,10 @@
 var restify     =   require('restify');
 var mongojs     =   require('mongojs');
 var	morgan  	= 	require('morgan');
+var shortId		= 	require('shortid');
 //var db          =   mongojs('goter', ['appUsers','offers']);
-var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', ['appUsers','offers']);
+var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', 
+						['appUsers','offers', 'offers_comments']);
 var server      =   restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));
@@ -24,4 +26,4 @@ server.listen(process.env.PORT || 9804, function () {
 
 var manageUsers =   require('./auth/manageUser')(server, db);
 var manageLists =   require('./list/manageList')(server, db);
-var manageOffer =   require('./offer/manageOffer')(server, db);
+var manageOffer =   require('./offer/manageOffer')(server, db, shortId, mongojs);

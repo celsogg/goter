@@ -144,26 +144,39 @@ angular.module('goter.controllers', ['goter.services'])
         $window.location.href = ("#/default/offer/location");
 
     }
+})
+
+.controller('OfferCommentsCtrl', function($rootScope, $scope, API, $window) {
+    $scope.offer = $rootScope.get();
+
+    API.getOfferComments($scope.offer._id, $rootScope.getToken())
+    .success(function (data, status, headers, config) {
+        console.log("data"+data);
+    })
+    .error( function (data, status, headers, config) {
+        $rootScope.hide();
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    });
 
     $scope.saveComment = function() {
         var ncomment = this.newcomment;
         this.newcomment = '';
-        API.putOffer($scope.offer._id, {
+        API.saveOfferComment($scope.offer._id, {
                 user: $rootScope.getToken(),
                 comment: ncomment
             }, $rootScope.getToken())
-            .success(function(data, status, headers, config) {
-                if (!$scope.offer.comments) $scope.offer.comments = [];
-                $scope.offer.comments.push({
-                    user: $rootScope.getToken(),
-                    comment: ncomment
-                });
-                $rootScope.set($scope.offer);
-            })
-            .error(function(data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
+        .success(function(data, status, headers, config) {
+            if (!$scope.offer.comments) $scope.offer.comments = [];
+            $scope.offer.comments.push({
+                user: $rootScope.getToken(),
+                comment: ncomment
             });
+            $rootScope.set($scope.offer);
+        })
+        .error(function(data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
     };
 })
 
@@ -191,36 +204,6 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.offer = this.offer;
     };
 
-    $scope.getPos = function() {
-        var onSuccess = function(position) {
-            /*alert('Latitude: '          + position.coords.latitude          + '\n' +
-                  'Longitude: '         + position.coords.longitude         + '\n' +
-                  'Altitude: '          + position.coords.altitude          + '\n' +
-                  'Accuracy: '          + position.coords.accuracy          + '\n' +
-                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-                  'Heading: '           + position.coords.heading           + '\n' +
-                  'Speed: '             + position.coords.speed             + '\n' +
-                  'Timestamp: '         + position.timestamp                + '\n');*/
-            $rootScope.offer.location = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            $scope.offer.location = $rootScope.offer.location;
-            $scope.locationInput = $rootScope.offer.location.lat + " " + $rootScope.offer.location.lng;
-
-        };
-
-        function onError(error) {
-            //alert('code: '    + error.code    + '\n' +
-            //      'message: ' + error.message + '\n');
-        }
-        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
-
-        navigator.geolocation.getCurrentPosition(onSuccess, onError,options);
-
-    }
-
-
     $scope.centerOnMe = function() {
         if (!$scope.map) {
             return;
@@ -243,6 +226,7 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
             $scope.offer.location = $rootScope.offer.location;
+            $scope.locationInput = $rootScope.offer.location.lat + " " + $rootScope.offer.location.lng;
 
             var newLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
             marker.setMap(null);
