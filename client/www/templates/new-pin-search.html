@@ -1,0 +1,65 @@
+<ion-view title="Fijar Busqueda">
+
+<div class="bar bar-header bar-dark">
+	<h1 class="title">Fijar Busqueda</h1>
+</div>
+
+<ion-content>
+<h3 align="center" style="margin-top:10px;">¿Que estas buscando?</h3>
+		<div class="list">
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Titulo</span>
+				<input type="text" placeholder="Título" ng-model="pin_search.title"></input>
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Descripción</span>
+				<textarea placeholder="Descripción" rows="3" ng-model="pin_search.description"></textarea>
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Etiquetas</span>
+				<input type="text" placeholder="Etiquetas" ng-model="pin_search.tags"/>
+			</label>
+			
+			<label class="item item-input item-floating-label item-select">
+				<span class="input-label">Frecuencia de busqueda</span>
+				<input type="text" placeholder="Frecuencia de busqueda" ng-model="pin_search.frequency"/>
+				<select>
+					<option>Días</option>
+					<option selected>Horas</option>
+			    </select>
+			</label>
+
+			<li class="item item-checkbox">
+				<span class="input-label">Publicar como anonimo</span>
+				<label class="checkbox">
+			       <input type="checkbox" ng-model="pin_search.anonymous">
+			     </label>
+			</li>
+			<li class="item item-checkbox">
+				<span class="input-label">Buscar siempre cerca de mí</span>
+				<label class="checkbox">
+			       <input type="checkbox" ng-model="pin_search.next_to_me">
+			     </label>
+			</li>
+			
+			<label class="item item-floating-label item-dark" ng-click="pinLocation(pin_search)">
+				 <h2 align="center" style="color:white">Fijar Ubicación</h2>
+			</label>
+			<label class="item item-floating-label item-positive" ng-click="publishPinSearch()">
+				 <h2 align="center" style="color:white">Publicar</h2>
+			</label>
+
+			
+
+
+		</div>
+
+
+			  
+
+			 
+
+		
+</ion-content>
+
+</ion-view>

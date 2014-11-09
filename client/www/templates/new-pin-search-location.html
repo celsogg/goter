@@ -1,0 +1,36 @@
+<ion-view >
+
+<div class="bar bar-header bar-dark">
+	<h1 class="title">Ingresa la ubicación</h1>
+</div>
+	<ion-content>
+		<div class="row" align="center">
+			<div class="col">
+				<input id="pac-input" class="controls" type="text" placeholder="Busca un lugar o elige tu posición actual">
+				<div id="map-2" data-tap-disabled="true"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+
+					<input type="text" placeholder="Localización" ng-model="pin_search.locationInput" disabled> {{pin_search.location.lat}} {{pin_search.location.lng}}</input>
+
+				</label>
+			</div>
+		</div>
+
+		<div class="row" >
+			<div class="col">
+				<button class="button button-stable" ng-click="searchPosition()">Seleccionar</button>
+				<button class="button button-stable" ng-click="centerOnMe()">Posición Actual</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col"><a class="button" ng-click="ready()" href="">Aceptar</a></div>
+		</div>
+	</ion-content>
+</ion-view>
+
+

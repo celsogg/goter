@@ -1,6 +1,6 @@
 angular.module('goter.controllers', ['goter.services'])
 
-.controller('HomeController', function($rootScope, $scope, $window) {
+.controller('HomeController', function($rootScope, $scope, $window, API) {
 
     $scope.name = $window.localStorage.token;
 
@@ -18,6 +18,14 @@ angular.module('goter.controllers', ['goter.services'])
 
         //aca manda la id al server para obtener la oferta
         $window.location.href = ('#/default/offer');
+    }
+
+    $scope.pinSearch = function () {
+
+        var search = this.search_word;
+        $rootScope.set(search);
+
+        $window.location.href = ('#/default/new/pin/search');
     }
 
 })
@@ -464,6 +472,226 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.clickTest = function() {
         alert("Descripción: " + $scope.offer.description);
     };
+
+})
+
+.controller('newPinCtrl', function($rootScope, $scope, API, $window) {
+
+    if ($rootScope.pin_search) {
+
+        $scope.pin_search = $rootScope.get();   
+    } 
+
+    else {
+
+        var location = {
+                lat: -33.448906 ,
+                lng: -70.681905 
+        };
+
+        $scope.pin_search = {
+
+        title: $rootScope.get(),
+        description: "",
+        tags: "",
+        frequency: "",
+        anonymous: "",
+        next_to_me: "",
+        location: location
+        };
+    };
+
+    delete $rootScope.pin_search;
+
+
+
+    $scope.pinLocation = function () {
+
+        $rootScope.set($scope.pin_search);
+        $window.location.href = ('#/default/new/pin/search/location');
+    };
+
+    $scope.publishPinSearch = function() {
+       
+        var form = {
+            pin_search: $scope.pin_search
+        };
+
+        var user = $window.localStorage.token;
+
+        API.savePinSearch(user, form)
+            .success(function(data, status, headers, config) {
+
+                $window.location.href = ('#/default/home');
+            })
+            .error(function(data, status, headers, config) {
+                $rootScope.hide();
+                $rootScope.notify("Oops something went wrong!! Please try again later");
+            });
+      
+    };
+
+
+})
+
+
+.controller('newPinLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
+
+
+    $scope.pin_search = $rootScope.get();
+
+
+    var myLatlng = {};
+    myLatlng = new google.maps.LatLng($scope.pin_search.location.lat, $scope.pin_search.location.lng);
+
+    var mapOptions = {
+        center: myLatlng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(document.getElementById("map-2"), mapOptions);
+
+    //Marker + infowindow + angularjs compiled ng-click
+    var contentString = "<div><a ng-click='clickTest()'>{{offer.title}}</a></div>";
+    var compiled = $compile(contentString)($scope);
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        draggable: true,
+        title: "Arrastrame!"
+    });
+
+
+
+    var infowindow = new google.maps.InfoWindow({
+        content: compiled[0]
+    });
+
+
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+    });
+
+    $scope.map = map;
+
+
+    // Create the search box and link it to the UI element.
+    var input = /** @type {HTMLInputElement} */ (
+        document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    var searchBox = new google.maps.places.SearchBox(
+        /** @type {HTMLInputElement} */
+        (input));
+
+    // [START region_getplaces]
+    // Listen for the event fired when the user selects an item from the
+    // pick list. Retrieve the matching places for that item.
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+
+        /*var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        var newLatlng = new google.maps.LatLng(lat,lng);*/
+
+
+        // For each place, get the icon, place name, and location.
+
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0, place; place = places[i]; i++) {
+            var image = {
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(25, 25)
+            };
+
+            marker.setMap(null);
+            marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                draggable: true,
+                title: "Arrastrame!"
+            });
+
+
+            bounds.extend(place.geometry.location);
+        }
+
+        map.fitBounds(bounds);
+    });
+
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+        var bounds = map.getBounds();
+        searchBox.setBounds(bounds);
+    });
+
+    $scope.centerOnMe = function() {
+        if (!$scope.map) {
+            return;
+        }
+
+        $scope.loading = $ionicLoading.show({
+            content: 'Getting current location...',
+            showBackdrop: false
+        });
+
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+
+            $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            $scope.loading.hide();
+
+            $scope.pin_search.location = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+
+            var newLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+            marker.setMap(null);
+            marker = new google.maps.Marker({
+                position: newLatlng,
+                map: map,
+                draggable: true,
+                title: "Arrastrame!"
+            });
+
+        }, function(error) {
+            alert('Unable to get location: ' + error.message);
+        },options);
+
+
+    };
+
+    $scope.searchPosition = function() {
+
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        $scope.pin_search.location = {
+            lat: lat,
+            lng: lng
+        };
+        
+    };
+
+    $scope.ready = function() {
+
+        $rootScope.pin_search = $scope.pin_search;
+        $rootScope.set($scope.pin_search);
+        $window.location.href = ('#/default/new/pin/search');
+
+    }
+
 
 })
 

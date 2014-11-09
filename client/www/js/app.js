@@ -232,6 +232,34 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    //PinSearch
+    .state('default.new-pin-search',{
+      url: '/new/pin/search',
+      views: {
+
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/new-pin-search.html',
+          controller:'newPinCtrl'
+        }
+      }
+    })
+
+    .state('default.new-pin-search-location',{
+      url: '/new/pin/search/location',
+      views: {
+
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/new-pin-search-location.html',
+          controller:'newPinLocationCtrl'
+        }
+      }
+    })
     ;
 
 

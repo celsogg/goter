@@ -2,8 +2,8 @@ angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
 
         //http://10.0.2.2:<hostport> para emular
-       //var base = "http://localhost:9804";
-       var base = "http://goter.herokuapp.com";
+       var base = "http://localhost:9804";
+       //var base = "http://goter.herokuapp.com";
        
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
@@ -110,6 +110,15 @@ angular.module('goter.services', [])
             },
             saveOffer: function (email, offer) {
                 return $http.post(base+'/api/v1/goter/offers', offer, {
+                    method: 'POST',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+
+            savePinSearch: function (email, pin_search) {
+                return $http.post(base+'/api/v1/goter/pin-searchs', pin_search, {
                     method: 'POST',
                     params: {
                         token: email
