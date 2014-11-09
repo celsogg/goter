@@ -27,34 +27,6 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 	// Each state's controller can be found in controllers.js
 	$stateProvider
 
-		// setup an abstract state for the tabs directive
-	
-<<<<<<< HEAD
-		.state('auth', {
-			url: "/auth",
-			abstract: true,
-			templateUrl: "templates/auth.html"
-		})
-
-		.state('auth.signin', {
-			url: '/signin',
-			views: {
-				'auth-signin': {
-					templateUrl: 'templates/auth-signin.html',
-					controller: 'SignInCtrl'
-				}
-			}
-		})
-		.state('auth.signup', {
-			url: '/signup',
-			views: {
-				'auth-signup': {
-					templateUrl: 'templates/auth-signup.html',
-					controller: 'SignUpCtrl'
-				}
-			}
-		})
-
     //SIGN IN & UP
     .state('signin', {
       url: '/signin',
