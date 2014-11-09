@@ -159,7 +159,8 @@ angular.module('goter.controllers', ['goter.services'])
 
     API.getOfferComments($scope.offer._id, $rootScope.getToken())
     .success(function (data, status, headers, config) {
-        console.log("data"+data);
+        //console.log("data"+data);
+        $scope.offer.comments = data;
     })
     .error( function (data, status, headers, config) {
         $rootScope.hide();
@@ -174,11 +175,9 @@ angular.module('goter.controllers', ['goter.services'])
                 comment: ncomment
             }, $rootScope.getToken())
         .success(function(data, status, headers, config) {
+            //console.log("data "+data);
             if (!$scope.offer.comments) $scope.offer.comments = [];
-            $scope.offer.comments.push({
-                user: $rootScope.getToken(),
-                comment: ncomment
-            });
+            $scope.offer.comments.push(data);
             $rootScope.set($scope.offer);
         })
         .error(function(data, status, headers, config) {

@@ -86,8 +86,12 @@ module.exports = function (server, db, shortId, mongojs) {
                     db.offers_comments.save( comment, 
                         function (err, data) {
                         if (!err){
-                            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'  });
-                            res.end(JSON.stringify(data));
+                            
+                            db.offers_comments.findOne({'full_slug' : full_slug}, function (err, doc) {
+                                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'  });
+                                res.end(JSON.stringify(doc));
+                            });
+                            
                         } else { console.log("err "+err); }
                     });
                 } else { console.log("err "+err); }
@@ -99,11 +103,12 @@ module.exports = function (server, db, shortId, mongojs) {
     server.get( '/api/v1/goter/offers/:id/comments', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
             db.offers_comments.find({
-                offer_id : req.params.id
+                offer_id : mongojs.ObjectId(req.params.id)
                 },function (err, docs) {
                     if (err){
                         console.log("err: "+err );
                     }else{
+                        //console.log(JSON.stringify(docs));
                         res.writeHead(200, {
                             'Content-Type': 'application/json; charset=utf-8'
                         });
