@@ -15,6 +15,10 @@
     "morgan": "^1.4.0",
     "passport": "^0.2.1",
     "passport-local": "~0.1.6",
-    "restify": "^2.8.3"
+    "restify": "^2.8.3",
+    "shortid": "latest"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }

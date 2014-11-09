@@ -29,6 +29,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 
 		// setup an abstract state for the tabs directive
 	
+<<<<<<< HEAD
 		.state('auth', {
 			url: "/auth",
 			abstract: true,
@@ -54,23 +55,20 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 			}
 		})
 
-/*		.state('tab', {
->>>>>>> f0623db099bafaa6fbfc298c6c76f85d4bba347e
-			url: "/tab", 
-			abstract: true,
-			templateUrl: "templates/tabs.html"
-		})*/
+    //SIGN IN & UP
+    .state('signin', {
+      url: '/signin',
+      templateUrl: 'templates/signin.html',
+      controller: 'SignInCtrl'
+    })
 
-  /*.state('tab.home', {
-      url: '/home',
-      views: {
-        'home': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeController'
-        }
-      }
-    })*/
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'templates/signup.html',
+      controller: 'SignUpCtrl'
+    })
 
+    //TABS
     .state('default', {
       url: "/default", 
       abstract: true,
@@ -83,13 +81,64 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         'goter-options': {
           templateUrl: 'templates/goter-options.html'
         },
-        'home': {
-          templateUrl: 'templates/home.html'
-         
+        'current-option': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeController'  
         }
       }
     })
 
+    .state('default.my-searchs', {
+      url: '/my-publications/searchs',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-searchs.html'
+        }
+      }
+    })
+
+    .state('default.my-offers', {
+      url: '/my-publications/offers',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-offers.html',
+          controller: "myOffersCtrl"
+        }
+      }
+    })
+
+    .state('default.my-results', {
+      url: '/my-notifications/results',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-results.html'
+        }
+      }
+    })
+
+    .state('default.my-comments', {
+      url: '/my-notifications/comments',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/my-comments.html'
+        }
+      }
+    })
+
+
+    //Offer
     .state('new', {
       url: "/new", 
       abstract: true,
@@ -103,7 +152,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-type.html'
+          templateUrl: 'templates/offer-new-type.html',
+          controller: "newOfferCtrl"
         }
       }
     })
@@ -115,7 +165,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-description.html'
+          templateUrl: 'templates/offer-new-description.html',
+          controller: "newOfferCtrl"
         }
       }
     })
@@ -127,17 +178,103 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'offer': {
-          templateUrl: 'templates/offer-new-location.html'
+          templateUrl: 'templates/offer-new-location.html',
+          controller: "newOfferLocationCtrl"
+        }
+      }
+    })
+
+    //Search
+    .state('default.search', {
+      url: '/search',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/search.html',
+          controller: 'HomeController'  
+        }
+      }
+    })
+
+    //Offer
+    .state('default.offer', {
+      url: '/offer',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/offer.html',
+          controller:'offerCtrl'
         }
       }
     })
 
 
+    //Location
+    .state('default.offer-location', {
+      url: '/offer/location',
+      views: {
 
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/location.html',
+          controller:'locationCtrl'
+        }
+      }
+    })
+  
 
+    //Comments
+    .state('default.offer-comments',{
+      url: '/offer-comments',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/offer-comments.html',
+          controller:'OfferCommentsCtrl'
+        }
+      }
+    })
+
+    //PinSearch
+    .state('default.new-pin-search',{
+      url: '/new/pin/search',
+      views: {
+
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/new-pin-search.html',
+          controller:'newPinCtrl'
+        }
+      }
+    })
+
+    .state('default.new-pin-search-location',{
+      url: '/new/pin/search/location',
+      views: {
+
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/new-pin-search-location.html',
+          controller:'newPinLocationCtrl'
+        }
+      }
+    })
     ;
 
+
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/auth/signin');
+	$urlRouterProvider.otherwise('/signin');
 
 });

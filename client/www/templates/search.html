@@ -1,0 +1,69 @@
+<ion-view title="Busqueda">
+
+<div class="bar bar-header bar-dark">
+	<h1 class="title">Busqueda</h1>
+</div>
+
+<ion-content>
+<h4 >Bienvenido {{name}}</h4>
+<h5 align="center">¿Quieres buscar de nuevo?</h5>
+
+<div class="list">
+
+	<div class="item item-input-inset" style="border: 0px">
+		<label class="item-input-wrapper">
+			<i class="icon ion-search placeholder-icon"></i>
+			<input type="text" placeholder="Buscar" ng-model="search_word">
+		</label>
+		<button class="button button-small">
+			Filtros
+		</button>
+	</div>
+
+
+	<div align="center" style="margin-top:5px;">
+
+		<a class="button" ng-click="search()">
+			Buscar
+		</a>
+		<a class="button button-dark" ng-click="pinSearch()">
+			Publicar Busqueda
+		</a>
+
+	</div>
+
+</div>
+
+<hr style="border:dashed 1px; border-color:gray;margin:50px;">
+
+<div class="list">	
+	<h3 align="center">Resultados</h3>	
+
+	<!-- <a align="center" class="item" ng-repeat="result in results" hrerf = "#/offer/{{result.id}}">
+		<h2  style="display:inline;">{{result.offer_name}}</h2>
+		<h2  style="display:inline;">{{result.location}} </h2>
+	</a> -->
+
+	<div align="center" class="item">
+		<h2 style="display:inline;">1</h2>
+		<a  style="display:inline;" href="" >Baby en el Peñon</a>
+		<a  style="display:inline;" href="#">Ubicación</a>
+	</div>
+
+	<div align="center" class="item">
+		<h2 style="display:inline;">2</h2>
+		<a  style="display:inline;" href="" ng-click="getOffer(1)" >Partido en Gabriela</a>
+		<a  style="display:inline;" href="#">Ubicación</a>
+	</div>
+
+	<div align="center" class="item">
+		<h2 style="display:inline;">3</h2>
+		<a  style="display:inline;" href="" >Junta San Francisco FC</a>
+		<a  style="display:inline;" href="#">Ubicación</a>
+	</div>
+</div>
+
+
+</ion-content>
+
+</ion-view>

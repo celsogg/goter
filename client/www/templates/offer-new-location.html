@@ -5,36 +5,37 @@
 </div>
 	<ion-content>
 		<div class="button-bar">
-			<a class="button" href="#/new/offer/type">Oferta</a>
-		<a class="button" href="#/new/offer/description">Descripción</a>
-		<a class="button" href="#/new/offer/location">Ubicación</a>
+		<a class="button" href="#/new/offer/type" ng-click="saveForm(offer)">Oferta</a>
+		<a class="button" href="#/new/offer/description" ng-click="saveForm(offer)">Descripción</a>
+		<a class="button activated" href="#/new/offer/location">Ubicación</a>
 		</div>
 		<br>
 		<h3>¿Donde quieres ubicar tu oferta?</h3>
+
+		
+		<div class="row" align="center">
+			<div class="col">
+				<input id="pac-input" class="controls" type="text" placeholder="Busca un lugar o elige tu posición actual">
+				<div id="map-2" data-tap-disabled="true"></div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<label class="item item-input">
 					<i class="icon ion-search placeholder-icon"></i>
-					<input type="text" placeholder="Localización">
+					<input type="text" placeholder="Localización" ng-model="locationInput" disabled></input>
 				</label>
-			</div>
-			<div class="col">
-				<button class="button button-stable">Ubicar</button>
 			</div>
 		</div>
-		<div class="row">	
+
+		<div class="row" >	
+				<button class="button button-stable" ng-click="searchPosition()">Seleccionar</button>
 			<div class="col">
-				<label class="item item-input">
-					<input type="text" placeholder="" disabled>
-				</label>
-			</div>
-			<div class="col">
-				<button class="button button-stable">Posición Actual</button>
+				<button class="button button-stable" ng-click="centerOnMe()">Posición Actual</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col"><a class="button" href="">Cancelar</a></div>
-			<div class="col"><a class="button disabled" href="">Publicar</a></div>
+			<div class="col"><a class="button" ng-click="publishOffer()" href="">Publicar</a></div>
 		</div>
 	</ion-content>
 </ion-view>
