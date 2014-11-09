@@ -100,9 +100,17 @@ angular.module('goter.services', [])
                     }
                 });
             },
-            putOffer: function (id, form, email) {
-                return $http.put(base+'/api/v1/goter/offer/'+id+'/comment', form, {
-                    method: 'PUT',
+            saveOfferComment: function (offerId, form, email) {
+                return $http.post(base + '/api/v1/goter/offers/' + offerId + '/comments', form, {
+                    method: 'POST',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            getOfferComments: function (offerId, email) {
+                return $http.get(base + '/api/v1/goter/offers/' + offerId + '/comments', {
+                    method: 'GET',
                     params: {
                         token: email
                     }
