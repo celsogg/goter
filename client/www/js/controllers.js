@@ -185,6 +185,27 @@ angular.module('goter.controllers', ['goter.services'])
             $rootScope.notify("Oops something went wrong!! Please try again later");
         });
     };
+
+    $scope.saveResponse = function(commentId, commentSlug, commentFullSlug) {
+        //console.log("commentid "+commentId+" "+commentSlug);
+        //console.log(this.response);
+        //console.log(angular.element);
+        API.saveOfferComment($scope.offer._id,{
+                user            : $rootScope.getToken(),
+                comment         : this.response,
+                parent_id       : commentId,
+                parent_slug     : commentSlug,
+                parent_full_slug: commentFullSlug
+            }, $rootScope.getToken())
+        .success(function(data, status, headers, config) {
+            //console.log("érsito");
+            
+        })
+        .error(function(data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    };
 })
 
 

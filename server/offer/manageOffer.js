@@ -62,17 +62,23 @@ module.exports = function (server, db, shortId, mongojs) {
             db.appUsers.findOne({email: req.params.user}, function (err, user) {
                 if (!err) {
                     // basado en la primera opción de http://docs.mongodb.org/ecosystem/use-cases/storing-comments/
+                    //console.log("asd "+JSON.stringify(req.params));
+                    
                     var slug_part = shortId.generate();
                     var date = new Date();
                     var full_slug_part = ''+date.getUTCFullYear()+'.'+date.getUTCMonth()+'.'+date.getUTCDate()+'.'+date.getUTCHours()+'.'+date.getUTCMinutes()+'.'+date.getUTCSeconds()+':'+slug_part;
-                    var slug, full_slug;
+                    var slug, full_slug, parent_id;
 
                     if (req.params.parent_slug){
-                        // TODO cuando el comentario es una respuesta
+                        slug = req.params.parent_slug + '/' + slug_part;
+                        full_slug = req.params.parent_full_slug + '/' + full_slug_part;
+                        parent_id = mongojs.ObjectId(req.params.parent_id);
                     } else {
                         slug = slug_part;
                         full_slug = full_slug_part;
+                        parent_id = null;
                     }
+
 
                     var comment = { 'offer_id'  : mongojs.ObjectId(req.params.id),      
                                     'user_id'   : user._id,
@@ -80,9 +86,11 @@ module.exports = function (server, db, shortId, mongojs) {
                                     'user_name' : user.name,
                                     'text'      : req.params.comment,
                                     'posted'    : date,
+                                    'parent_id' : parent_id,
                                     'slug'      : slug,
                                     'full_slug' : full_slug  };
-
+                    //console.log("comm "+JSON.stringify(comment));
+                    
                     db.offers_comments.save( comment, 
                         function (err, data) {
                         if (!err){
