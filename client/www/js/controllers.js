@@ -134,6 +134,63 @@ angular.module('goter.controllers', ['goter.services'])
     });
 })
 
+.controller('myPinSearchsCtrl', function($rootScope, $scope, API, $window) {
+
+    $scope.getPinSearch = function(pin_search) {
+
+        var id_pin_search = this.pin_search._id;
+        var email = $window.localStorage.token;
+
+        API.getPinSearch(id_pin_search, email).success(function(data) {
+            //$scope.offer = data;
+            $rootScope.set(data);
+            $window.location.href = ('#/default/pin-search');
+
+
+        }).error(function(error) {
+            $rootScope.hide();
+            $rootScope.notify("Invalid Username or password");
+        });
+    }
+
+    API.getPinSearchs($rootScope.getToken()).success(function(data, status, headers, config) {
+        $scope.pin_searchs = data;
+    }).error(function(data, status, headers, config) {
+        $rootScope.hide();
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    });
+})
+
+.controller('pinSearchCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
+
+    $scope.pin_search = $rootScope.get();
+    
+    var myLatlng = new google.maps.LatLng($scope.pin_search.location.lat, $scope.pin_search.location.lng);
+    var mapOptions = {
+        center: myLatlng,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map-2"), mapOptions);
+
+    //Marker + infowindow + angularjs compiled ng-click
+    var contentString = "<div><a ng-click='clickTest()'>{{offer.title}}</a></div>";
+    var compiled = $compile(contentString)($scope);
+    var infowindow = new google.maps.InfoWindow({
+        content: compiled[0]
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: 'Tooltip'
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+    });
+    $scope.map = map;
+})
+
 .controller('offerCtrl', function($rootScope, $scope, API, $window) {
 
     $scope.offer = $rootScope.get();
@@ -392,10 +449,6 @@ angular.module('goter.controllers', ['goter.services'])
 
 .controller('locationCtrl', function($scope, $ionicLoading, $compile, $rootScope, API, $window) {
 
-    
-
-
-
     /*function initialize() {*/
     $scope.offer = $rootScope.get();
 
@@ -428,12 +481,10 @@ angular.module('goter.controllers', ['goter.services'])
 
     $scope.map = map;
 
-
     /*}
-
     google.maps.event.addDomListener(window, 'load', initialize);*/
 
-    $scope.centerOnMe = function() {
+/*    $scope.centerOnMe = function() {
         if (!$scope.map) {
             return;
         }
@@ -451,7 +502,7 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-    };
+    };*/
 
     $scope.clickTest = function() {
         alert("Descripción: " + $scope.offer.description);
@@ -481,7 +532,8 @@ angular.module('goter.controllers', ['goter.services'])
         frequency: "",
         anonymous: "",
         next_to_me: "",
-        location: location
+        location: location,
+        user: $window.localStorage.token
         };
     };
 
@@ -579,7 +631,6 @@ angular.module('goter.controllers', ['goter.services'])
         if (places.length == 0) {
             return;
         }
-
 
         /*var lat = marker.getPosition().lat();
         var lng = marker.getPosition().lng();

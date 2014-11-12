@@ -132,6 +132,24 @@ angular.module('goter.services', [])
                         token: email
                     }
                 });
+            },
+            getPinSearchs: function (email) {
+                return $http.get(base+'/api/v1/goter/pin-searchs', {
+                    method: 'GET',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            getPinSearch: function(id,email){
+                return $http.get(base+'/api/v1/goter/pin-search/' + id, {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        id:id
+                    }
+                    
+                });
             }
         };
     });

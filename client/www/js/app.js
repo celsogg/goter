@@ -67,7 +67,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
           templateUrl: 'templates/goter-options.html'
         },
         'current-option': {
-          templateUrl: 'templates/my-searchs.html'
+          templateUrl: 'templates/my-searchs.html',
+          controller: "myPinSearchsCtrl"
         }
       }
     })
@@ -110,7 +111,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
     })
 
 
-    //Offer
+    //NewOffer
     .state('new', {
       url: "/new", 
       abstract: true,
@@ -180,6 +181,20 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         'current-option': {
           templateUrl: 'templates/offer.html',
           controller:'offerCtrl'
+        }
+      }
+    })
+
+    //Pin-Search
+    .state('default.pin-search', {
+      url: '/pin-search',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/pin-search.html',
+          controller:'pinSearchCtrl'
         }
       }
     })
