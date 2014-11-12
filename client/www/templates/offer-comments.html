@@ -7,8 +7,13 @@
 			<div class="row item item-avatar" ng-repeat="comment in offer.comments">
 				<img  src="img/no-mini-image.jpg"></img>
 				<div class="col">
-					<h2 style="margin-left:70px;" ><strong>{{ comment.user }}:</strong> </h2>
-					<p style="margin-left:80px;">{{comment.comment}}</p>
+					<h2 style="margin-left:70px;" ><strong>{{ comment.user_name }}:</strong> </h2>
+					<p style="margin-left:80px;">{{comment.text}}</p>
+					<a style="margin-left:70px;" href="">Responder</a><a style="margin-left:20px;" href="">Respuestas</a>
+					<label class="item item-input">
+						<textarea id="{{comment._id}}" ng-model="response" placeholder="Escribe tu respuesta" rows="3" ></textarea>
+					</label>
+					<a class="button" ng-click="saveResponse('{{comment._id}}','{{comment.slug}}', '{{comment.full_slug}}')" >Responder</a>
 				</div>
 			</div>
 		</div>

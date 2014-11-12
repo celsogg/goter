@@ -216,7 +216,8 @@ angular.module('goter.controllers', ['goter.services'])
 
     API.getOfferComments($scope.offer._id, $rootScope.getToken())
     .success(function (data, status, headers, config) {
-        console.log("data"+data);
+        //console.log("data"+data);
+        $scope.offer.comments = data;
     })
     .error( function (data, status, headers, config) {
         $rootScope.hide();
@@ -231,12 +232,31 @@ angular.module('goter.controllers', ['goter.services'])
                 comment: ncomment
             }, $rootScope.getToken())
         .success(function(data, status, headers, config) {
+            //console.log("data "+data);
             if (!$scope.offer.comments) $scope.offer.comments = [];
-            $scope.offer.comments.push({
-                user: $rootScope.getToken(),
-                comment: ncomment
-            });
+            $scope.offer.comments.push(data);
             $rootScope.set($scope.offer);
+        })
+        .error(function(data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    };
+
+    $scope.saveResponse = function(commentId, commentSlug, commentFullSlug) {
+        //console.log("commentid "+commentId+" "+commentSlug);
+        //console.log(this.response);
+        //console.log(angular.element);
+        API.saveOfferComment($scope.offer._id,{
+                user            : $rootScope.getToken(),
+                comment         : this.response,
+                parent_id       : commentId,
+                parent_slug     : commentSlug,
+                parent_full_slug: commentFullSlug
+            }, $rootScope.getToken())
+        .success(function(data, status, headers, config) {
+            //console.log("érsito");
+            
         })
         .error(function(data, status, headers, config) {
             $rootScope.hide();
