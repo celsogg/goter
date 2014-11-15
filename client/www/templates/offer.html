@@ -24,8 +24,13 @@
  	</div>
 
   	<div class="col">
-  			<h4 >Rate:</h4>
+  			<h4 >Popularidad</h4>
+  			
+  			<a ng-click= "likeFunction()" class="button icon-left ion-heart button-clear button-{{offer.likeStyle}}">{{offer.likes}}</a>
+
+  			<!--
   			<img style="border: solid gray 1px;width:100%; height:100%" src="img/default-rate.png" ><img/>
+  			-->
   	</div>
 </div>
 
