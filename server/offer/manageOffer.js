@@ -170,9 +170,9 @@ module.exports = function (server, db, shortId, mongojs) {
         return next();
     });
 
-    /*server.del('/api/v1/goter/data/item/:id', function (req, res, next) {
+    server.del('/api/v1/goter/offer/delete/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
-            db.bucketLists.remove({
+            db.offers.remove({
                 _id: db.ObjectId(req.params.id)
             }, function (err, data) {
                 res.writeHead(200, {
@@ -182,6 +182,26 @@ module.exports = function (server, db, shortId, mongojs) {
             });
             return next();
         });
-    });*/
+    });
+
+    server.get('/api/v1/goter/search/:word', function (req, res, next) {
+        validateRequest.validate(req, res, db, function () {
+            db.offers.runCommand( 
+                "text", {search: req.params.word, language: "spanish"}, 
+                function (err, docs) {
+                    if (err){
+                        console.log("err: "+err );
+                    }else{
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        });
+                        res.end(JSON.stringify(docs));
+                    }
+                }
+            );
+            
+        });
+        return next();
+    });
 
 }

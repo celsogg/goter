@@ -39,29 +39,22 @@
 <div class="list">	
 	<h3 align="center">Resultados</h3>	
 
-	<!-- <a align="center" class="item" ng-repeat="result in results" hrerf = "#/offer/{{result.id}}">
-		<h2  style="display:inline;">{{result.offer_name}}</h2>
-		<h2  style="display:inline;">{{result.location}} </h2>
-	</a> -->
 
-	<div align="center" class="item">
-		<h2 style="display:inline;">1</h2>
-		<a  style="display:inline;" href="" >Baby en el Peñon</a>
-		<a  style="display:inline;" href="#">Ubicación</a>
-	</div>
-
-	<div align="center" class="item">
-		<h2 style="display:inline;">2</h2>
-		<a  style="display:inline;" href="" ng-click="getOffer(1)" >Partido en Gabriela</a>
-		<a  style="display:inline;" href="#">Ubicación</a>
-	</div>
-
-	<div align="center" class="item">
-		<h2 style="display:inline;">3</h2>
-		<a  style="display:inline;" href="" >Junta San Francisco FC</a>
-		<a  style="display:inline;" href="#">Ubicación</a>
-	</div>
+	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result.obj}})">
+		<img  src="img/no-mini-image.jpg"><img/>
+		<div class="col">
+			<h2 style="margin-left:70px; margin-top:15px;" >{{result.obj.title}}</h2>
+		</div>
+		<div class="col">
+			<button class="button button-dark" hrerf = "" ng-click="getLocation({{result.obj}})">Ubicación</button>
+		</div>
+		
+	</a>
 </div>
+
+
+
+
 
 
 </ion-content>

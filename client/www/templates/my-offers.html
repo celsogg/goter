@@ -7,17 +7,20 @@
 			<a class="button activated" href="#/default/my-publications/offers">Ofertas</a>
 			<a class="button" href="#/default/my-publications/searchs">Busquedas</a>
 		</div>
-		<div class="list">	
-			<a class="row item item-avatar" ng-repeat="offer in offers" hrerf = "" ng-click="getOffer({{offer}})">
-				<img  src="img/no-mini-image.jpg"><img/>
-				<div class="col">
-					<h2 style="margin-left:70px; margin-top:15px;" >{{ offer.title }} </h2>
-				</div>
-				<div class="col">
-					<img style="margin-top:10px;border: solid gray 1px;width:144; height:29px;" src="img/default-rate.png" ><img/>
-				</div>
-				<!-- <h2  style="display:inline;">{{ offer.rating }} </h2> -->
-			</a>
-		</div>
+		<ion-list>	
+			<ion-item class="item-avatar" ng-repeat="offer in offers" hrerf = "" ng-click="getOffer({{offer}})">
+				<img  src="img/no-mini-image.jpg">
+				
+					<h2 style="float:left;margin-top:10px;" >{{ offer.title }} </h2>
+					<img style="float:right; margin-top:5px; border: solid gray 1px;width:144; height:29px;" src="img/default-rate.png" ><img/>
+				
+          		<ion-option-button class="button-dark" ng-click="edit({{offer}})">
+            		Editar
+          		</ion-option-button>
+          		<ion-option-button class="button-assertive" ng-click="delete({{offer}})">
+            		Eliminar
+          		</ion-option-button>
+			</ion-item>
+		</ion-list>
 	</ion-content>
 </ion-view>

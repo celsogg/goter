@@ -125,6 +125,15 @@ angular.module('goter.services', [])
                 });
             },
 
+            deleteOffer: function (id,email) {
+                return $http.delete(base+'/api/v1/goter/offer/delete/' + id, {
+                    method: 'DELETE',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+
             savePinSearch: function (email, pin_search) {
                 return $http.post(base+'/api/v1/goter/pin-searchs', pin_search, {
                     method: 'POST',
@@ -147,6 +156,16 @@ angular.module('goter.services', [])
                     params: {
                         token: email,
                         id:id
+                    }
+                    
+                });
+            },
+            getSearchResults: function(email, word){
+                return $http.get(base+'/api/v1/goter/search/' + word, {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        word:word
                     }
                     
                 });

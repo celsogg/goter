@@ -2,7 +2,7 @@ var restify     =   require('restify');
 var mongojs     =   require('mongojs');
 var	morgan  	= 	require('morgan');
 var shortId		= 	require('shortid');
-//var db          =   mongojs('goter', ['appUsers','offers']);
+//var db          =   mongojs('goter', ['appUsers','offers','pinS','offers_comments']);
 var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', ['appUsers','offers','pinS','offers_comments']);
 var server      =   restify.createServer();
 

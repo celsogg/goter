@@ -166,7 +166,7 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
         },
         'current-option': {
           templateUrl: 'templates/search.html',
-          controller: 'HomeController'  
+          controller: 'searchCtrl'  
         }
       }
     })

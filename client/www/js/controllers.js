@@ -9,30 +9,80 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.search = function() {
 
         var search_word = this.search_word;
+        var email = $scope.name;
+        
+        API.getSearchResults(email, search_word).success(function(data) {
 
-        //aca manda la palabra al server
-        $window.location.href = ('#/default/search');
+            $rootScope.set(data);
+            $window.location.href = ('#/default/search');
+            $rootScope.search_word = search_word;
+         
+        }).error(function(error) {
+            $rootScope.hide();
+            
+        }); 
     }
 
-    $scope.getOffer = function(id) {
+})
 
-        //aca manda la id al server para obtener la oferta
-        $window.location.href = ('#/default/offer');
+.controller('searchCtrl', function($rootScope, $scope, $window, API) {
+
+    $scope.name = $window.localStorage.token;
+    $scope.search_word = $rootScope.search_word;
+    delete $rootScope.search_word;
+    var results = $rootScope.get();
+    $scope.results = results.results;
+
+    $scope.getOffer = function(offer) {
+
+        var idOffer = offer._id;
+
+        API.getOffer(idOffer, $scope.name).success(function(data) {
+
+            $scope.offer = data;
+            $rootScope.set(data);
+            $window.location.href = ('#/default/offer');
+
+
+        }).error(function(error) {
+            $rootScope.hide();
+        });
+
     }
 
     $scope.pinSearch = function () {
 
         var search = this.search_word;
         $rootScope.set(search);
-
         $window.location.href = ('#/default/new/pin/search');
+    }
+
+    $scope.search = function() {
+
+        var search_word = this.search_word;
+        var email = $scope.name;
+
+        API.getSearchResults(email, search_word).success(function(data) {
+            $scope.results = data.results;
+            $window.location.href = ('#/default/search');
+        }).error(function(error) {
+            $rootScope.hide();    
+        }); 
+    }
+
+    $scope.getLocation = function(offer) {
+
+        $rootScope.set(offer);
+        $window.location.href = ("#/default/offer/location");
+
     }
 
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {
-    console.log("OfferNewTypeCtrl cargado");
+    //console.log("OfferNewTypeCtrl cargado");
 })
+
 
 .controller('SignInCtrl', function($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
@@ -114,11 +164,9 @@ angular.module('goter.controllers', ['goter.services'])
 
         API.getOffer(idOffer, email).success(function(data) {
 
-
             $scope.offer = data;
             $rootScope.set(data);
             $window.location.href = ('#/default/offer');
-
 
         }).error(function(error) {
             $rootScope.hide();
@@ -126,12 +174,35 @@ angular.module('goter.controllers', ['goter.services'])
         });
     }
 
+    $scope.edit = function(offer) {
+
+        
+
+        
+    }
+
+    $scope.delete = function(offer) {
+
+        var email = $window.localStorage.token;
+        API.deleteOffer(offer._id, email).success(function(data) {
+
+            $window.location.reload();
+
+        }).error(function(error) {
+            $rootScope.hide();
+        });
+        
+    }
+
     API.getOffers($rootScope.getToken()).success(function(data, status, headers, config) {
         $scope.offers = data;
+       
     }).error(function(data, status, headers, config) {
         $rootScope.hide();
         $rootScope.notify("Oops something went wrong!! Please try again later");
     });
+
+    
 })
 
 .controller('myPinSearchsCtrl', function($rootScope, $scope, API, $window) {
@@ -169,6 +240,9 @@ angular.module('goter.controllers', ['goter.services'])
     var mapOptions = {
         center: myLatlng,
         zoom: 17,
+        zoomControl : false,
+        streetViewControl: false,
+        panControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map-2"), mapOptions);
@@ -242,6 +316,8 @@ angular.module('goter.controllers', ['goter.services'])
             $rootScope.notify("Oops something went wrong!! Please try again later");
         });
     };
+
+
 
     $scope.saveResponse = function(commentId, commentSlug, commentFullSlug) {
         //console.log("commentid "+commentId+" "+commentSlug);
@@ -375,6 +451,9 @@ angular.module('goter.controllers', ['goter.services'])
     var mapOptions = {
         center: myLatlng,
         zoom: 15,
+        zoomControl : false,
+        streetViewControl: false,
+        panControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -477,6 +556,9 @@ angular.module('goter.controllers', ['goter.services'])
     var mapOptions = {
         center: myLatlng,
         zoom: 17,
+        zoomControl : false,
+        streetViewControl: false,
+        panControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -493,6 +575,7 @@ angular.module('goter.controllers', ['goter.services'])
         position: myLatlng,
         map: map,
         title: 'Tooltip'
+
     });
 
     google.maps.event.addListener(marker, 'click', function() {
@@ -601,8 +684,12 @@ angular.module('goter.controllers', ['goter.services'])
     myLatlng = new google.maps.LatLng($scope.pin_search.location.lat, $scope.pin_search.location.lng);
 
     var mapOptions = {
+
         center: myLatlng,
         zoom: 15,
+        zoomControl : false,
+        streetViewControl: false,
+        panControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -744,10 +831,7 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.pin_search = $scope.pin_search;
         $rootScope.set($scope.pin_search);
         $window.location.href = ('#/default/new/pin/search');
-
     }
-
-
 })
 
 ;
