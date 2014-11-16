@@ -276,12 +276,28 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.overStar = value;
         $scope.percent = 100 * (value / $scope.max);
     };*/
-
+    
+    $scope.offer.likeStyle = "dark";
+    $scope.offer.likeState = false;
+    $scope.offer.likes = 0;
+    
     $scope.getLocation = function(offer) {
 
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
 
+    }
+
+    $scope.likeFunction = function(offer) {
+        if ($scope.offer.likeState == false) {
+            $scope.offer.likeStyle = "assertive";
+            $scope.offer.likeState = true;
+            $scope.offer.likes += 1;
+        } else {
+            $scope.offer.likeStyle = "dark";
+            $scope.offer.likeState = false;
+            $scope.offer.likes -= 1;
+        }
     }
 })
 
@@ -303,7 +319,7 @@ angular.module('goter.controllers', ['goter.services'])
         this.newcomment = '';
         API.saveOfferComment($scope.offer._id, {
                 user: $rootScope.getToken(),
-                comment: ncomment
+                commnt: ncomment
             }, $rootScope.getToken())
         .success(function(data, status, headers, config) {
             //console.log("data "+data);
