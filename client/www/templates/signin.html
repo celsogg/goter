@@ -9,11 +9,13 @@
             <form>
             <div  class="list">
                <label class="item item-input">
-                  <input type="text" class="input-label" placeholder="Ingresa tu email" ng-model="user.email">
+                  <span class="input-label">E-mail</span>
+                  <input type="text" placeholder="Ingresa tu email" ng-model="user.email">
                </label>
                
                <label class="item item-input">
-                  <input  class="input-label" placeholder="Ingresa tu contraseña" type="password" ng-model="user.password">
+                  <span class="input-label">Contraseña</span>
+                  <input type="password" placeholder="Ingresa tu contraseña" type="password" ng-model="user.password">
                </label>
             </div>
             </form>
@@ -22,7 +24,7 @@
                <a class="button button-full icon-left ion-log-in button-positive" ng-click="validateUser()">
                   Entrar
                </a>
-               <a class="button button-full icon-left ion-waterdrop button-positive" href="#/signup">
+               <a class="button button-full icon-left ion-waterdrop button-energized" href="#/signup">
                   Regístrate
                </a>
             </div>

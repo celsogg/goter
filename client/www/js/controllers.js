@@ -279,7 +279,6 @@ angular.module('goter.controllers', ['goter.services'])
     
     $scope.offer.likeStyle = "dark";
     $scope.offer.likeState = false;
-    $scope.offer.likes = 0;
     
     $scope.getLocation = function(offer) {
 
