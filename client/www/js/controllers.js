@@ -300,7 +300,6 @@ angular.module('goter.controllers', ['goter.services'])
 
         API.updateOffer($scope.offer._id, form, $rootScope.getToken())
         .success(function(data, status, headers, config) {
-            //console.log("data "+data);
             if (!$scope.offer.comments) $scope.offer.comments = [];
             $scope.offer.comments.push(data);
             $rootScope.set($scope.offer);

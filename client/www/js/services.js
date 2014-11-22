@@ -169,7 +169,7 @@ angular.module('goter.services', [])
                     }
                     
                 });
-            }
+            },
             uptadeOffer: function(id,form,email){
                 return $http.put(base+'/api/v1/goter/offer/'+id, form, {
                     method: 'PUT',
