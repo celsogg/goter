@@ -358,7 +358,7 @@ angular.module('goter.controllers', ['goter.services'])
 
 
 .controller('newOfferCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
-    if (!$rootScope.offer) $rootScope.offer = {};
+    if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
 
@@ -370,7 +370,7 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('newOfferLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
-    if (!$rootScope.offer) $rootScope.offer = {};
+    if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
 
