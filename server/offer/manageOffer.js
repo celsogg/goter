@@ -170,6 +170,34 @@ module.exports = function (server, db, shortId, mongojs) {
         return next();
     });
 
+    server.put('/api/v1/goter/offers/:id', function (req, res, next) {
+        validateRequest.validate(req, res, db, function() {
+            db.offers.findOne(
+                { _id: db.ObjectId(req.params.id) },
+                function (err, data) {
+                    if (!err){
+                    delete req.params.offer._id;
+                    db.offers.update(
+                        { _id: db.ObjectId(req.params.id) },
+                         req.params.offer ,
+                        function (err, data) {
+                            if (!err){
+                                res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                res.end(JSON.stringify(data));
+                            }else{
+                                console.log("err- "+err);
+                            }
+                        }
+                    );
+                    }else{
+                        console.log("err "+err);
+                    }
+                }
+            );
+        });
+        return next();
+    });
+
     server.del('/api/v1/goter/offer/delete/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
             db.offers.remove({

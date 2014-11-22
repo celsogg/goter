@@ -170,13 +170,13 @@ angular.module('goter.services', [])
                     
                 });
             },
-            uptadeOffer: function(id,form,email){
-                return $http.put(base+'/api/v1/goter/offer/'+id, form, {
+            updateOffer: function(id, form, email){
+                return $http.put(base+'/api/v1/goter/offers/'+id, form, {
                     method: 'PUT',
                     params: {
                         token: email
                     }
-                })
+                });
             }
         };
     });

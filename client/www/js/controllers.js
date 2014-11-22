@@ -293,21 +293,21 @@ angular.module('goter.controllers', ['goter.services'])
             $scope.offer.likeState = true;
             $scope.offer.likes += 1;
 
-        var offerUppdate = this.offer;
-        var form = {
-            offer: $scope.offer
-        };
+            //console.log("like");
 
-        API.updateOffer($scope.offer._id, form, $rootScope.getToken())
-        .success(function(data, status, headers, config) {
-            if (!$scope.offer.comments) $scope.offer.comments = [];
-            $scope.offer.comments.push(data);
-            $rootScope.set($scope.offer);
-        })
-        .error(function(data, status, headers, config) {
-                $rootScope.hide();
-                $rootScope.notify("Oops something went wrong!! Please try again later");
-            });
+            var offerUppdate = this.offer;
+            var form = {
+                offer: $scope.offer
+            };
+
+            API.updateOffer($scope.offer._id, form, $rootScope.getToken())
+            .success(function(data, status, headers, config) {
+                console.log("succeslike");
+            })
+            .error(function(data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+                });
 
         } else {
             $scope.offer.likeStyle = "dark";
