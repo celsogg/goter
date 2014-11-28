@@ -82,7 +82,7 @@ angular.module('goter.services', [])
                 });
             },
             getOffer: function(id,email){
-                return $http.get(base+'/api/v1/goter/offer/' + id, {
+                return $http.get(base+'/api/v1/goter/offers/' + id, {
                     method: 'GET',
                     params: {
                         token: email,
@@ -173,6 +173,22 @@ angular.module('goter.services', [])
             updateOffer: function(id, form, email){
                 return $http.put(base+'/api/v1/goter/offers/'+id, form, {
                     method: 'PUT',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            likeOffer: function (offer_id, email) {
+                return $http.post(base + '/api/v1/goter/offers/' + offer_id + '/liked/' + email, {token:email}, {
+                    method: 'POST',
+                    params: {
+                        token: email
+                    }
+                });
+            },
+            dislikeOffer: function (offer_id, email) {
+                return $http.post(base + '/api/v1/goter/offers/' + offer_id + '/disliked/' + email, {token:email}, {
+                    method: 'POST',
                     params: {
                         token: email
                     }
