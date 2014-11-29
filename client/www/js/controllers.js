@@ -1,6 +1,6 @@
 angular.module('goter.controllers', ['goter.services'])
 
-.controller('HomeController', function($rootScope, $scope, $window, API) {
+.controller('HomeController', function($rootScope, $scope, $window, API, $ionicModal) {
 
     $scope.name = $window.localStorage.token;
 
@@ -10,28 +10,57 @@ angular.module('goter.controllers', ['goter.services'])
 
         var search_word = this.search_word;
         var email = $scope.name;
-        
-        API.getSearchResults(email, search_word).success(function(data) {
+        var radio = $scope.radio;
+    
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
+        navigator.geolocation.getCurrentPosition(function(pos) {
+
+            var my_location = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+            API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
             $rootScope.set(data);
             $window.location.href = ('#/default/search');
             $rootScope.search_word = search_word;
-         
-        }).error(function(error) {
+            $rootScope.radio = radio;
+            }).error(function(error) {
             $rootScope.hide();
-            
-        }); 
+          
+            }); 
+         
+        }, function(error) {
+            alert('Unable to get location: ' + error.message);
+        },options);
+   
     }
 
+    $ionicModal.fromTemplateUrl('templates/radio.html', {
+        scope: $scope
+    }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+    $scope.confirmRadio = function(radio){
+        $scope.radio = radio;
+        $scope.modal.hide();
+    }
+
+    $scope.radio = 10;
+    
 })
 
-.controller('searchCtrl', function($rootScope, $scope, $window, API) {
+.controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
 
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
+    $scope.radio = $rootScope.radio;
     delete $rootScope.search_word;
+    delete $rootScope.radio;
     var results = $rootScope.get();
-    $scope.results = results.results;
+    $scope.results = results;
 
     $scope.getOffer = function(offer) {
 
@@ -61,13 +90,30 @@ angular.module('goter.controllers', ['goter.services'])
 
         var search_word = this.search_word;
         var email = $scope.name;
+        var radio = $scope.radio;
 
-        API.getSearchResults(email, search_word).success(function(data) {
-            $scope.results = data.results;
+
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
+        navigator.geolocation.getCurrentPosition(function(pos) {
+
+            var my_location = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+            API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
+            $scope.results = data;
             $window.location.href = ('#/default/search');
-        }).error(function(error) {
-            $rootScope.hide();    
+            }).error(function(error) {
+            $rootScope.hide();
+
         }); 
+         
+
+        }, function(error) {
+            alert('Unable to get location: ' + error.message);
+        },options);
+
     }
 
     $scope.getLocation = function(offer) {
@@ -75,6 +121,17 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
 
+    }
+
+    $ionicModal.fromTemplateUrl('templates/radio.html', {
+        scope: $scope
+    }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+    $scope.confirmRadio = function(radio){
+        $scope.radio = radio;
+        $scope.modal.hide();
     }
 
 })
