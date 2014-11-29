@@ -3,10 +3,10 @@ var mongojs  = require('mongojs');
 var	morgan   = require('morgan');
 var shortId	 = require('shortid');
 var distance = require('geo-distance');
-var db       = mongojs('goter',
-//var db       =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter',
-						['appUsers','offers','pinS','offers_comments', 'offers_likes', 'pinS_comments']);
 var server   = restify.createServer();
+//var db       = mongojs('goter',
+var db       =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter',
+						['appUsers','offers','pinS','offers_comments', 'offers_likes', 'pinS_comments']);
 
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
