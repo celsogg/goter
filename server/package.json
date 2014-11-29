@@ -16,7 +16,9 @@
     "passport": "^0.2.1",
     "passport-local": "~0.1.6",
     "restify": "^2.8.3",
-    "shortid": "latest"
+    "shortid": "latest",
+    "geo-tools": "~0.1.2",
+    "geo-distance": "~0.1.2"
   },
   "engines": {
     "node": "0.10.x"

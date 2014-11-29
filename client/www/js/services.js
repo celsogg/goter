@@ -87,10 +87,8 @@ angular.module('goter.services', [])
                     params: {
                         token: email,
                         id:id
-                    }
-                    
+                    }  
                 });
-
             },
             getOffers: function (email) {
                 return $http.get(base+'/api/v1/goter/offers', {
@@ -168,12 +166,15 @@ angular.module('goter.services', [])
                     
                 });
             },
-            getSearchResults: function(email, word){
+            getSearchResults: function(email,word,loc,radio){
                 return $http.get(base+'/api/v1/goter/search/' + word, {
                     method: 'GET',
                     params: {
                         token: email,
-                        word:word
+                        word:word,
+                        lat:loc.lat,
+                        lng:loc.lng,
+                        radio:radio
                     }
                     
                 });

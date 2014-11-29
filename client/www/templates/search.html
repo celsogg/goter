@@ -15,7 +15,7 @@
 			<i class="icon ion-search placeholder-icon"></i>
 			<input type="text" placeholder="Buscar" ng-model="search_word">
 		</label>
-		<button class="button button-small">
+		<button class="button button-small" ng-click="modal.show()">
 			Filtros
 		</button>
 	</div>
@@ -40,20 +40,44 @@
 	<h3 align="center">Resultados</h3>	
 
 
-	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result.obj}})">
+	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result}})">
 		<img  src="img/no-mini-image.jpg"><img/>
 		<div class="col">
-			<h2 style="margin-left:70px; margin-top:15px;" >{{result.obj.title}}</h2>
+			<h2 style="margin-left:70px; margin-top:15px;" >{{result.title}}</h2>
 		</div>
 		<div class="col">
-			<button class="button button-dark" hrerf = "" ng-click="getLocation({{result.obj}})">Ubicación</button>
+			<button class="button button-dark" hrerf = "" ng-click="getLocation({{result}})">Ubicación</button>
+		</div>
+		<div class="col">
+			<h2  >{{result.distance.distance}} {{result.distance.unit}}</h2>
 		</div>
 		
 	</a>
 </div>
 
 
-
+<script id="templates/radio.html" type="text/ng-template">
+	<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-positive">
+	<h1 class="title">Radio de busqueda</h1>
+	<button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+	</ion-header-bar>
+	<ion-content class="padding">
+	<div class="list">
+	<label class="item item-input">
+	<span class="input-label">Seleccione un radio de busqueda: {{radio}} Km </span>
+	</label>
+	<div class="range">
+	<i class="icon ion-volume-low" ></i>
+	<input type="range" name="volume" min="1" max="100" value="5" ng-model="radio">
+	<i class="icon ion-volume-high"></i>
+	</div>
+	<p></p>
+	<button class="button button-full button-positive" ng-click="confirmRadio(radio)">Confirmar</button>
+	</div>
+	</ion-content>
+	</ion-modal-view>
+</script>
 
 
 
