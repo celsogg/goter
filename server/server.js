@@ -4,7 +4,7 @@ var	morgan  	= 	require('morgan');
 var shortId		= 	require('shortid');
 var distance = require('geo-distance');
 //var db          =   mongojs('goter', ['appUsers','offers','pinS','offers_comments']);
-var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', ['appUsers','offers','pinS','offers_comments']);
+var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter', ['appUsers','offers','pinS','offers_comments', 'offers_likes']);
 var server      =   restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));

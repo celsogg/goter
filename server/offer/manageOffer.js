@@ -19,18 +19,30 @@ module.exports = function (server, db, shortId, mongojs, distance) {
         return next();
     });
 
-    server.get('/api/v1/goter/offer/:id', function (req, res, next) {
-
-        
+    server.get('/api/v1/goter/offers/:id', function (req, res, next) {
         validateRequest.validate(req, res, db, function () {
             db.offers.findOne({
                 _id: db.ObjectId(req.params.id)
             }, function (err, data) {
-                res.writeHead(200, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
-                res.end(JSON.stringify(data));
-                
+                if (!err){
+                    db.offers_likes.find(
+                        {
+                            offer_id: mongojs.ObjectId(req.params.id),
+                            users_email: req.params.token
+                        } ,
+                    function (err2, data2){
+                        if (!err2){
+                            if ( data2.length > 0 ) data.liked = true;
+                            else data.liked = false;
+                            res.writeHead(200, {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            });
+                            res.end(JSON.stringify(data));
+                        } else {
+                            console.log("err2 "+err2);
+                        }
+                    });
+                } else console.log("err "+err);
             });
 
         });
@@ -44,8 +56,7 @@ module.exports = function (server, db, shortId, mongojs, distance) {
                 function (err, data) {
                     if (err){
                         console.log("err "+err );
-                    }
-                    else{
+                    } else {
                         res.writeHead(200, {
                             'Content-Type': 'application/json; charset=utf-8'
                         });
@@ -168,6 +179,107 @@ module.exports = function (server, db, shortId, mongojs, distance) {
             );
         });
         return next();
+    });
+
+    server.put('/api/v1/goter/offers/:id', function (req, res, next) {
+        validateRequest.validate(req, res, db, function() {
+            db.offers.findOne(
+                { _id: db.ObjectId(req.params.id) },
+                function (err, data) {
+                    if (!err){
+                        delete req.params.offer._id;
+                        db.offers.update(
+                            { _id: db.ObjectId(req.params.id) },
+                             req.params.offer ,
+                            function (err, data) {
+                                if (!err){
+                                    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                    res.end(JSON.stringify(data));
+                                }else{
+                                    console.log("err- "+err);
+                                }
+                            }
+                        );
+                    }else{
+                        console.log("err "+err);
+                    }
+                }
+            );
+        });
+        return next();
+    });
+
+    server.post('/api/v1/goter/offers/:id/liked/:user_email', function (req, res, next) {
+        //console.log(req);
+        validateRequest.validate(req, res, db, function () {
+            
+            db.offers_likes.findOne(
+                { offer_id: db.ObjectId(req.params.id) },
+                function (err, doc) {
+                    console.log("doc "+doc);
+                    if (!err){
+                        if (doc){
+                            db.offers_likes.update(
+                                { offer_id: db.ObjectId(req.params.id) },
+                                { $addToSet: { users_email: req.params.token} },
+                                function (result) {
+                                    console.log("paso");
+                                    console.log("result "+result);
+                                    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                    res.end(JSON.stringify(result));
+                                }
+                            );
+                        }else{
+                            console.log("else");
+                            db.offers_likes.save(
+                                { offer_id: db.ObjectId(req.params.id), users_email: [ req.params.token ]},
+                                function (err, data) {
+                                    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                    res.end(JSON.stringify(data));
+                                }
+                            );
+                        }
+                    }else{
+                        console.log("err "+err);
+                    }
+                }
+            );
+
+            
+            return next();
+        });
+    });
+
+    server.post('/api/v1/goter/offers/:id/disliked/:user_email', function (req, res, next) {
+        //console.log(req);
+        validateRequest.validate(req, res, db, function () {
+            
+            db.offers_likes.findOne(
+                { offer_id: db.ObjectId(req.params.id) },
+                function (err, doc) {
+                    console.log("doc "+doc);
+                    if (!err){
+                        if (doc){
+                            db.offers_likes.update(
+                                { offer_id: db.ObjectId(req.params.id) },
+                                { $pull: { users_email: req.params.token } },
+                                function (result) {
+                                    console.log("dis");
+                                    console.log("result "+JSON.stringify(result));
+                                    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+                                    res.end(JSON.stringify(result));
+                                }
+                            );
+                        }
+                    }else{
+                        console.log("err "+err);
+                    }
+                }
+            );
+
+            
+            return next();
+        });
     });
 
     server.del('/api/v1/goter/offer/delete/:id', function (req, res, next) {

@@ -222,6 +222,7 @@ angular.module('goter.controllers', ['goter.services'])
         API.getOffer(idOffer, email).success(function(data) {
 
             $scope.offer = data;
+            // console.log("data "+JSON.stringify(data));
             $rootScope.set(data);
             $window.location.href = ('#/default/offer');
 
@@ -242,9 +243,7 @@ angular.module('goter.controllers', ['goter.services'])
 
         var email = $window.localStorage.token;
         API.deleteOffer(offer._id, email).success(function(data) {
-
             $window.location.reload();
-
         }).error(function(error) {
             $rootScope.hide();
         });
@@ -334,9 +333,16 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.percent = 100 * (value / $scope.max);
     };*/
     
-    $scope.offer.likeStyle = "dark";
-    $scope.offer.likeState = false;
-    $scope.offer.likes = 0;
+    if ($scope.offer.liked == true){
+        $scope.offer.likeStyle = "assertive";
+        $scope.offer.likeState = true;
+    }else{
+        $scope.offer.likeStyle = "dark";
+        $scope.offer.likeState = false;
+    }
+
+    //$scope.offer.likeStyle = "dark";
+    //$scope.offer.likeState = false;
     
     $scope.getLocation = function(offer) {
 
@@ -346,15 +352,58 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.likeFunction = function(offer) {
-        if ($scope.offer.likeState == false) {
-            $scope.offer.likeStyle = "assertive";
-            $scope.offer.likeState = true;
-            $scope.offer.likes += 1;
+
+        var form = { offer: $scope.offer };
+
+        if ($scope.offer.liked == false) {
+
+            API.likeOffer( $scope.offer._id , $rootScope.getToken() )
+            .success( function (data, status, headers, config) {
+
+                $scope.offer.likeStyle = "assertive";
+                $scope.offer.likeState = true;
+                $scope.offer.liked = true;
+                form.offer.likes += 1;
+
+                API.updateOffer($scope.offer._id, form, $rootScope.getToken())
+                .success( function ( data, status, headers, config ) {
+                    
+                    //$scope.offer.likes += 1;
+                    //console.log("succeslike");
+                })
+                .error(function(data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+                });
+            })
+            .error(function (data, status, headers, config) {
+                console.log("error");
+            });
+
         } else {
-            $scope.offer.likeStyle = "dark";
-            $scope.offer.likeState = false;
-            $scope.offer.likes -= 1;
-        }
+            
+            API.dislikeOffer( $scope.offer._id, $rootScope.getToken() )
+            .success( function (data, status, headers, config) {
+                $scope.offer.likeStyle = "dark";
+                $scope.offer.likeState = false;
+                $scope.offer.liked = false;
+                form.offer.likes -= 1;
+
+                API.updateOffer( $scope.offer._id, form, $rootScope.getToken() )
+                .success( function ( data, status, headers, config ) {
+                    
+                    //$scope.offer.likes -= 1;
+                    //console.log("succeslike");
+                })
+                .error( function(data, status, headers, config) {
+                    $rootScope.hide();
+                    $rootScope.notify("Oops something went wrong!! Please try again later");
+                });
+            })
+            .error( function (data, status, headers, config) {
+                console.log("error");
+            });
+        }  
     }
 })
 
@@ -376,7 +425,7 @@ angular.module('goter.controllers', ['goter.services'])
         this.newcomment = '';
         API.saveOfferComment($scope.offer._id, {
                 user: $rootScope.getToken(),
-                commnt: ncomment
+                comment: ncomment
             }, $rootScope.getToken())
         .success(function(data, status, headers, config) {
             //console.log("data "+data);
@@ -416,7 +465,7 @@ angular.module('goter.controllers', ['goter.services'])
 
 
 .controller('newOfferCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
-    if (!$rootScope.offer) $rootScope.offer = {};
+    if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
 
@@ -428,7 +477,7 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('newOfferLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
-    if (!$rootScope.offer) $rootScope.offer = {};
+    if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
 

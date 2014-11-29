@@ -1,47 +1,53 @@
 <ion-view>
 	
-<div class="bar bar-header bar-dark">
+<div class="bar bar-header bar-positive">
 	<h1 class="title">Ofrecer</h1>
 </div>
 
 	<ion-content>
 
 	<div class="button-bar">
-		<a class="button activated" href="#/new/offer/type">Oferta</a>
+		<a class="button button-positive" href="#/new/offer/type">Oferta</a>
 		<a class="button" href="#/new/offer/description" ng-click="saveForm(offer)">Descripción</a>
 		<a class="button" href="#/new/offer/location" ng-click="saveForm(offer)">Ubicación</a>
 	</div>
 	<br>
-	<h3>¿Qué quieres ofrecer?</h3>
+	<h3 align="center">¿Qué quieres ofrecer?</h3>
 		<div class="row">
 			<div class="col">
 				<div class="list">
 					<label class="item item-radio">
 						<input type="radio" name="group" value="product" ng-model="offer.type">
-						<div class="item-content">Producto</div>
+						<div class="item-content icon-left ion-bag"> Producto</div>
 						<i class="radio-icon ion-checkmark"></i>
 					</label>
+					
 					<label class="item item-radio">
-				    <input type="radio" name="group" value="event" ng-model="offer.type">
-				    <div class="item-content">Evento</div>
-				    <i class="radio-icon ion-checkmark"></i>
-				  </label>
-				  <label class="item item-radio">
-				    <input type="radio" name="group" value="service" ng-model="offer.type">
-				    <div class="item-content">Servicio</div>
-				    <i class="radio-icon ion-checkmark"></i>
-				  </label>
-				  <label class="item item-radio">
-				    <input type="radio" name="group" value="tip" ng-model="offer.type">
-				    <div class="item-content">Dato</div>
-				    <i class="radio-icon ion-checkmark"></i>
-				  </label>
+				    	<input type="radio" name="group" value="event" ng-model="offer.type">
+				    	<div class="item-content icon-left ion-music-note"> Evento</div>
+				    	<i class="radio-icon ion-checkmark"></i>
+				  	</label>
+				  
+				  	<label class="item item-radio">
+				    	<input type="radio" name="group" value="service" ng-model="offer.type">
+				    	<div class="item-content icon-left ion-fork"> Servicio</div>
+				    	<i class="radio-icon ion-checkmark"></i>
+				  	</label>
+				  
+				  	<label class="item item-radio">
+				    	<input type="radio" name="group" value="tip" ng-model="offer.type">
+				    	<div class="item-content icon-left ion-alert"> Dato</div>
+				    	<i class="radio-icon ion-checkmark"></i>
+				  	</label>
 				</div>
 			</div>
-			<!-- <div class="col">foto aqui?</div> -->
+			<!--<div class="col">asd</div>-->
 		</div>
-		<div class="row">
-			<div class="col"><a class="button " href="#/new/offer/description" ng-click="saveForm(offer)">Siguiente</a></div>
+
+		<div class="button-bar">
+			<a class="button icon-left ion-close" href="#/default/home">Cancelar</a>
+			<a class="button icon-right ion-chevron-right" href="#/new/offer/description" ng-click="saveForm(offer)">Siguiente</a>
 		</div>
+
 	</ion-content>
 </ion-view>

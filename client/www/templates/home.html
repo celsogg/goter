@@ -1,12 +1,12 @@
 <ion-view title="Home">
 
-<div class="bar bar-header bar-dark">
+<div class="bar bar-header bar-positive">
 	<h1 class="title">Home</h1>
 </div>
 
  <ion-content>
 
-<h4 >Bienvenido {{name}}</h4>
+<h4 >Bienvenido {{name}} !</h4>
 
 <h5 align="center">¿Que quieres hacer?</h5>
 
@@ -24,17 +24,14 @@
 		</div>
 	</form>
 
-	<div align="center" style="margin-top:5px;">
-
-
-		<a class="button" ng-click="search()">
+	<div class="button-bar">
+		<a class="button button-positive icon-left ion-ios7-search" ng-click="search()">
 			Buscar
 		</a>
 
-		<a class="button button-dark" href="#/new/offer/type">
+		<a class="button button-energized icon-left ion-waterdrop" href="#/new/offer/type">
 			Ofrecer
 		</a>
-
 	</div>
 
 </div>

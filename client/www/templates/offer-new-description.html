@@ -1,17 +1,17 @@
 <ion-view>
 
-<div class="bar bar-header bar-dark">
+<div class="bar bar-header bar-positive">
 	<h1 class="title">Ofrecer</h1>
 </div>
 	
  <ion-content>
 	<div class="button-bar">
 		<a class="button" href="#/new/offer/type" ng-click="saveForm(offer)">Oferta</a>
-		<a class="button activated" href="#/new/offer/description">Descripción</a>
+		<a class="button button-positive" href="#/new/offer/description">Descripción</a>
 		<a class="button" href="#/new/offer/location" ng-click="saveForm(offer)">Ubicación</a>
 	</div>
 	<br>
-	<h3>¿De qué trata tu oferta?</h3>
+	<h3 align="center">¿De qué trata tu oferta?</h3>
 		<div class="list">
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Título</span>
@@ -42,9 +42,13 @@
 			    </select>
 			</label>
 		</div>
-		<div class="row">
-			<div class="col"><a class="button " href="#/new/offer/location" ng-click="saveForm(offer)">Siguiente</a></div>
+
+		<div class="button-bar">
+			<a class="button icon-left ion-chevron-left" href="#/new/offer/type" ng-click="saveForm(offer)">Volver</a>
+			<a class="button icon-left ion-close" href="#/default/home">Cancelar</a>
+			<a class="button icon-right ion-chevron-right" href="#/new/offer/location" ng-click="saveForm(offer)">	
+			Siguiente</a>
 		</div>
-		
+			
 	</ion-content>
 </ion-view>
