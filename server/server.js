@@ -4,7 +4,7 @@ var	morgan  	= 	require('morgan');
 var shortId		= 	require('shortid');
 var db          =   mongojs('goter',
 //var db          =   mongojs('mongodb://goter:goter@ds047440.mongolab.com:47440/goter',
-						['appUsers','offers','pinS','offers_comments', 'offers_likes']);
+						['appUsers','offers','pinS','offers_comments', 'offers_likes', 'pinS_comments']);
 var server      =   restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));
@@ -24,8 +24,8 @@ server.listen(process.env.PORT || 9804, function () {
     console.log("Server started @ ", process.env.PORT || 9804);
 });
 
-var manageUsers =   require('./auth/manageUser')(server, db);
-var manageLists =   require('./list/manageList')(server, db);
-var manageOffer =   require('./offer/manageOffer')(server, db, shortId, mongojs);
-var managePinS =   require('./pinS/managePinS')(server, db);
+var manageUsers = require('./auth/manageUser')   (server, db);
+var manageLists = require('./list/manageList')   (server, db);
+var manageOffer = require('./offer/manageOffer') (server, db, shortId, mongojs);
+var managePinS  = require('./pinS/managePinS')   (server, db, shortId, mongojs);
 

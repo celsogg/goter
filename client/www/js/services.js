@@ -133,14 +133,22 @@ angular.module('goter.services', [])
                     }
                 });
             },
-
             savePinSearch: function (email, pin_search) {
-                return $http.post(base+'/api/v1/goter/pin-searchs', pin_search, {
+                return $http.post(base + '/api/v1/goter/pin-searches', pin_search, {
                     method: 'POST',
                     params: {
                         token: email
                     }
                 });
+            },
+            getPinSearchComments: function (pinSearchId, email) {
+                return $http.get( base + '/api/v1/goter/pin-searches/' + pinSearchId + '/comments',
+                                  {  method: 'GET', params: {  token: email  } } );
+            },
+            savePinSearchComment: function (pinSearchId, form, email) {
+                return $http.post( base + '/api/v1/goter/pin-searches/' + pinSearchId + '/comments', 
+                                   form,
+                                   { method: 'POST', params: { token: email } });
             },
             getPinSearchs: function (email) {
                 return $http.get(base+'/api/v1/goter/pin-searchs', {
