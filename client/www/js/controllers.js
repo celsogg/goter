@@ -324,14 +324,6 @@ angular.module('goter.controllers', ['goter.services'])
 .controller('offerCtrl', function($rootScope, $scope, API, $window) {
 
     $scope.offer = $rootScope.get();
-    /*$scope.rate = 7;
-    $scope.max = 10;
-    $scope.isReadonly = false;
-
-    $scope.hoveringOver = function(value) {
-        $scope.overStar = value;
-        $scope.percent = 100 * (value / $scope.max);
-    };*/
     
     if ($scope.offer.liked == true){
         $scope.offer.likeStyle = "assertive";
@@ -340,9 +332,6 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.offer.likeStyle = "dark";
         $scope.offer.likeState = false;
     }
-
-    //$scope.offer.likeStyle = "dark";
-    //$scope.offer.likeState = false;
     
     $scope.getLocation = function(offer) {
 
@@ -527,7 +516,7 @@ angular.module('goter.controllers', ['goter.services'])
 
     };
 
-    $scope.searchPosition = function() {
+    /*$scope.searchPosition = function() {
 
         var lat = marker.getPosition().lat();
         var lng = marker.getPosition().lng();
@@ -536,7 +525,7 @@ angular.module('goter.controllers', ['goter.services'])
             lng: lng
         };
         $scope.offer.location = $rootScope.offer.location;
-    };
+    };*/
 
 
     $scope.publishOffer = function() {
@@ -545,6 +534,16 @@ angular.module('goter.controllers', ['goter.services'])
         //    $scope.offer.tags && $scope.offer.length && $scope.offer.location  
         //    )
         //{
+            
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        $rootScope.offer.location = {
+            lat: lat,
+            lng: lng
+        };
+        $scope.offer.location = $rootScope.offer.location;
+
+
         var form = {
             offer: $scope.offer
         };
