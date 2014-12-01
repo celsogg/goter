@@ -321,6 +321,54 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.map = map;
 })
 
+.controller('pinSearchCommentsCtrl', function ($rootScope, $scope, API, $window) {
+    $scope.pin_search = $rootScope.get();
+
+    API.getPinSearchComments($scope.pin_search._id, $rootScope.getToken())
+    .success(function (data, status, headers, config) {
+        $scope.pin_search.comments = data;
+    })
+    .error( function (data, status, headers, config) {
+        $rootScope.hide();
+        $rootScope.notify("Oops something went wrong!! Please try again later");
+    });
+
+    $scope.saveComment = function() {
+        var ncomment = this.newcomment;
+        this.newcomment = '';
+        API.savePinSearchComment($scope.pin_search._id, {
+                user: $rootScope.getToken(),
+                comment: ncomment
+            }, $rootScope.getToken())
+        .success(function(data, status, headers, config) {
+            console.log("data "+data);
+            if (!$scope.pin_search.comments) $scope.pin_search.comments = [];
+            $scope.pin_search.comments.push(data);
+            $rootScope.set($scope.pin_search);
+        })
+        .error(function(data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    };
+
+    $scope.saveResponse = function(commentId, commentSlug, commentFullSlug) {
+        API.saveOfferComment($scope.pin_search._id,{
+                user            : $rootScope.getToken(),
+                comment         : this.response,
+                parent_id       : commentId,
+                parent_slug     : commentSlug,
+                parent_full_slug: commentFullSlug
+            }, $rootScope.getToken())
+        .success(function(data, status, headers, config) {
+        })
+        .error(function(data, status, headers, config) {
+            $rootScope.hide();
+            $rootScope.notify("Oops something went wrong!! Please try again later");
+        });
+    };
+})
+
 .controller('offerCtrl', function($rootScope, $scope, API, $window) {
 
     $scope.offer = $rootScope.get();

@@ -199,6 +199,13 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    .state('default.pin-search-comments', {
+      url: '/pin-search-comments',
+      views: {
+        'goter-options' : {  templateUrl: 'templates/goter-options.html'  },
+        'current-option': {  templateUrl: 'templates/pin-search-comments.html',
+                             controller : 'pinSearchCommentsCtrl'  }  }
+    })
 
     //Location
     .state('default.offer-location', {
