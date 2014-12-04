@@ -16,12 +16,22 @@ document.addEventListener('deviceready', function() {
 
 function displayResult(data) {
    alert("Is service running: " + data.ServiceRunning);
+}*/
+
+function updateHandler(data) {
+   if (data.LatestResult != null) {
+      try {
+         var resultMessage = document.getElementById("resultMessage");
+         resultMessage.innerHTML = data.LatestResult.Message;
+      } catch (err) {
+      }
+   }
 }
 
 function displayError(data) {
    alert("We have an error "+e);
 }
-*/
+
 
 function go() {
    myService.getStatus(function(r){startService(r)}, function(e){displayError(e)});
@@ -48,6 +58,12 @@ function registerForUpdates(data) {
       myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
    }
 }
+
+function handleError(data) {
+				alert("Error: " + data.ErrorMessage);
+ 				alert(JSON.stringify(data));
+				updateView(data);
+ 			}
 
 
 
