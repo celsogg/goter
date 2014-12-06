@@ -16,40 +16,39 @@
 			<input type="text" placeholder="Buscar" ng-model="search_word">
 		</label>
 		<button class="button button-small" ng-click="modal.show()">
-			Filtros
+			Radio
 		</button>
 	</div>
 
-
-	<div align="center" style="margin-top:5px;">
-
-		<a class="button" ng-click="search()">
+	<div class="button-bar">
+		<a class="button button-positive icon-left ion-ios7-search" ng-click="search()">
 			Buscar
 		</a>
-		<a class="button button-dark" ng-click="pinSearch()">
-			Publicar Busqueda
-		</a>
 
+		<a class="button button-energized icon-left ion-waterdrop" ng-click="pinSearch()">
+			Publicar búsqueda
+		</a>
 	</div>
 
 </div>
 
-<hr style="border:dashed 1px; border-color:gray;margin:50px;">
-
 <div class="list">	
-	<h3 align="center">Resultados</h3>	
+	
+	<div class="item item-divider" align="center">
+    Resultados
+  	</div>	
 
 
 	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result}})">
 		<img  src="img/no-mini-image.jpg"><img/>
-		<div class="col">
-			<h2 style="margin-left:70px; margin-top:15px;" >{{result.title}}</h2>
+		<div class="col" align="center">
+			<h2 style="margin-top:15px;" >{{result.title}}</h2>
 		</div>
-		<div class="col">
-			<button class="button button-dark" hrerf = "" ng-click="getLocation({{result}})">Ubicación</button>
+		<div class="col" align="center">
+			<button class="button button-clear button-positive icon-left ion-location" ng-click="getLocation({{result}})">Ubicación</button>
 		</div>
-		<div class="col">
-			<h2  >{{result.distance.distance}} {{result.distance.unit}}</h2>
+		<div class="col" align="center">
+			<h2 style="margin-top:15px">{{result.distance.distance}} {{result.distance.unit}}</h2>
 		</div>
 		
 	</a>
@@ -60,7 +59,7 @@
 	<ion-modal-view>
 	<ion-header-bar class="bar bar-header bar-positive">
 	<h1 class="title">Radio de busqueda</h1>
-	<button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+	<button class="button button-clear button-primary icon ion-close-round" ng-click="modal.hide()"></button>
 	</ion-header-bar>
 	<ion-content class="padding">
 	<div class="list">

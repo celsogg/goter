@@ -21,14 +21,16 @@
 			</div>
 		</div>
 
-		<div class="row" >
-			<div class="col">
-				<button class="button button-stable" ng-click="searchPosition()">Seleccionar</button>
-				<button class="button button-stable" ng-click="centerOnMe()">Posición Actual</button>
-			</div>
+		
+		<!--<button class="button button-stable" ng-click="searchPosition()">Seleccionar</button>-->
+				
+
+		<div class="div-padding">
+			<button class="button button-block button-dark icon-left ion-location" ng-click="centerOnMe()">Usar mi posición actual</button>
 		</div>
-		<div class="row">
-			<div class="col"><a class="button" ng-click="ready()" href="">Aceptar</a></div>
+
+		<div class="div-padding">
+			<button class="button button-block button-energized icon-left ion-chevron-left" ng-click="ready()">Aceptar</button>
 		</div>
 	</ion-content>
 </ion-view>
