@@ -60,6 +60,19 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    .state('default.preferences', {
+      url: '/preferences',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/preferences.html',
+            
+        }
+      }
+    })    
+
     .state('default.my-searchs', {
       url: '/my-publications/searchs',
       views: {
