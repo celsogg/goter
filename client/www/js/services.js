@@ -1,9 +1,10 @@
 angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
 
-       var base = "http://10.0.2.2:9804";
+       //var base = "http://10.0.2.2:9804";
        //var base = "http://localhost:9804";
-       //var base = "http://goter.herokuapp.com";
+       var base = "http://goter.herokuapp.com";
+
        
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
@@ -131,7 +132,7 @@ angular.module('goter.services', [])
                 });
             },
             savePinSearch: function (email, pin_search) {
-                return $http.post(base + '/api/v1/goter/pin-searchs', pin_search, {
+                return $http.post(base + '/api/v1/goter/pin-searches', pin_search, {
                     method: 'POST',
                     params: {
                         token: email

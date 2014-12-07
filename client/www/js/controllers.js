@@ -503,6 +503,8 @@ angular.module('goter.controllers', ['goter.services'])
 
 
 .controller('newOfferCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
+
+
     if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
@@ -512,12 +514,52 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.saveForm = function(offer) {
         $rootScope.offer = this.offer;
     };
+
+    ionic.Platform.ready(function() {
+        //console.log("ready get camera types");
+        if (!navigator.camera)
+        {
+            // error handling
+            return;
+        }
+        //pictureSource=navigator.camera.PictureSourceType.PHOTOLIBRARY;
+        pictureSource=navigator.camera.PictureSourceType.CAMERA;
+        destinationType=navigator.camera.DestinationType.FILE_URI;
+    });
+
+    // take picture
+    $scope.takePicture = function() {
+        //console.log("got camera button click");
+        var options =   {
+            quality: 50,
+            destinationType: destinationType,
+            sourceType: pictureSource,
+            encodingType: 0
+        };
+        if (!navigator.camera)
+        {
+            // error handling
+            return;
+        }
+        navigator.camera.getPicture(
+            function (imageURI) {
+                //console.log("got camera success ", imageURI);
+                $scope.offer.image = imageURI;
+            },
+            function (err) {
+                //console.log("got camera error ", err);
+                // error handling camera plugin
+            },
+            options);
+    };
 })
 
 .controller('newOfferLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
     if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
+
+
 
     if ($rootScope.offer.location) $scope.locationInput = $rootScope.offer.location.lat + " " + $rootScope.offer.location.lng;
 
@@ -565,6 +607,8 @@ angular.module('goter.controllers', ['goter.services'])
 
     };
 
+    
+
     /*$scope.searchPosition = function() {
 
         var lat = marker.getPosition().lat();
@@ -593,6 +637,20 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.offer.location = $rootScope.offer.location;
 
 
+        var options = new FileUploadOptions();
+        options.fileKey="ffile";
+        options.fileName=$scope.offer.image.substr($scope.offer.image.lastIndexOf('/')+1);
+        options.mimeType="image/jpeg";
+        
+        var params = {};
+        params.other = obj.text; // some other POST fields
+        options.params = params;
+
+        var ft = new FileTransfer();
+    
+        ft.upload($scope.offer.image, "http://goter.herokuapp.com/images", uploadSuccess, uploadError, options);
+
+
         var form = {
             offer: $scope.offer
         };
@@ -608,10 +666,8 @@ angular.module('goter.controllers', ['goter.services'])
                 $rootScope.hide();
                 $rootScope.notify("Oops something went wrong!! Please try again later");
             });
-        //}else{
-        //    alert('Faltan campos por rellenar ;D');
-        //    console.log("offer "+JSON.stringify($scope.offer));
-        //}
+
+
     };
 
     var myLatlng = {};
