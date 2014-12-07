@@ -514,7 +514,7 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.offer = this.offer;
     };
 
-    ionic.Platform.ready(function() {
+    /*ionic.Platform.ready(function() {
         //console.log("ready get camera types");
         if (!navigator.camera)
         {
@@ -524,15 +524,15 @@ angular.module('goter.controllers', ['goter.services'])
         //pictureSource=navigator.camera.PictureSourceType.PHOTOLIBRARY;
         pictureSource=navigator.camera.PictureSourceType.CAMERA;
         destinationType=navigator.camera.DestinationType.FILE_URI;
-    });
+    });*/
 
     // take picture
     $scope.takePicture = function() {
         //console.log("got camera button click");
         var options =   {
             quality: 50,
-            destinationType: destinationType,
-            sourceType: pictureSource,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType:     Camera.PictureSourceType.CAMERA,
             encodingType: 0
         };
         if (!navigator.camera)
@@ -544,6 +544,7 @@ angular.module('goter.controllers', ['goter.services'])
             function (imageURI) {
                 //console.log("got camera success ", imageURI);
                 $scope.offer.image = imageURI;
+                $window.location.href = ('#/default/new/offer/description');
             },
             function (err) {
                 //console.log("got camera error ", err);
@@ -635,8 +636,9 @@ angular.module('goter.controllers', ['goter.services'])
         };
         $scope.offer.location = $rootScope.offer.location;
 
+        var ft = new FileTransfer(),
+                options = new FileUploadOptions();
 
-        var options = new FileUploadOptions();
         options.fileKey="ffile";
         options.fileName=$scope.offer.image.substr($scope.offer.image.lastIndexOf('/')+1);
         options.mimeType="image/jpeg";
