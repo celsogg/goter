@@ -1,7 +1,7 @@
 module.exports = function (server, db, shortId, mongojs) {
     var validateRequest = require("../auth/validateRequest");
 
-    server.post('/api/v1/goter/pin-searchs', function (req, res, next) {
+    server.post('/api/v1/goter/pin-searches', function (req, res, next) {
         
         console.log("validate: ");
         validateRequest.validate(req, res, db, function () {

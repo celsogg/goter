@@ -132,7 +132,7 @@ angular.module('goter.services', [])
                 });
             },
             savePinSearch: function (email, pin_search) {
-                return $http.post(base + '/api/v1/goter/pin-searches', pin_search, {
+                return $http.post(base + '/api/v1/goter/pin-searchs', pin_search, {
                     method: 'POST',
                     params: {
                         token: email
