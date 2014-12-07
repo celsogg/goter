@@ -1,6 +1,9 @@
 <ion-view title="Mis Busquedas">
 
 	<div class="bar bar-header bar-positive">
+		<a class="button button-clear" href="#/default/home">
+			<img src="../img/goter3.png" class="home-logo">
+		</a>
 		<h1 class="title">Mis Publicaciones <i class="icon ion-arrow-right-c"></i> Busquedas</h1>
 		<button class="button button-clear icon ion-log-out" ng-click="logout()"></button>
 	</div>
@@ -16,9 +19,6 @@
 	<a class="row item" ng-repeat="pin_search in pin_searchs" hrerf = "#" ng-click="getPinSearch({{pin_search}})">
 		<div class="col">
 			<h2 style="margin-left:70px; margin-top:15px;" >{{ pin_search.title }} </h2>
-		</div>
-		<div class="col">
-			<img style="margin-top:10px;border: solid gray 1px;width:144; height:29px;" src="img/default-rate.png" ><img/>
 		</div>
 	</a>
 </div>
