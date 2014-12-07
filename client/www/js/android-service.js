@@ -1,3 +1,4 @@
+var androidService = angular.module("goter.android-service", ['goter.controllers', 'goter.services'])
 
 var myService;
 
@@ -19,19 +20,19 @@ function displayResult(data) {
 }*/
 
 function updateHandler(data) {
-   if (data.LatestResult != null) {
+/*   if (data.LatestResult != null) {
       try {
          var resultMessage = document.getElementById("resultMessage");
          resultMessage.innerHTML = data.LatestResult.Message;
       } catch (err) {
       }
-   }
+   }*/
+   console.log("hola mundo");
 }
 
 function displayError(data) {
    alert("We have an error "+e);
 }
-
 
 function go() {
    myService.getStatus(function(r){startService(r)}, function(e){displayError(e)});
@@ -49,13 +50,13 @@ function enableTimer(data) {
    if (data.TimerEnabled) {
       registerForUpdates(data);
    } else {
-      myService.enableTimer(60000, function(r){registerForUpdates(r)}, function(e){displayError(e)});
+      myService.enableTimer(120000, function(r){registerForUpdates(r)}, function(e){displayError(e)});
    }
 }
 
 function registerForUpdates(data) {
    if (!data.RegisteredForUpdates) {
-      //myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
+      myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
    }
 }
 
