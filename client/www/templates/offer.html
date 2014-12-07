@@ -1,16 +1,19 @@
 <ion-view title="Oferta">
 
 <div class="bar bar-header bar-positive">
+  <a class="button button-clear" href="#/default/home">
+    <img src="img/goter3.png" class="home-logo">
+  </a>
 	<h1 class="title">Oferta</h1>
+  <button class="button button-clear icon ion-log-out" ng-click="logout()"></button>
 </div>
 
 <ion-content>
 
 <div class="list card">
-  	<div class="item item-avatar">
-    	<img src="img/default.png">
-    	<h2> {{offer.user}} </h2>
-		<progress  max="100" value="50"/>
+  <div class="item item-avatar">
+    <img src="img/default.png">
+    <h2> {{offer.user}} </h2>
 	</div>
 	
 	<div class="item item-divider" align="center">
@@ -22,24 +25,24 @@
     	<p>
     		{{offer.description}}
     	</p>
-    </div>
+  </div>
 
-     <div class="item tabs tabs-secondary tabs-icon-left">
-     	<a ng-click= "likeFunction()" class="tab-item button button-clear button-{{offer.likeStyle}}">
-      		<i class="icon ion-heart"></i>
-      		{{offer.likes}}
-    	</a>
+  <div class="item tabs tabs-secondary tabs-icon-left">
+     <a ng-click= "likeFunction()" class="tab-item button button-clear button-{{offer.likeStyle}}">
+      	<i class="icon ion-heart"></i>
+      	{{offer.likes}}
+    </a>
     	
-    	<a class="tab-item" href="#/default/offer-comments">
-      		<i class="icon ion-chatboxes"></i>
-      		Comentarios
-    	</a>
+  	<a class="tab-item" href="#/default/offer-comments">
+    	<i class="icon ion-chatboxes"></i>
+    	Comentarios
+  	</a>
     	
-    	<a class="tab-item" ng-click="getLocation({{offer}})">
-      		<i class="icon ion-location"></i>
-      		Ubicación
-    	</a>
-     </div>
+  	<a class="tab-item" ng-click="getLocation({{offer}})">
+    		<i class="icon ion-location"></i>
+    		Ubicación
+  	</a>
+  </div>
 </div>
 
 </ion-content>

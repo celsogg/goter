@@ -1,5 +1,5 @@
 #login {
-	background-image: url("../img/party2.jpg");
+	background-image: url("../img/travel1.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -113,4 +113,8 @@
 #icon-like {
   font-size: 1.1em;
   color: #ef4e3a;
+}
+
+.home-logo {
+  height: 35px;
 }

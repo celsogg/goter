@@ -1,59 +1,40 @@
 <ion-view title="Fijar Busqueda">
 
 <div class="bar bar-header bar-positive">
+	<a class="button button-clear" href="#/default/home">
+		<img src="img/goter3.png" class="home-logo">
+	</a>
 	<h1 class="title">Busqueda Fijada</h1>
+	<button class="button button-clear icon ion-log-out" ng-click="logout()"></button>
 </div>
 
 <ion-content>
 
-<hr style="margin-top:0px;border:dashed 1px; border-color:gray;">
-
-<div class="row" align="center">
-	<div class="col">
-		<img style="border: solid 2px;width:100px; height:100px" src="img/default.png"><img/>
-
+<div class="list card">
+	<div class="item item-avatar">
+    	<img src="img/default.png">
+    	<h2> {{pin_search.user}} </h2>
 	</div>
 
- 	<div class="col" >
- 		<h3>{{pin_search.user}}</h3>
-		
-			<div style:"display:inline;">
-				<h5>Reputación:</h5>
-				<progress  max="100" value="50"/>
-			</div> 
-		
- 	</div>
-
-  	<div class="col">
-  			<h4 >Rate:</h4>
-  			<img style="border: solid gray 1px;width:100%; height:100%" src="img/default-rate.png" ><img/>
-  	</div>
-</div>
-
-<hr style="border:dashed 1px; border-color:gray;margin-bottom:30px;">
-
-<div class="row" align="center">
-	<div class="col">
-		<h1>{{pin_search.title}}</h1>
-		<h4 align="left" style="font-weight:bold;">Descripcion:</h4>
-		<div class="card">
-			<div class="item item-text-wrap">
-				<h3 align="left">{{pin_search.description}}</h3>
-			</div>
-		</div>
+	<div class="item item-divider" align="center">
+    	<h1>{{pin_search.title}}</h1>
 	</div>
+
+	<div class="item item-body">
+		<p>
+    		{{pin_search.description}}
+    	</p>
+		<div id="map-2" data-tap-disabled="true"></div>
+    </div>
 </div>
 
-<div class="row" align="center">
-	<div style="border:dashed 2px" id="map-2" data-tap-disabled="true"></div>
+<div class="item tabs tabs-secondary tabs-icon-left">    
+    <a class="tab-item" href="#/default/pin-search-comments">
+      	<i class="icon ion-chatboxes"></i>
+      	Comentarios
+    </a>	    	
 </div>
 
-</br>
-<div class="row" align="center">
- 	<div class="button-bar">
- 		<a class="button" href="#/default/pin-search-comments" >Comentarios</a>
-	</div>
-</div>
 </ion-content>
 
 </ion-view>

@@ -1,7 +1,11 @@
 <ion-view title="Busqueda">
 
 <div class="bar bar-header bar-positive">
+	<a class="button button-clear" href="#/default/home">
+		<img src="img/goter3.png" class="home-logo">
+	</a>
 	<h1 class="title">Busqueda</h1>
+	<button class="button button-clear icon ion-log-out" ng-click="logout()"></button>
 </div>
 
 <ion-content>
@@ -25,8 +29,8 @@
 			Buscar
 		</a>
 
-		<a class="button button-energized icon-left ion-waterdrop" ng-click="pinSearch()">
-			Publicar búsqueda
+		<a class="button button-energized icon-left ion-pin" ng-click="pinSearch()">
+			Fijar búsqueda
 		</a>
 	</div>
 
@@ -42,10 +46,10 @@
 	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result}})">
 		<img  src="img/no-mini-image.jpg"><img/>
 		<div class="col" align="center">
-			<h2 style="margin-top:15px;" >{{result.title}}</h2>
+			<h2 style="margin-top:15px; margin-left:15px" >{{result.title}}</h2>
 		</div>
 		<div class="col" align="center">
-			<button class="button button-clear button-positive icon-left ion-location" ng-click="getLocation({{result}})">Ubicación</button>
+			<button class="button button-clear button-positive icon-left ion-location" ng-click="getLocation({{result}})"></button>
 		</div>
 		<div class="col" align="center">
 			<h2 style="margin-top:15px">{{result.distance.distance}} {{result.distance.unit}}</h2>
