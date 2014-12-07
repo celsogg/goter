@@ -5,64 +5,44 @@
 </div>
 
 <ion-content>
-<hr style="border:dashed 1px; border-color:gray;">
 
-<div class="row" align="center">
-	<div class="col">
-		<img style="border: solid 2px;width:100px; height:100px" src="img/default.png"><img/>
-
+<div class="list card">
+  	<div class="item item-avatar">
+    	<img src="img/default.png">
+    	<h2> {{offer.user}} </h2>
+		<progress  max="100" value="50"/>
+	</div>
+	
+	<div class="item item-divider" align="center">
+    	<h1>{{offer.title}}</h1>
 	</div>
 
- 	<div class="col" >
- 		<h3>{{offer.user}}</h3>
-		
-			<div style:"display:inline;">
-				<h5>Reputación:</h5>
-				<progress  max="100" value="50"/>
-			</div> 
-		
- 	</div>
+	<div class="item item-body">
+    	<img class="full-image" src="img/no-image.png">
+    	<p>
+    		{{offer.description}}
+    	</p>
+    </div>
 
-  	<div class="col">
-  			<h4 >Popularidad</h4>
-  			
-  			<a ng-click= "likeFunction()" class="button icon-left ion-heart button-clear button-{{offer.likeStyle}}">{{offer.likes}}</a>
-
-  			<!--
-  			<img style="border: solid gray 1px;width:100%; height:100%" src="img/default-rate.png" ><img/>
-  			-->
-  	</div>
-</div>
-
-<hr style="margin-top:0px; border:dashed 1px; border-color:gray;margin-bottom:30px;">
-
-<div class="row" align="center">
-	<div class="col">
-		<h1>{{offer.title}}</h1>
-		<img style="border: dashed 2px;width:100%; height:100%;" src="img/no-image.png" style=""><img/>
-		<h4 align="left" style="font-weight:bold;">Descripcion:</h4>
-		<div class="card">
-			<div class="item item-text-wrap">
-				
-				<h3 align="left">{{offer.description}}</h3>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="row" align="center">
- 	<div class="button-bar">
-
- 		<a class="button" href="#/default/offer-comments" >Comentarios</a>
- 	
- 		<a class="button button-dark" hrerf = "" ng-click="getLocation({{offer}})">Ubicación</a>
-
-	</div>
+     <div class="item tabs tabs-secondary tabs-icon-left">
+     	<a ng-click= "likeFunction()" class="tab-item button button-clear button-{{offer.likeStyle}}">
+      		<i class="icon ion-heart"></i>
+      		{{offer.likes}}
+    	</a>
+    	
+    	<a class="tab-item" href="#/default/offer-comments">
+      		<i class="icon ion-chatboxes"></i>
+      		Comentarios
+    	</a>
+    	
+    	<a class="tab-item" ng-click="getLocation({{offer}})">
+      		<i class="icon ion-location"></i>
+      		Ubicación
+    	</a>
+     </div>
 </div>
 
 </ion-content>
 
 </ion-view>
 
-<!-- Vamo a ser el tiible partio cn los cauroh de la pobla aki en le gabrielle at 3 o'clock, la pulenta si queri venir aca tamo, no te vao a coogotiar ti juajajkaja -->

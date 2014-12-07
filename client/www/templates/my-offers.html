@@ -12,8 +12,10 @@
 				<img  src="img/no-mini-image.jpg">
 				
 					<h2 style="float:left;margin-top:10px;" >{{ offer.title }} </h2>
-					<img style="float:right; margin-top:5px; border: solid gray 1px;width:144; height:29px;" src="img/default-rate.png" ><img/>
-				
+					<div style="float:right; margin-top:5px; width:144; height:29px;">
+						<i id="icon-like" class="icon icon-possitive ion-heart"></i>
+						{{offer.likes}}
+					</div>				
           		<ion-option-button class="button-dark" ng-click="edit({{offer}})">
             		Editar
           		</ion-option-button>

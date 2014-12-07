@@ -60,10 +60,10 @@ function registerForUpdates(data) {
 }
 
 function handleError(data) {
-				alert("Error: " + data.ErrorMessage);
- 				alert(JSON.stringify(data));
-				updateView(data);
- 			}
+   alert("Error: " + data.ErrorMessage);
+   alert(JSON.stringify(data));
+   //updateView(data);
+}
 
 
 
