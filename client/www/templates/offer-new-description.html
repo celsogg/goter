@@ -26,13 +26,14 @@
 				<input type="text" placeholder="Etiquetas" ng-model="offer.tags"/>
 			</label>
 			<div class="row">
-				<div class="col">
-				<button class="button button-stable">Agregar Imagen</button>
+				<div class="col"> 
+				<button class="button button-stable button-block button-positive icon-left ion-ios7-camera" ng-click="takePicture()">Agregar Imagen</button>
 				</div>
 				<div class="col">
 				<img src="">
 				</div>
 			</div>
+
 			<label class="item item-input item-floating-label item-select">
 				<span class="input-label">Duración</span>
 				<input type="text" placeholder="Duración" ng-model="offer.length"/>
