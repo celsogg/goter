@@ -7,7 +7,7 @@ document.addEventListener('deviceready', function() {
    myService = factory.create(serviceName);
    //myService.startService(function(r){alert(r)}, function(e){alert(e));
 
-   go();
+   myService.getStatus(function(r){startService(r)}, function(e){displayError(e)});
 }, true);
 
 /*function getStatus() {
@@ -55,7 +55,7 @@ function enableTimer(data) {
 
 function registerForUpdates(data) {
    if (!data.RegisteredForUpdates) {
-      myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
+      //myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
    }
 }
 
