@@ -17,8 +17,8 @@ server.use(restify.bodyParser({
     keepExtensions: true
 }));
 
-server.use(restify.methodOverride());
-server.use(restify.static(path.join(__dirname, './uploads')));
+//server.use(restify.methodOverride());
+//server.use(restify.static(path.join(__dirname, './uploads')));
 
 server.use(morgan('dev')); // LOGGER
 

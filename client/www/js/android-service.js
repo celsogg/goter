@@ -27,6 +27,7 @@ function updateHandler(data) {
       } catch (err) {
       }
    }*/
+
    console.log("hola mundo");
 }
 

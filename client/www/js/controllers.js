@@ -523,8 +523,8 @@ angular.module('goter.controllers', ['goter.services'])
             return;
         }
         //pictureSource=navigator.camera.PictureSourceType.PHOTOLIBRARY;
-        pictureSource=navigator.camera.PictureSourceType.CAMERA;
-        destinationType=navigator.camera.DestinationType.FILE_URI;
+        pictureSource   = navigator.camera.PictureSourceType.CAMERA;
+        destinationType = navigator.camera.DestinationType.FILE_URI;
     });
 
     // take picture
@@ -638,9 +638,9 @@ angular.module('goter.controllers', ['goter.services'])
 
 
         var options = new FileUploadOptions();
-        options.fileKey="ffile";
-        options.fileName=$scope.offer.image.substr($scope.offer.image.lastIndexOf('/')+1);
-        options.mimeType="image/jpeg";
+        options.fileKey  = "ffile";
+        options.fileName = $scope.offer.image.substr($scope.offer.image.lastIndexOf('/')+1);
+        options.mimeType = "image/jpeg";
         
         var params = {};
         params.other = obj.text; // some other POST fields

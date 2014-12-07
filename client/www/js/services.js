@@ -1,9 +1,9 @@
 angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
 
-       //var base = "http://10.0.2.2:9804";
+       var base = "http://10.0.2.2:9804";
        //var base = "http://localhost:9804";
-       var base = "http://goter.herokuapp.com";
+       //var base = "http://goter.herokuapp.com";
 
        
         $rootScope.show = function (text) {
