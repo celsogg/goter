@@ -56,15 +56,14 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
     }
 
 
     $ionicModal.fromTemplateUrl('templates/radio.html', {
         scope: $scope
     }).then(function(modal) {
-    $scope.modal = modal;
-  });
+        $scope.modal = modal;
+    });
 
     $scope.confirmRadio = function(radio){
         $scope.radio = radio;
@@ -72,11 +71,9 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.radio = 10;
-    
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
-
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
     $scope.radio = $rootScope.radio;
@@ -118,7 +115,6 @@ angular.module('goter.controllers', ['goter.services'])
             $rootScope.hide();
         });
         }
-
     }
 
     $scope.pinSearch = function () {
@@ -176,14 +172,12 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
     }
 
     $scope.getLocation = function(offer) {
 
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
-
     }
 
     $ionicModal.fromTemplateUrl('templates/radio.html', {
@@ -196,14 +190,11 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.radio = radio;
         $scope.modal.hide();
     }
-
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {
     //console.log("OfferNewTypeCtrl cargado");
 })
-
-
 
 .controller('SignInCtrl', function($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
@@ -237,7 +228,6 @@ angular.module('goter.controllers', ['goter.services'])
             $rootScope.notify("Invalid Username or password");
         });
     }
-
 })
 
 .controller('SignUpCtrl', function($rootScope, $scope, API, $window) {
@@ -296,11 +286,7 @@ angular.module('goter.controllers', ['goter.services'])
         });
     }
 
-    $scope.edit = function(offer) {
-
-        
-
-        
+    $scope.edit = function(offer) {    
     }
 
     $scope.delete = function(offer) {
@@ -311,12 +297,10 @@ angular.module('goter.controllers', ['goter.services'])
         }).error(function(error) {
             $rootScope.hide();
         });
-        
     }
 
     API.getOffers($rootScope.getToken()).success(function(data, status, headers, config) {
         $scope.offers = data;
-       
     }).error(function(data, status, headers, config) {
         $rootScope.hide();
         $rootScope.notify("Oops something went wrong!! Please try again later");
@@ -449,7 +433,6 @@ angular.module('goter.controllers', ['goter.services'])
 
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
-
     }
 
     $scope.likeFunction = function(offer) {
@@ -579,11 +562,7 @@ angular.module('goter.controllers', ['goter.services'])
     };
 
     ionic.Platform.ready(function() {
-<<<<<<< HEAD
         console.log("ready get camera types");
-=======
-        //console.log("ready get camera types");
->>>>>>> 8dfda2995783108eae3ff766a120105650737b5e
         if (!navigator.camera)
         {
             console.log("cam error");
@@ -591,16 +570,9 @@ angular.module('goter.controllers', ['goter.services'])
             return;
         }
         //pictureSource=navigator.camera.PictureSourceType.PHOTOLIBRARY;
-<<<<<<< HEAD
         pictureSource   = navigator.camera.PictureSourceType.CAMERA;
         destinationType = navigator.camera.DestinationType.FILE_URI;
     });
-
-=======
-        pictureSource=navigator.camera.PictureSourceType.CAMERA;
-        destinationType=navigator.camera.DestinationType.FILE_URI;
-    });
->>>>>>> 8dfda2995783108eae3ff766a120105650737b5e
 
     // take picture
     $scope.takePicture = function() {
@@ -679,23 +651,15 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
-
-    };
-
-    
-
     /*$scope.searchPosition = function() {
-
         var lat = marker.getPosition().lat();
         var lng = marker.getPosition().lng();
         $rootScope.offer.location = {
             lat: lat,
-            lng: lng
-        };
+            lng: lng   };
         $scope.offer.location = $rootScope.offer.location;
     };*/
-
+    }
 
     $scope.publishOffer = function() {
         //if (
@@ -745,9 +709,7 @@ angular.module('goter.controllers', ['goter.services'])
                 $rootScope.hide();
                 $rootScope.notify("Oops something went wrong!! Please try again later");
             });
-
-
-    };
+    }
 
     var myLatlng = {};
     if (!$rootScope.offer.location) myLatlng = new google.maps.LatLng(-33.448906, -70.681905);
@@ -775,21 +737,15 @@ angular.module('goter.controllers', ['goter.services'])
         title: "Arrastrame!"
     });
 
-
-
     var infowindow = new google.maps.InfoWindow({
         content: compiled[0]
     });
-
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
 
     $scope.map = map;
-
-
-
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */ (
@@ -947,8 +903,6 @@ angular.module('goter.controllers', ['goter.services'])
 
     delete $rootScope.pin_search;
 
-
-
     $scope.pinLocation = function () {
 
         $rootScope.set($scope.pin_search);
@@ -975,15 +929,12 @@ angular.module('goter.controllers', ['goter.services'])
       
     };
 
-
 })
 
 
 .controller('newPinLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
 
-
     $scope.pin_search = $rootScope.get();
-
 
     var myLatlng = {};
     myLatlng = new google.maps.LatLng($scope.pin_search.location.lat, $scope.pin_search.location.lng);
@@ -1011,20 +962,15 @@ angular.module('goter.controllers', ['goter.services'])
         title: "Arrastrame!"
     });
 
-
-
     var infowindow = new google.maps.InfoWindow({
         content: compiled[0]
     });
-
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
 
     $scope.map = map;
-
-
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */ (
         document.getElementById('pac-input'));
@@ -1116,8 +1062,6 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
-
     };
 
     $scope.searchPosition = function() {
@@ -1128,7 +1072,6 @@ angular.module('goter.controllers', ['goter.services'])
             lat: lat,
             lng: lng
         };
-        
     };
 
     $scope.ready = function() {
@@ -1138,5 +1081,4 @@ angular.module('goter.controllers', ['goter.services'])
         $window.location.href = ('#/default/new/pin/search');
     }
 })
-
 ;
