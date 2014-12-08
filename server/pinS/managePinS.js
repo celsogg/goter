@@ -1,4 +1,4 @@
-module.exports = function (server, db, shortId, mongojs) {
+module.exports = function (server, db, shortId, mongojs, distance) {
     var validateRequest = require("../auth/validateRequest");
 
     server.post('/api/v1/goter/pin-searches', function (req, res, next) {
@@ -126,4 +126,78 @@ module.exports = function (server, db, shortId, mongojs) {
         });
         return next();
     });
+
+    server.get('/api/v1/goter/search-pins/:word', function (req, res, next) {
+        validateRequest.validate(req, res, db, function () {
+            db.pinS.runCommand( 
+                "text", {search: req.params.word, language: "spanish"}, 
+                function (err, docs) {
+                    if (err){
+                        console.log("err: "+err );
+                    }else{
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        });
+
+                        var result = [];
+                        var i = 0;
+                        docs.results.forEach(function(entry) {
+
+                            var search_point = {
+                                lon: req.params.lng,
+                                lat: req.params.lat
+                            }
+
+                            var offer_point = {
+                                lon: entry.obj.location.lng,
+                                lat: entry.obj.location.lat
+                            }
+
+                            var dist = distance.between(search_point,offer_point);
+                            entry.obj.distance = dist.human_readable();
+
+                            if(entry.obj.distance.unit == 'km'){
+
+                                if(parseFloat(entry.obj.distance.distance) <= parseFloat(req.params.radio)){
+
+                                    result.push(entry.obj);
+                                }
+                            }
+
+                            else{
+                                
+                                if(parseFloat(entry.obj.distance.distance) < parseFloat(req.params.radio)*1000){
+
+                                    result.push(entry.obj);
+                                }
+
+                            }
+                        });
+
+                        result.sort(sort_by('distance', true, parseFloat));
+                        
+
+                        res.end(JSON.stringify(result));
+                       
+                    }
+                }
+            );
+            
+        });
+
+        return next();
+    });
+
+    var sort_by = function(field, reverse, primer){
+
+        var key = primer ? 
+        function(x) {return primer(x[field])} : 
+        function(x) {return x[field]};
+
+        reverse = [-1, 1][+!!reverse];
+
+        return function (a, b) {
+            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+        } 
+    }
 }

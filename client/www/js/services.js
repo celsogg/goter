@@ -179,6 +179,20 @@ angular.module('goter.services', [])
                     
                 });
             },
+            getSearchPinsResults: function(email,word,loc,radio){
+                return $http.get(base+'/api/v1/goter/search-pins/' + word, {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        word:word,
+                        lat:loc.lat,
+                        lng:loc.lng,
+                        radio:radio
+                    }
+                    
+                });
+            },
+
             updateOffer: function(id, form, email){
                 return $http.put(base+'/api/v1/goter/offers/'+id, form, {
                     method: 'PUT',

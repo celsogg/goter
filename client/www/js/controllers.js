@@ -5,13 +5,15 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.name = $window.localStorage.token;
 
     $scope.search_word = "";
+    $scope.search_pins = "";
 
     $scope.search = function() {
 
         var search_word = this.search_word;
         var email = $scope.name;
         var radio = $scope.radio;
-    
+        var search_pins = this.search_pins;
+      
         var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
         navigator.geolocation.getCurrentPosition(function(pos) {
 
@@ -20,22 +22,43 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-            API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
+            if(search_pins == false){
+                
+                API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
-            $rootScope.set(data);
-            $window.location.href = ('#/default/search');
-            $rootScope.search_word = search_word;
-            $rootScope.radio = radio;
-            }).error(function(error) {
-            $rootScope.hide();
-          
-            }); 
-         
+                    $rootScope.set(data);
+                    $window.location.href = ('#/default/search');
+                    $rootScope.search_word = search_word;
+                    $rootScope.radio = radio;
+                    $rootScope.search_pins = search_pins;
+
+                }).error(function(error) {
+                    $rootScope.hide();
+
+                }); 
+            } 
+
+            else{
+                
+                console.log(search_pins);
+                API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
+                    $rootScope.set(data);
+                    $window.location.href = ('#/default/search');
+                    $rootScope.search_word = search_word;
+                    $rootScope.radio = radio;
+                    $rootScope.search_pins = search_pins;
+
+                }).error(function(error) {
+                    $rootScope.hide();
+                }); 
+            }
+
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-   
+
     }
+
 
     $ionicModal.fromTemplateUrl('templates/radio.html', {
         scope: $scope
@@ -57,14 +80,18 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
     $scope.radio = $rootScope.radio;
+    $scope.search_pins = $rootScope.search_pins;
     delete $rootScope.search_word;
     delete $rootScope.radio;
+    delete $rootScope.search_pins;
     var results = $rootScope.get();
     $scope.results = results;
 
     $scope.getOffer = function(offer) {
 
         var idOffer = offer._id;
+
+        if(this.search_pins == false){
 
         API.getOffer(idOffer, $scope.name).success(function(data) {
 
@@ -76,6 +103,21 @@ angular.module('goter.controllers', ['goter.services'])
         }).error(function(error) {
             $rootScope.hide();
         });
+
+        }
+
+        else{
+            API.getPinSearch(idOffer, $scope.name).success(function(data) {
+
+            $scope.offer = data;
+            $rootScope.set(data);
+            $window.location.href = ('#/default/pin-search');
+
+
+        }).error(function(error) {
+            $rootScope.hide();
+        });
+        }
 
     }
 
@@ -91,6 +133,7 @@ angular.module('goter.controllers', ['goter.services'])
         var search_word = this.search_word;
         var email = $scope.name;
         var radio = $scope.radio;
+        var search_pins = this.search_pins;
 
 
         var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
@@ -101,14 +144,34 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-            API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
-            $scope.results = data;
-            $window.location.href = ('#/default/search');
-            }).error(function(error) {
-            $rootScope.hide();
 
-        }); 
-         
+            if(search_pins == false){
+                
+                console.log("Normal");
+                API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
+
+                    $scope.results = data;
+                    $window.location.href = ('#/default/search');
+                    $rootScope.hide();
+
+                }).error(function(error) {
+                    $rootScope.hide();
+
+                }); 
+            } 
+
+            else{
+                console.log("DePins!");
+                API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
+                    $scope.results = data;
+                    $window.location.href = ('#/default/search');
+                    $rootScope.hide();
+
+                }).error(function(error) {
+                    $rootScope.hide();
+                }); 
+            }
+
 
         }, function(error) {
             alert('Unable to get location: ' + error.message);

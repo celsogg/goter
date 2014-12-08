@@ -37,4 +37,4 @@ server.listen(process.env.PORT || 9804, function () {
 var manageUsers = require('./auth/manageUser')   (server, db);
 var manageLists = require('./list/manageList')   (server, db);
 var manageOffer = require('./offer/manageOffer') (server, db, shortId, mongojs, distance, fs);
-var managePinS  = require('./pinS/managePinS')   (server, db, shortId, mongojs);
+var managePinS  = require('./pinS/managePinS')   (server, db, shortId, mongojs, distance);
