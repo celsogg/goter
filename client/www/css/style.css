@@ -8,11 +8,13 @@
 
 #goter-logo {
 	margin-top: 3px;
-	height: 50px;
+  margin-bottom: 3px; 
+	width: 42%;
 }
 
 #test {
 	text-align: center;
+  width: 99%;
 }
 
 .scroll-content {

@@ -10,9 +10,9 @@
 
  <ion-content>
 
-<h4 >Bienvenido {{name}} !</h4>
+<h4 style="margin-left:10px">Bienvenido {{name}} !</h4>
 
-<h5 align="center">¿Que quieres hacer?</h5>
+<h5 style="margin-left:10px">¿Que quieres hacer?</h5>
 
 <div class="list">
 	<form>
@@ -26,6 +26,16 @@
 				Radio
 			</button>
 		</div>
+
+		<div class="list">
+  			<li class="item item-checkbox">
+     			<label class="checkbox">
+       				<input type="checkbox" ng-model="search_pins">
+     			</label>
+     			Consultar búsquedas de otros usuarios
+  			</li>
+  		</div>
+
 	</form>
 
 	<div class="button-bar">
