@@ -1,5 +1,3 @@
-var androidService = angular.module("goter.android-service", ['goter.controllers', 'goter.services'])
-
 var myService;
 
 document.addEventListener('deviceready', function() {
@@ -67,5 +65,5 @@ function handleError(data) {
    //updateView(data);
 }
 
-
+var androidService = angular.module("goter.android-service", ['goter.controllers', 'goter.services'])
 

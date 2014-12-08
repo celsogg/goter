@@ -516,9 +516,10 @@ angular.module('goter.controllers', ['goter.services'])
     };
 
     ionic.Platform.ready(function() {
-        //console.log("ready get camera types");
+        console.log("ready get camera types");
         if (!navigator.camera)
         {
+            console.log("cam error");
             // error handling
             return;
         }
@@ -527,13 +528,14 @@ angular.module('goter.controllers', ['goter.services'])
         destinationType = navigator.camera.DestinationType.FILE_URI;
     });
 
+
     // take picture
     $scope.takePicture = function() {
         //console.log("got camera button click");
         var options =   {
             quality: 50,
-            destinationType: destinationType,
-            sourceType: pictureSource,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType:     Camera.PictureSourceType.CAMERA,
             encodingType: 0
         };
         if (!navigator.camera)
@@ -545,6 +547,7 @@ angular.module('goter.controllers', ['goter.services'])
             function (imageURI) {
                 //console.log("got camera success ", imageURI);
                 $scope.offer.image = imageURI;
+                $window.location.href = ('#/default/new/offer/description');
             },
             function (err) {
                 //console.log("got camera error ", err);
@@ -636,20 +639,23 @@ angular.module('goter.controllers', ['goter.services'])
         };
         $scope.offer.location = $rootScope.offer.location;
 
+        var ft = new FileTransfer(), options = new FileUploadOptions();
 
-        var options = new FileUploadOptions();
+
         options.fileKey  = "ffile";
-        options.fileName = $scope.offer.image.substr($scope.offer.image.lastIndexOf('/')+1);
+        options.fileName = "nombre_random";
         options.mimeType = "image/jpeg";
-        
-        var params = {};
-        params.other = obj.text; // some other POST fields
-        options.params = params;
-
-        var ft = new FileTransfer();
     
         ft.upload($scope.offer.image, "http://goter.herokuapp.com/images", uploadSuccess, uploadError, options);
-
+        function uploadSuccess(r) {
+            // handle success like a message to the user
+            console.log("exito");
+            }
+        function uploadError(error) {
+            //console.log("upload error source " + error.source);
+            //console.log("upload error target " + error.target);
+            }
+        };
 
         var form = {
             offer: $scope.offer
