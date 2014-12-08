@@ -1,0 +1,67 @@
+<ion-view title="Preferences">
+
+<div class="bar bar-header bar-positive">
+	<a class="button button-clear" href="#/default/home">
+		<img src="img/goter3.png" class="home-logo">
+	</a>
+	<h1 class="title">Mi cuenta</h1>
+	<button class="button button-clear icon ion-log-out" ng-click="logout()"></button>
+</div>
+
+<ion-content>
+	<div class="list card">
+		<div class="item item-divider">
+    		Imagen de perfil
+  		</div>
+		
+		<a class="item item-thumbnail-left" href="#">
+      		<img src="img/goter3.png"> <!--Aca hacer llamado a imagen de perfil de usuario -->
+      		<h2> {{Name}} </h2>
+      		<p>Cambiar tu imagen de perfil</p>
+    	</a>
+    </div>
+
+    <div class="list card">	
+    	<div class="item item-divider">
+    		Correo
+  		</div>
+  		
+  		<label class="item item-input item-floating-label">
+    		<span class="input-label">Nuevo e-mail</span>
+    		<input type="text" placeholder="Nuevo e-mail">
+  		</label>
+
+  		<label class="item item-input item-floating-label">
+    		<span class="input-label">Repite tu e-mail</span>
+    		<input type="text" placeholder="Repite tu e-mail">
+  		</label>
+
+		<label class="item item-floating-label item-energized" align="center">
+			<i class="icon ion-upload"></i>
+    		Guardar
+		</label>
+	</div>
+
+	<div class="list card">	
+  		<div class="item item-divider">
+    		Contraseña
+  		</div>
+
+  		<label class="item item-input item-floating-label">
+    		<span class="input-label">Contraseña anterior</span>
+    		<input type="text" placeholder="Contraseña anterior">
+  		</label>
+
+  		<label class="item item-input item-floating-label">
+    		<span class="input-label">Nueva contraseña</span>
+    		<input type="text" placeholder="Nueva contraseña">
+  		</label>
+
+  		<label class="item item-floating-label item-energized" align="center">
+			<i class="icon ion-upload"></i>
+    		Guardar
+		</label>
+
+	</div>
+</ion-content>
+</ion-view>

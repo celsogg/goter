@@ -9,10 +9,11 @@
 </div>
 
 <ion-content>
-<h4 >Bienvenido {{name}}</h4>
-<h5 align="center">¿Quieres buscar de nuevo?</h5>
+<h4 style="margin-left:10px">Bienvenido {{name}}</h4>
+<h5 style="margin-left:10px">¿Quieres buscar de nuevo?</h5>
 
 <div class="list">
+<form>
 
 	<div class="item item-input-inset" style="border: 0px">
 		<label class="item-input-wrapper">
@@ -23,6 +24,16 @@
 			Radio
 		</button>
 	</div>
+
+	<div class="list">
+		<li class="item item-checkbox">
+   			<label class="checkbox">
+   				<input type="checkbox">
+   			</label>
+   			Incluir búsquedas de otros en mis resultados
+  		</li>
+  	</div>
+</form>		
 
 	<div class="button-bar">
 		<a class="button button-positive icon-left ion-ios7-search" ng-click="search()">
