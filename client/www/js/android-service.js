@@ -1,4 +1,4 @@
-var goterAndSer;
+var goterAndSer, USToken;
 /*// get Angular scope from the known DOM element
 e = document.getElementById('myAngularApp');
 scope = angular.element(e).scope();
@@ -13,7 +13,7 @@ function microappscope(){
    var microappscope = angular.element(elem).scope();
    return microappscope;
 }
-
+/*
 document.addEventListener('deviceready', function() {
    var serviceName = 'com.enlix.goter.GoterService';
    var factory = cordova.require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService')
@@ -22,7 +22,7 @@ document.addEventListener('deviceready', function() {
 
    goterAndSer.getStatus(function(r){startService(r)}, function(e){displayError(e)});
 }, true);
-
+*/
 /*function getStatus() {
    goterAndSer.getStatus(function(r){displayResult(r)}, function(e){displayError(e)});
 }
@@ -41,7 +41,10 @@ function updateHandler(data) {
    }*/
    console.log("hola update handler");
    microappscope().$apply(function() {
-      microappscope().hola();
+      if (!USToken) {
+         console.log(">>>>>>>>>>>>>>>>>>>>>>>gettin  token ");
+         USToken = microappscope().getToken();
+      }
    }); 
    //microappscope().hola()
    //console.log("hola mundo");
@@ -86,9 +89,10 @@ function handleError(data) {
 function handleSuccess (r) {
    // TODO
 }
-function updateToken(token) {
+
+function ASUpdateToken(token) {
    if (goterAndSer) {
-      console.log("")
+      console.log("----android service js update token----")
       var config = { "token": token }
       goterAndSer.setConfiguration(  
          config,
@@ -96,4 +100,8 @@ function updateToken(token) {
          function(e) { handleError(e) }
       )
    }
+}
+
+function ASGetToken () {
+   return USToken;
 }
