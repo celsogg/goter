@@ -51,7 +51,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       url: '/home',
       views: {
         'goter-options': {
-          templateUrl: 'templates/goter-options.html'
+          templateUrl: 'templates/goter-options.html',
+          controller: 'NotificationsCtrl'
         },
         'current-option': {
           templateUrl: 'templates/home.html',

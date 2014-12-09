@@ -1,3 +1,5 @@
+//var androidService = require("/android-service.js");
+
 angular.module('goter.controllers', ['goter.services'])
 
 .controller('HomeController', function($rootScope, $scope, $window, API, $ionicModal) {
@@ -56,7 +58,6 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
     }
 
     $scope.searchType = function(type) {
@@ -98,8 +99,8 @@ angular.module('goter.controllers', ['goter.services'])
     $ionicModal.fromTemplateUrl('templates/radio.html', {
         scope: $scope
     }).then(function(modal) {
-    $scope.modal = modal;
-  });
+        $scope.modal = modal;
+    });
 
     $scope.confirmRadio = function(radio){
         $scope.radio = radio;
@@ -107,11 +108,9 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.radio = 10;
-    
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
-
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
     $scope.radio = $rootScope.radio;
@@ -153,7 +152,6 @@ angular.module('goter.controllers', ['goter.services'])
             $rootScope.hide();
         });
         }
-
     }
 
     $scope.pinSearch = function () {
@@ -211,14 +209,12 @@ angular.module('goter.controllers', ['goter.services'])
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
     }
 
     $scope.getLocation = function(offer) {
 
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
-
     }
 
     $ionicModal.fromTemplateUrl('templates/radio.html', {
@@ -373,29 +369,20 @@ autoUpdate();
     }*/
 
     
-
-       
-    
-
-   
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {
     //console.log("OfferNewTypeCtrl cargado");
 })
 
-
 .controller('SignInCtrl', function($rootScope, $scope, API, $window) {
-    // if the user is already logged in, take him to his bucketlist
-    if ($rootScope.isSessionActive()) {
 
+    if ($rootScope.isSessionActive()) {
         $window.location.href = ('#/default/home');
     }
 
-    $scope.user = {
-        email: "",
-        password: ""
-    };
+    $scope.user = { email   :'' ,
+                    password:'' }
 
     $scope.validateUser = function() {
         var email = this.user.email;
@@ -411,13 +398,13 @@ autoUpdate();
         }).success(function(data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
+            updateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
             $rootScope.hide();
             $rootScope.notify("Invalid Username or password");
         });
     }
-
 })
 
 .controller('SignUpCtrl', function($rootScope, $scope, API, $window) {
@@ -476,11 +463,7 @@ autoUpdate();
         });
     }
 
-    $scope.edit = function(offer) {
-
-        
-
-        
+    $scope.edit = function(offer) {    
     }
 
     $scope.delete = function(offer) {
@@ -491,12 +474,10 @@ autoUpdate();
         }).error(function(error) {
             $rootScope.hide();
         });
-        
     }
 
     API.getOffers($rootScope.getToken()).success(function(data, status, headers, config) {
         $scope.offers = data;
-       
     }).error(function(data, status, headers, config) {
         $rootScope.hide();
         $rootScope.notify("Oops something went wrong!! Please try again later");
@@ -629,7 +610,6 @@ autoUpdate();
 
         $rootScope.set(offer);
         $window.location.href = ("#/default/offer/location");
-
     }
 
     $scope.likeFunction = function(offer) {
@@ -758,16 +738,19 @@ autoUpdate();
         $rootScope.offer = this.offer;
     };
 
-   /* ionic.Platform.ready(function() {
-        //console.log("ready get camera types");
+
+    /*ionic.Platform.ready(function() {
+        console.log("ready get camera types");
+
         if (!navigator.camera)
         {
+            console.log("cam error");
             // error handling
             return;
         }
         //pictureSource=navigator.camera.PictureSourceType.PHOTOLIBRARY;
-        pictureSource=navigator.camera.PictureSourceType.CAMERA;
-        destinationType=navigator.camera.DestinationType.FILE_URI;
+        pictureSource   = navigator.camera.PictureSourceType.CAMERA;
+        destinationType = navigator.camera.DestinationType.FILE_URI;
     });
 
     // take picture
@@ -847,23 +830,15 @@ autoUpdate();
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
-
-    };
-
-    
-
     /*$scope.searchPosition = function() {
-
         var lat = marker.getPosition().lat();
         var lng = marker.getPosition().lng();
         $rootScope.offer.location = {
             lat: lat,
-            lng: lng
-        };
+            lng: lng   };
         $scope.offer.location = $rootScope.offer.location;
     };*/
-
+    }
 
     $scope.publishOffer = function() {
         //if (
@@ -880,10 +855,13 @@ autoUpdate();
         };
         $scope.offer.location = $rootScope.offer.location;
 
+
         /*var ft = new FileTransfer(),
                 options = new FileUploadOptions();
 
-        options.fileKey = "ffile";
+
+
+        options.fileKey  = "ffile";
         options.fileName = "nombre_random";
         options.mimeType = "image/jpeg";*/
         
@@ -891,17 +869,20 @@ autoUpdate();
         params.other = obj.text; // some other POST fields
         options.params = params;*/
 
-        /*var ft = new FileTransfer();
+        /*
     
         ft.upload($scope.offer.image, "http://goter.herokuapp.com/images", uploadSuccess, uploadError, options);
         function uploadSuccess(r) {
             // handle success like a message to the user
-            }
+            console.log("exito");
+        }
         function uploadError(error) {
             //console.log("upload error source " + error.source);
             //console.log("upload error target " + error.target);
+
             }*/
       
+
 
         var form = {
             offer: $scope.offer
@@ -918,9 +899,7 @@ autoUpdate();
                 $rootScope.hide();
                 $rootScope.notify("Oops something went wrong!! Please try again later");
             });
-
-
-    };
+    }
 
     var myLatlng = {};
     if (!$rootScope.offer.location) myLatlng = new google.maps.LatLng(-33.448906, -70.681905);
@@ -948,21 +927,15 @@ autoUpdate();
         title: "Arrastrame!"
     });
 
-
-
     var infowindow = new google.maps.InfoWindow({
         content: compiled[0]
     });
-
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
 
     $scope.map = map;
-
-
-
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */ (
@@ -1120,8 +1093,6 @@ autoUpdate();
 
     delete $rootScope.pin_search;
 
-
-
     $scope.pinLocation = function () {
 
         $rootScope.set($scope.pin_search);
@@ -1148,15 +1119,12 @@ autoUpdate();
       
     };
 
-
 })
 
 
 .controller('newPinLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
 
-
     $scope.pin_search = $rootScope.get();
-
 
     var myLatlng = {};
     myLatlng = new google.maps.LatLng($scope.pin_search.location.lat, $scope.pin_search.location.lng);
@@ -1184,20 +1152,15 @@ autoUpdate();
         title: "Arrastrame!"
     });
 
-
-
     var infowindow = new google.maps.InfoWindow({
         content: compiled[0]
     });
-
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
 
     $scope.map = map;
-
-
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */ (
         document.getElementById('pac-input'));
@@ -1289,8 +1252,6 @@ autoUpdate();
         }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
-
-
     };
 
     $scope.searchPosition = function() {
@@ -1301,7 +1262,6 @@ autoUpdate();
             lat: lat,
             lng: lng
         };
-        
     };
 
     $scope.ready = function() {
@@ -1312,4 +1272,9 @@ autoUpdate();
     }
 })
 
+.controller('NotificationsCtrl',function ($rootScope, $scope) {
+    $scope.hola = function () {
+        console.log("hola desde NotificationsCtrl");
+    }
+})
 ;
