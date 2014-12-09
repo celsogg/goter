@@ -59,6 +59,41 @@ angular.module('goter.controllers', ['goter.services'])
 
     }
 
+    $scope.searchType = function(type) {
+
+        var email = $scope.name;
+        var radio = $scope.radio;
+        var search_word = type;
+
+        var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
+        navigator.geolocation.getCurrentPosition(function(pos) {
+
+            var my_location = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+
+            API.getSearchResultsByType(email, search_word, my_location, radio).success(function(data) {
+
+                $rootScope.set(data);
+                $window.location.href = ('#/default/search');
+                $rootScope.radio = radio;
+                $rootScope.search_pins = false;
+
+
+            }).error(function(error) {
+                $rootScope.hide();
+
+            }); 
+            
+
+        }, function(error) {
+            alert('Unable to get location: ' + error.message);
+        },options);
+            
+
+    }
 
     $ionicModal.fromTemplateUrl('templates/radio.html', {
         scope: $scope
@@ -723,7 +758,7 @@ autoUpdate();
         $rootScope.offer = this.offer;
     };
 
-    ionic.Platform.ready(function() {
+   /* ionic.Platform.ready(function() {
         //console.log("ready get camera types");
         if (!navigator.camera)
         {
@@ -760,7 +795,7 @@ autoUpdate();
                 // error handling camera plugin
             },
             options);
-    };
+    };*/
 })
 
 .controller('newOfferLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
@@ -845,18 +880,18 @@ autoUpdate();
         };
         $scope.offer.location = $rootScope.offer.location;
 
-        var ft = new FileTransfer(),
+        /*var ft = new FileTransfer(),
                 options = new FileUploadOptions();
 
         options.fileKey = "ffile";
         options.fileName = "nombre_random";
-        options.mimeType = "image/jpeg";
+        options.mimeType = "image/jpeg";*/
         
         /*var params = {};
         params.other = obj.text; // some other POST fields
         options.params = params;*/
 
-        var ft = new FileTransfer();
+        /*var ft = new FileTransfer();
     
         ft.upload($scope.offer.image, "http://goter.herokuapp.com/images", uploadSuccess, uploadError, options);
         function uploadSuccess(r) {
@@ -865,7 +900,7 @@ autoUpdate();
         function uploadError(error) {
             //console.log("upload error source " + error.source);
             //console.log("upload error target " + error.target);
-            }
+            }*/
       
 
         var form = {
