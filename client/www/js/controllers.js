@@ -147,7 +147,7 @@ angular.module('goter.controllers', ['goter.services'])
 
             if(search_pins == false){
                 
-                console.log("Normal");
+                
                 API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
                     $scope.results = data;
@@ -161,7 +161,7 @@ angular.module('goter.controllers', ['goter.services'])
             } 
 
             else{
-                console.log("DePins!");
+              
                 API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
                     $scope.results = data;
                     $window.location.href = ('#/default/search');
@@ -197,6 +197,152 @@ angular.module('goter.controllers', ['goter.services'])
         $scope.modal.hide();
     }
 
+    $scope.getMap = function(results){
+        $rootScope.set(results);
+        $window.location.href = ("#/default/search/map");
+    }
+
+
+})
+
+.controller('searchMapCtrl', function($rootScope, $scope, $window, $timeout, $compile) {
+
+
+   var results = $rootScope.get();
+
+   var marker = null;
+
+   var mapOptions = {
+        zoom: 17,
+        zoomControl : false,
+        streetViewControl: false,
+        panControl: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+
+   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+   var markers = [];
+
+   results.forEach(function(entry){
+
+        console.log(entry);
+
+        var point = new google.maps.LatLng(entry.location.lat,entry.location.lng);
+
+        markers.push(new google.maps.Marker({
+            position: point,
+            map: map,
+            animation: google.maps.Animation.BOUNCE,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+      }));
+
+        var contentString = "<div>"+entry.title+"</div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: compiled[0]
+        });
+
+        var last = markers[markers.length - 1];
+        //google.maps.event.addListener(last, 'click', function() {
+           infowindow.open(map, last);
+        //});
+    
+   });
+
+
+
+
+   function autoUpdate() {
+      navigator.geolocation.getCurrentPosition(function(position) {  
+        var newPoint = new google.maps.LatLng(position.coords.latitude, 
+          position.coords.longitude);
+
+       
+        if (marker) {
+      // Marker already created - Move it
+      marker.setPosition(newPoint);
+  }
+  else {
+    // Center the map on the new position
+    map.setCenter(newPoint);
+      // Marker does not exist - Create it
+      marker = new google.maps.Marker({
+        position: newPoint,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+    });
+  }
+
+    
+}); 
+
+  // Call the autoUpdate() function every 1 seconds
+  var timer = $timeout(autoUpdate, 1000);
+
+  if(window.location.href == 'http://localhost:8100/#/default/search/map'){
+  }
+  else{
+
+    $timeout.cancel(timer);
+  }
+  
+}
+
+autoUpdate();
+
+
+    /*var watchID;
+    var geoLoc;
+
+    if(navigator.geolocation){
+          // timeout at 60000 milliseconds (60 seconds)
+          var options = { frequency: 3000 };
+          geoLoc = navigator.geolocation;
+          watchID = geoLoc.watchPosition(showLocation, 
+             errorHandler, options);
+          
+    }else{
+          alert("Sorry, browser does not support geolocation!");
+    }
+
+    function showLocation(position) {
+
+        console.log("entreaqui");
+        var newPoint = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
+        if (marker) {
+            // Marker already created - Move it
+            marker.setPosition(newPoint);
+        }
+        else {
+            // Marker does not exist - Create it
+            marker = new google.maps.Marker({
+                position: newPoint,
+                map: map
+            });
+        }
+
+        map.setCenter(newPoint);
+    }
+
+    function errorHandler(err) {
+          if(err.code == 1) {
+            alert("Error: Access is denied!");
+        }else if( err.code == 2) {
+            alert("Error: Position is unavailable!");
+        }
+    }*/
+
+    
+
+       
+    
+
+   
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {

@@ -184,6 +184,19 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
       }
     })
 
+    .state('default.search-map', {
+      url: '/search/map',
+      views: {
+        'goter-options': {
+          templateUrl: 'templates/goter-options.html'
+        },
+        'current-option': {
+          templateUrl: 'templates/search-map.html',
+          controller: 'searchMapCtrl'  
+        }
+      }
+    })
+
     //Offer
     .state('default.offer', {
       url: '/offer',
