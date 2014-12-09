@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('goter', ['ionic', 'goter.controllers', 'goter.services', 'goter.android-service'])
+angular.module('goter', ['ionic', 'goter.controllers', 'goter.services'])
 
 .run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
@@ -51,7 +51,8 @@ angular.module('goter', ['ionic', 'goter.controllers', 'goter.services', 'goter.
       url: '/home',
       views: {
         'goter-options': {
-          templateUrl: 'templates/goter-options.html'
+          templateUrl: 'templates/goter-options.html',
+          controller: 'NotificationsCtrl'
         },
         'current-option': {
           templateUrl: 'templates/home.html',

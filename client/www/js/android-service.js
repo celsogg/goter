@@ -1,16 +1,30 @@
-var myService;
+var goterAndSer;
+/*// get Angular scope from the known DOM element
+e = document.getElementById('myAngularApp');
+scope = angular.element(e).scope();
+// update the model with a wrap in $apply(fn) which will refresh the view for us
+scope.$apply(function() {
+    scope.controllerMethod(val);
+}); */
+
+function microappscope(){
+   var elem = document.getElementById('notifications')
+   //console.log("elem"+JSON.stringify(elem));
+   var microappscope = angular.element(elem).scope();
+   return microappscope;
+}
 
 document.addEventListener('deviceready', function() {
    var serviceName = 'com.enlix.goter.GoterService';
    var factory = cordova.require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService')
-   myService = factory.create(serviceName);
-   //myService.startService(function(r){alert(r)}, function(e){alert(e));
+   goterAndSer = factory.create(serviceName);
+   //goterAndSer.startService(function(r){alert(r)}, function(e){alert(e));
 
-   myService.getStatus(function(r){startService(r)}, function(e){displayError(e)});
+   goterAndSer.getStatus(function(r){startService(r)}, function(e){displayError(e)});
 }, true);
 
 /*function getStatus() {
-   myService.getStatus(function(r){displayResult(r)}, function(e){displayError(e)});
+   goterAndSer.getStatus(function(r){displayResult(r)}, function(e){displayError(e)});
 }
 
 function displayResult(data) {
@@ -25,8 +39,12 @@ function updateHandler(data) {
       } catch (err) {
       }
    }*/
-
-   console.log("hola mundo");
+   console.log("hola update handler");
+   microappscope().$apply(function() {
+      microappscope().hola();
+   }); 
+   //microappscope().hola()
+   //console.log("hola mundo");
 }
 
 function displayError(data) {
@@ -34,14 +52,14 @@ function displayError(data) {
 }
 
 function go() {
-   myService.getStatus(function(r){startService(r)}, function(e){displayError(e)});
+   goterAndSer.getStatus(function(r){startService(r)}, function(e){displayError(e)});
 };
 
 function startService(data) {
    if (data.ServiceRunning) {
       enableTimer(data);
    } else {
-      myService.startService(function(r){enableTimer(r)}, function(e){displayError(e)});
+      goterAndSer.startService(function(r){enableTimer(r)}, function(e){displayError(e)});
    }
 }
 
@@ -49,13 +67,13 @@ function enableTimer(data) {
    if (data.TimerEnabled) {
       registerForUpdates(data);
    } else {
-      myService.enableTimer(120000, function(r){registerForUpdates(r)}, function(e){displayError(e)});
+      goterAndSer.enableTimer(1200000, function(r){registerForUpdates(r)}, function(e){displayError(e)});
    }
 }
 
 function registerForUpdates(data) {
    if (!data.RegisteredForUpdates) {
-      myService.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
+      goterAndSer.registerForUpdates(function(r){updateHandler(r)}, function(e){handleError(e)});
    }
 }
 
@@ -65,5 +83,17 @@ function handleError(data) {
    //updateView(data);
 }
 
-var androidService = angular.module("goter.android-service", ['goter.controllers', 'goter.services'])
-
+function handleSuccess (r) {
+   // TODO
+}
+function updateToken(token) {
+   if (goterAndSer) {
+      console.log("")
+      var config = { "token": token }
+      goterAndSer.setConfiguration(  
+         config,
+         function(r) { handleSuccess(r) },
+         function(e) { handleError(e) }
+      )
+   }
+}

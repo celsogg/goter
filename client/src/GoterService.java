@@ -25,12 +25,15 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 
+import com.loopj.android.http.*;
+
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundService;
 
 public class GoterService extends BackgroundService {
 
 	private final static String TAG = GoterService.class.getSimpleName();
 
+	private String token = "";
 	private String mHelloTo = "World";
 	private Integer notCounter = 0;
 
@@ -39,7 +42,7 @@ public class GoterService extends BackgroundService {
 	@Override
 	protected JSONObject doWork() {
 		JSONObject result = new JSONObject();
-		@SuppressWarnings("deprecation")
+/*		@SuppressWarnings("deprecation")
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 			.setSmallIcon(R.drawable.icon)
 			.setContentTitle("My notification")
@@ -72,7 +75,9 @@ public class GoterService extends BackgroundService {
 			result.put("Message", msg);
 
 			Log.d(TAG, msg);
-		} catch (JSONException e) {}
+		} catch (JSONException e) {}*/
+
+		RequestParams params = new RequestParams();
 
 		return result;
 	}
@@ -91,7 +96,8 @@ public class GoterService extends BackgroundService {
 	@Override
 	protected void setConfig(JSONObject config) {
 		try {
-			if (config.has("HelloTo")) this.mHelloTo = config.getString("HelloTo");
+			if (config.has("token")) this.token = config.getString("token");
+			System.out.println("conf set");
 		} catch (JSONException e) {}
 
 	}

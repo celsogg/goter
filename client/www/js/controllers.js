@@ -1,3 +1,5 @@
+//var androidService = require("/android-service.js");
+
 angular.module('goter.controllers', ['goter.services'])
 
 .controller('HomeController', function($rootScope, $scope, $window, API, $ionicModal) {
@@ -197,16 +199,13 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('SignInCtrl', function($rootScope, $scope, API, $window) {
-    // if the user is already logged in, take him to his bucketlist
-    if ($rootScope.isSessionActive()) {
 
+    if ($rootScope.isSessionActive()) {
         $window.location.href = ('#/default/home');
     }
 
-    $scope.user = {
-        email: "",
-        password: ""
-    };
+    $scope.user = { email   :'' ,
+                    password:'' }
 
     $scope.validateUser = function() {
         var email = this.user.email;
@@ -222,6 +221,7 @@ angular.module('goter.controllers', ['goter.services'])
         }).success(function(data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
+            updateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
             $rootScope.hide();
@@ -1079,6 +1079,12 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.pin_search = $scope.pin_search;
         $rootScope.set($scope.pin_search);
         $window.location.href = ('#/default/new/pin/search');
+    }
+})
+
+.controller('NotificationsCtrl',function ($rootScope, $scope) {
+    $scope.hola = function () {
+        console.log("hola desde NotificationsCtrl");
     }
 })
 ;
