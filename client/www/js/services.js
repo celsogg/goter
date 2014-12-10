@@ -71,7 +71,6 @@ angular.module('goter.services', [])
         }
 
         return {
-
             signin: function (form) {
                 return $http.post(base+'/api/v1/goter/auth/login', form);
             },
