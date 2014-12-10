@@ -33,7 +33,29 @@ angular.module('goter.controllers', ['goter.services'])
                         $window.location.href = ('#/default/search');
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
-                        
+
+                        data.forEach(function(entry){
+
+                        if (entry.type == "product"){
+
+                            entry.icon = "icon ion-bag";
+                        }
+                        else if(entry.type == "event"){
+
+                            entry.icon = "icon ion-music-note"; 
+                        }
+                        else if(entry.type == "service"){
+                            entry.icon = "icon ion-fork"; 
+                        }
+                        else{
+                            entry.icon = "icon ion-alert"; 
+
+                        }
+
+                        });
+
+
+               
 
                     }).error(function(error) {
 
@@ -53,6 +75,27 @@ angular.module('goter.controllers', ['goter.services'])
                         $rootScope.search_word = search_word;
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
+
+                        data.forEach(function(entry){
+
+                        if (entry.type == "product"){
+
+                            entry.icon = "icon ion-bag";
+                        }
+                        else if(entry.type == "event"){
+
+                            entry.icon = "icon ion-music-note"; 
+                        }
+                        else if(entry.type == "service"){
+                            entry.icon = "icon ion-fork"; 
+                        }
+                        else{
+                            entry.icon = "icon ion-alert"; 
+
+                        }
+
+                        });
+
                         
 
 
@@ -107,6 +150,26 @@ angular.module('goter.controllers', ['goter.services'])
                 $window.location.href = ('#/default/search');
                 $rootScope.radio = radio;
                 $rootScope.search_pins = false;
+
+                data.forEach(function(entry){
+
+                        if (entry.type == "product"){
+
+                            entry.icon = "icon ion-bag";
+                        }
+                        else if(entry.type == "event"){
+
+                            entry.icon = "icon ion-music-note"; 
+                        }
+                        else if(entry.type == "service"){
+                            entry.icon = "icon ion-fork"; 
+                        }
+                        else{
+                            entry.icon = "icon ion-alert"; 
+
+                        }
+
+                        });
 
 
             }).error(function(error) {
@@ -208,6 +271,9 @@ angular.module('goter.controllers', ['goter.services'])
                     $rootScope.setSearchResults(data);
                     $window.location.href = ('#/default/search');
                     $rootScope.hide();
+
+
+
 
                 }).error(function(error) {
                     $rootScope.hide();
