@@ -2,8 +2,8 @@ angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
 
        //var base = "http://10.0.2.2:9804";
-       //var base = "http://localhost:9804";
-       var base = "http://goter.herokuapp.com";
+       var base = "http://localhost:9804";
+       //var base = "http://goter.herokuapp.com";
 
        
         $rootScope.show = function (text) {
@@ -17,6 +17,7 @@ angular.module('goter.services', [])
         };
 
         var savedData = {}
+        var searchResults = {}
 
         $rootScope.set = function (data) { 
            savedData = data;
@@ -25,6 +26,9 @@ angular.module('goter.services', [])
         $rootScope.get = function () { 
           return savedData;
         }
+
+        $rootScope.setSearchResults = function(data) { searchResults = data }
+        $rootScope.getSearchResults = function()     { return searchResults }
 
         $rootScope.hide = function () {
             $ionicLoading.hide();

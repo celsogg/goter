@@ -29,10 +29,12 @@ angular.module('goter.controllers', ['goter.services'])
                 API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
                     $rootScope.set(data);
-                    $window.location.href = ('#/default/search');
+                    $rootScope.setSearchResults(data);
                     $rootScope.search_word = search_word;
                     $rootScope.radio = radio;
                     $rootScope.search_pins = search_pins;
+                    $window.location.href = ('#/default/search');
+                    
 
                 }).error(function(error) {
                     $rootScope.hide();
@@ -45,11 +47,11 @@ angular.module('goter.controllers', ['goter.services'])
                 console.log(search_pins);
                 API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
                     $rootScope.set(data);
-                    $window.location.href = ('#/default/search');
+                    $rootScope.setSearchResults(data);
                     $rootScope.search_word = search_word;
                     $rootScope.radio = radio;
                     $rootScope.search_pins = search_pins;
-
+                    $window.location.href = ('#/default/search');
                 }).error(function(error) {
                     $rootScope.hide();
                 }); 
@@ -73,50 +75,44 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.radio = 10;
-    ASUpdateToken($scope.name);
+    //ASUpdateToken($scope.name);
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
-    $scope.radio = $rootScope.radio;
+    $scope.radio = $rootScope.radio || 10;
     $scope.search_pins = $rootScope.search_pins;
     delete $rootScope.search_word;
     delete $rootScope.radio;
     delete $rootScope.search_pins;
-    var results = $rootScope.get();
+    var results = $rootScope.getSearchResults();
     $scope.results = results;
 
     $scope.getOffer = function(offer) {
-
         var idOffer = offer._id;
-
-        if(this.search_pins == false){
-
-        API.getOffer(idOffer, $scope.name).success(function(data) {
-
-            $scope.offer = data;
-            $rootScope.set(data);
-            $window.location.href = ('#/default/offer');
-
-
-        }).error(function(error) {
-            $rootScope.hide();
-        });
-
-        }
-
-        else{
+        if($scope.search_pins == false){
+            API.getOffer(idOffer, $scope.name).success(function(data) {
+                $scope.offer = data;
+                $rootScope.search_word = $scope.search_word;
+                $rootScope.radio = $scope.radio;
+                $rootScope.search_pins = $scope.search_pins;
+                $rootScope.set(data);
+                $window.location.href = ('#/default/offer');
+            }).error(function(error) {
+                $rootScope.hide();
+            });
+        }else{
             API.getPinSearch(idOffer, $scope.name).success(function(data) {
-
-            $scope.offer = data;
-            $rootScope.set(data);
-            $window.location.href = ('#/default/pin-search');
-
-
-        }).error(function(error) {
-            $rootScope.hide();
-        });
+                $scope.offer = data;
+                $rootScope.search_word = $scope.search_word;
+                $rootScope.radio = $scope.radio;
+                $rootScope.search_pins = $scope.search_pins;
+                $rootScope.set(data);
+                $window.location.href = ('#/default/pin-search');
+            }).error(function(error) {
+                $rootScope.hide();
+            });
         }
     }
 
@@ -150,6 +146,7 @@ angular.module('goter.controllers', ['goter.services'])
                 API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
                     $scope.results = data;
+                    $rootScope.setSearchResults(data);
                     $window.location.href = ('#/default/search');
                     $rootScope.hide();
 
@@ -163,6 +160,7 @@ angular.module('goter.controllers', ['goter.services'])
                 console.log("DePins!");
                 API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
                     $scope.results = data;
+                    $rootScope.setSearchResults(data);
                     $window.location.href = ('#/default/search');
                     $rootScope.hide();
 
@@ -222,7 +220,7 @@ angular.module('goter.controllers', ['goter.services'])
         }).success(function(data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            ASUpdateToken(email);
+            //ASUpdateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
             $rootScope.hide();
@@ -1084,11 +1082,11 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('NotificationsCtrl',function ($rootScope, $scope) {
-    $scope.getToken = function () {
+    /*$scope.getToken = function () {
         //if ( !USGetToken() ){
             console.log("hola desde NotificationsCtrl");
             return $rootScope.getToken()
         //}
-    }
+    }*/
 })
 ;
