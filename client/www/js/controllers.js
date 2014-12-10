@@ -24,18 +24,16 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-           
+           if(search_word == ''){
 
-            if(search_word == ''){
+            API.getAllOffers(email, my_location, radio).success(function(data) {
 
-
-
-                API.getAllOffers(email, my_location, radio).success(function(data) {
-
-                        $rootScope.set(data);
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
+                        
 
                     }).error(function(error) {
 
@@ -45,17 +43,18 @@ angular.module('goter.controllers', ['goter.services'])
             }
             else{
 
-
-                if(search_pins == false){
+                 if(search_pins == false){
 
                     API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
-
-                        $rootScope.set(data);
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.search_word = search_word;
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
+                        
+
 
                     }).error(function(error) {
 
@@ -68,23 +67,20 @@ angular.module('goter.controllers', ['goter.services'])
 
                    
                     API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
-                        $rootScope.set(data);
+
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.search_word = search_word;
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
-
+                        
                     }).error(function(error) {
                         $rootScope.hide();
-                    }); 
+                }); 
                 }
             }
-
-
-
-            
-
-        }, function(error) {
+                }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
     }
@@ -106,7 +102,8 @@ angular.module('goter.controllers', ['goter.services'])
 
             API.getSearchResultsByType(email, search_word, my_location, radio).success(function(data) {
 
-                $rootScope.set(data);
+                //$rootScope.set(data);
+                $rootScope.setSearchResults(data);
                 $window.location.href = ('#/default/search');
                 $rootScope.radio = radio;
                 $rootScope.search_pins = false;
@@ -143,7 +140,7 @@ angular.module('goter.controllers', ['goter.services'])
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
     $scope.name = $window.localStorage.token;
     $scope.search_word = $rootScope.search_word;
-    $scope.radio = $rootScope.radio || 10;
+    $scope.radio = $rootScope.radio;
     $scope.search_pins = $rootScope.search_pins;
     delete $rootScope.search_word;
     delete $rootScope.radio;
