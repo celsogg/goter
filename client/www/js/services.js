@@ -27,6 +27,9 @@ angular.module('goter.services', [])
           return savedData;
         }
 
+        $rootScope.setMapResults = function(data) { mapResults = data }
+        $rootScope.getMapResults = function()     { return mapResults }
+
         $rootScope.hide = function () {
             $ionicLoading.hide();
         };
