@@ -359,6 +359,149 @@ module.exports = function (server, db, shortId, mongojs, distance, fs) {
         return next();
     });
 
+    server.get('/api/v1/goter/search/type/:type', function (req, res, next) {
+
+        validateRequest.validate(req, res, db, function () {
+            
+            db.offers.find( 
+                { type: req.params.type },
+                function (err, docs) {
+                    if (err){
+                        console.log("err: "+err );
+                    }else{
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        });
+
+                        var result = [];
+                        var i = 0;
+                        console.log(docs);
+                        docs.forEach(function(entry) {
+
+
+
+                            var search_point = {
+                                lon: req.params.lng,
+                                lat: req.params.lat
+                            }
+
+                            var offer_point = {
+                                lon: entry.location.lng,
+                                lat: entry.location.lat
+                            }
+
+                            var dist = distance.between(search_point,offer_point);
+                            entry.distance = dist.human_readable();
+
+                            if(entry.distance.unit == 'km'){
+
+                                if(parseFloat(entry.distance.distance) <= parseFloat(req.params.radio)){
+
+                                    result.push(entry);
+                                }
+                            }
+
+                            else{
+                                
+                                if(parseFloat(entry.distance.distance) < parseFloat(req.params.radio)*1000){
+
+                                    result.push(entry);
+                                }
+
+                            }
+                        });
+
+                        result.sort(sort_by('distance', true, parseFloat));
+                        
+                        res.end(JSON.stringify(result));
+                       
+                    }
+                }
+            );
+            
+        });
+
+        return next();
+    });
+
+server.get('/api/v1/goter/search-offers', function (req, res, next) {
+
+        validateRequest.validate(req, res, db, function () {
+            
+            var docs = db.offers.find({} 
+                ,
+                function (err, docs) {
+                    if (err){
+                        console.log("err: "+err );
+                    }else{
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        });
+
+
+                        var result_km = [];
+                        var result = [];
+                        var i = 0;
+          
+                        docs.forEach(function(entry) {
+
+
+                            var search_point = {
+                                lon: req.params.lng,
+                                lat: req.params.lat
+                            }
+
+                            var offer_point = {
+                                lon: entry.location.lng,
+                                lat: entry.location.lat
+                            }
+
+                            var dist = distance.between(search_point,offer_point);
+
+            
+
+                            entry.distance = dist.human_readable();
+                            entry.radians = entry.distance.distance_earth_radians;
+
+
+
+                            if(entry.distance.unit == 'km'){
+
+                                if(parseFloat(entry.distance.distance) <= parseFloat(req.params.radio)){
+
+                                    result.push(entry);
+                                }
+                            }
+
+                            else{
+                                
+                                if(parseFloat(entry.distance.distance) < parseFloat(req.params.radio)*1000){
+
+                                    result.push(entry);
+                                }
+
+                            }
+                        });
+    
+                        //console.log(result_km);
+
+                        //result.concat(result_km);
+                        result.sort(sort_by('radians', true, parseFloat));
+                        
+                        res.end(JSON.stringify(result));
+                       
+                    }
+                }
+            );
+            
+        });
+
+        return next();
+    });
+
+   
+
+
     fs.exists(__dirname + '/uploads', function (exists) {
         if (!exists) {
             console.log('Creating directory ' + __dirname + '/uploads');

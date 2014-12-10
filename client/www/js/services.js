@@ -1,6 +1,7 @@
 angular.module('goter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
 
+
        //var base = "http://10.0.2.2:9804";
        var base = "http://localhost:9804";
        //var base = "http://goter.herokuapp.com";
@@ -183,6 +184,33 @@ angular.module('goter.services', [])
                     
                 });
             },
+
+            getAllOffers: function(email,loc,radio){
+                return $http.get(base+'/api/v1/goter/search-offers', {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        lat:loc.lat,
+                        lng:loc.lng,
+                        radio:radio
+                    }
+                    
+                });
+            },
+
+            getSearchResultsByType: function(email,type,loc,radio){
+                return $http.get(base+'/api/v1/goter/search/type/' + type, {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        type:type,
+                        lat:loc.lat,
+                        lng:loc.lng,
+                        radio:radio
+                    }
+                });
+            },
+            
             getSearchPinsResults: function(email,word,loc,radio){
                 return $http.get(base+'/api/v1/goter/search-pins/' + word, {
                     method: 'GET',
