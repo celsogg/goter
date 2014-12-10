@@ -45,12 +45,19 @@
 		</a>
 	</div>
 
+	
+	
+	
+
 </div>
 
 <div class="list">	
 	
 	<div class="item item-divider" align="center">
-    Resultados
+    <h2 >Resultados <h2>
+    <a  class="button button-dark icon-left ion-location" ng-click="getMap(results)">
+		Ver en mapa
+	</a>
   	</div>	
 
 
@@ -67,11 +74,6 @@
 		</div>
 		
 	</a>
-	<div class="button-bar">
-		<a class="button button-dark icon-left" ng-click="getMap(results)">
-			Ver Resultados en Mapa
-		</a>
-	</div>
 </div>
 
 
@@ -89,9 +91,9 @@
 	<span class="input-label">Seleccione un radio de busqueda: {{radio}} Km </span>
 	</label>
 	<div class="range">
-	<i class="icon ion-volume-low" ></i>
+	<i class="icon ion-minus-round" ></i>
 	<input type="range" name="volume" min="1" max="100" value="5" ng-model="radio">
-	<i class="icon ion-volume-high"></i>
+	<i class="icon ion-plus-round"></i>
 	</div>
 	<p></p>
 	<button class="button button-full button-positive" ng-click="confirmRadio(radio)">Confirmar</button>

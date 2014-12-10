@@ -47,26 +47,35 @@
 			Ofrecer
 		</a>
 	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<h4 align="center">Busca en estas categorias</h4>
-	<div class="button-bar" align="center">
-		
-		<a class="button button-balanced ion-bag" ng-click="searchType('product')">
-			Producto
-		</a>
 
-		<a class="button button-royal  ion-music-note" ng-click="searchType('event')">
-			Evento
-		</a>
-		<a class="button button-energized  ion-fork" ng-click="searchType('service')">
-			Servicio
-		</a>
-		<a class="button button-assertive  ion-alert" ng-click="searchType('tip')">
-			Dato
-		</a>
+	
+	<div class="row">
+		
+		<div class="col">
+			<a class="tab-item" ng-click="searchType('product')">
+				<i class="icon ion-bag"></i>Productos	
+			</a>
+		</div>
+
+
+		<div class="col">
+			<a class="tab-item" ng-click="searchType('event')">
+				<i class="icon ion-music-note"></i>Eventos
+			</a>
+		</div>
+		
+		<div class="col">
+			<a class="tab-item" ng-click="searchType('service')">
+				<i class="icon ion-fork"></i>Servicios
+			</a>
+		</div>
+		
+		<div class="col">
+			<a class="tab-item" ng-click="searchType('tip')">
+				<i class="icon ion-alert"></i>Datos
+			</a>
+		</div>
+	
 	</div>
 
 </div>
@@ -83,9 +92,9 @@
 	<span class="input-label">Seleccione un radio de busqueda: {{radio}} Km </span>
 	</label>
 	<div class="range">
-	<i class="icon ion-volume-low" ></i>
+	<i class="icon ion-minus-round" ></i>
 	<input type="range" name="volume" min="1" max="100" value="5" ng-model="radio">
-	<i class="icon ion-volume-high"></i>
+	<i class="icon ion-plus-round"></i>
 	</div>
 	<p></p>
 	<button class="button button-full button-positive" ng-click="confirmRadio(radio)">Confirmar</button>

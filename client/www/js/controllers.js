@@ -24,17 +24,16 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-           
+           if(search_word == ''){
 
-            if(search_word == ''){
+            API.getAllOffers(email, my_location, radio).success(function(data) {
 
-
-                API.getAllOffers(email, my_location, radio).success(function(data) {
-
-                        $rootScope.set(data);
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
+                        
 
                     }).error(function(error) {
 
@@ -44,16 +43,18 @@ angular.module('goter.controllers', ['goter.services'])
             }
             else{
 
-                if(search_pins == false){
+                 if(search_pins == false){
 
                     API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
-
-                        $rootScope.set(data);
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.search_word = search_word;
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
+                        
+
 
                     }).error(function(error) {
 
@@ -66,23 +67,20 @@ angular.module('goter.controllers', ['goter.services'])
 
                    
                     API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
-                        $rootScope.set(data);
+
+                        //$rootScope.set(data);
+                        $rootScope.setSearchResults(data);
                         $window.location.href = ('#/default/search');
                         $rootScope.search_word = search_word;
                         $rootScope.radio = radio;
                         $rootScope.search_pins = search_pins;
-
+                        
                     }).error(function(error) {
                         $rootScope.hide();
-                    }); 
+                }); 
                 }
             }
-
-
-
-            
-
-        }, function(error) {
+                }, function(error) {
             alert('Unable to get location: ' + error.message);
         },options);
     }
@@ -104,7 +102,8 @@ angular.module('goter.controllers', ['goter.services'])
 
             API.getSearchResultsByType(email, search_word, my_location, radio).success(function(data) {
 
-                $rootScope.set(data);
+                //$rootScope.set(data);
+                $rootScope.setSearchResults(data);
                 $window.location.href = ('#/default/search');
                 $rootScope.radio = radio;
                 $rootScope.search_pins = false;
@@ -135,7 +134,7 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.radio = 10;
-    ASUpdateToken($scope.name);
+    //ASUpdateToken($scope.name);
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
@@ -146,39 +145,33 @@ angular.module('goter.controllers', ['goter.services'])
     delete $rootScope.search_word;
     delete $rootScope.radio;
     delete $rootScope.search_pins;
-    var results = $rootScope.get();
+    var results = $rootScope.getSearchResults();
     $scope.results = results;
 
     $scope.getOffer = function(offer) {
-
         var idOffer = offer._id;
-
-        if(this.search_pins == false){
-
-        API.getOffer(idOffer, $scope.name).success(function(data) {
-
-            $scope.offer = data;
-            $rootScope.set(data);
-            $window.location.href = ('#/default/offer');
-
-
-        }).error(function(error) {
-            $rootScope.hide();
-        });
-
-        }
-
-        else{
+        if($scope.search_pins == false){
+            API.getOffer(idOffer, $scope.name).success(function(data) {
+                $scope.offer = data;
+                $rootScope.search_word = $scope.search_word;
+                $rootScope.radio = $scope.radio;
+                $rootScope.search_pins = $scope.search_pins;
+                $rootScope.set(data);
+                $window.location.href = ('#/default/offer');
+            }).error(function(error) {
+                $rootScope.hide();
+            });
+        }else{
             API.getPinSearch(idOffer, $scope.name).success(function(data) {
-
-            $scope.offer = data;
-            $rootScope.set(data);
-            $window.location.href = ('#/default/pin-search');
-
-
-        }).error(function(error) {
-            $rootScope.hide();
-        });
+                $scope.offer = data;
+                $rootScope.search_word = $scope.search_word;
+                $rootScope.radio = $scope.radio;
+                $rootScope.search_pins = $scope.search_pins;
+                $rootScope.set(data);
+                $window.location.href = ('#/default/pin-search');
+            }).error(function(error) {
+                $rootScope.hide();
+            });
         }
     }
 
@@ -212,6 +205,7 @@ angular.module('goter.controllers', ['goter.services'])
                 API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
                     $scope.results = data;
+                    $rootScope.setSearchResults(data);
                     $window.location.href = ('#/default/search');
                     $rootScope.hide();
 
@@ -225,6 +219,7 @@ angular.module('goter.controllers', ['goter.services'])
               
                 API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
                     $scope.results = data;
+                    $rootScope.setSearchResults(data);
                     $window.location.href = ('#/default/search');
                     $rootScope.hide();
 
@@ -283,13 +278,11 @@ angular.module('goter.controllers', ['goter.services'])
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-
    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
    var markers = [];
 
    results.forEach(function(entry){
-
 
         var point = new google.maps.LatLng(entry.location.lat,entry.location.lng);
 
@@ -351,13 +344,14 @@ angular.module('goter.controllers', ['goter.services'])
         //google.maps.event.addListener(last, 'click', function() {
            infowindow.open(map, last);
         //});
+
         
         google.maps.event.addListener(last, 'click', function() {
             
-            var idOffer = this.customInfo;
+        var idOffer = this.customInfo;
         var email = $window.localStorage.token;
 
-        API.getOffer(idOffer, email).success(function(data) {
+       API.getOffer(idOffer, email).success(function(data) {
 
             $scope.offer = data;
             // console.log("data "+JSON.stringify(data));
@@ -377,7 +371,9 @@ angular.module('goter.controllers', ['goter.services'])
         });
     
    });
-    
+
+            
+
     
 /*
     $scope.getOffer = function(offer) {
@@ -386,43 +382,39 @@ angular.module('goter.controllers', ['goter.services'])
     };*/
 
    function autoUpdate() {
-      navigator.geolocation.getCurrentPosition(function(position) {  
-        var newPoint = new google.maps.LatLng(position.coords.latitude, 
-          position.coords.longitude);
+        navigator.geolocation.getCurrentPosition(function(position) {  
+            var newPoint = new google.maps.LatLng(position.coords.latitude, 
+              position.coords.longitude);
 
-       
-        if (marker) {
-      // Marker already created - Move it
-      marker.setPosition(newPoint);
-  }
-  else {
-    // Center the map on the new position
-    map.setCenter(newPoint);
-      // Marker does not exist - Create it
-      marker = new google.maps.Marker({
-        position: newPoint,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-    });
-  }
+           
+            if (marker) {
+                // Marker already created - Move it
+                marker.setPosition(newPoint);
+            }
+            else {
+                // Center the map on the new position
+                map.setCenter(newPoint);
+                // Marker does not exist - Create it
+                marker = new google.maps.Marker({
+                    position: newPoint,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                });
+            }
+        }); 
 
-    
-}); 
+        // Call the autoUpdate() function every 1 seconds
+        var timer = $timeout(autoUpdate, 1000);
 
-  // Call the autoUpdate() function every 1 seconds
-  var timer = $timeout(autoUpdate, 1000);
+        if(window.location.href == 'http://localhost:8100/#/default/search/map'){
+        }
+        else{
+            $timeout.cancel(timer);
+        }
+    }
 
-  if(window.location.href == 'http://localhost:8100/#/default/search/map'){
-  }
-  else{
-
-    $timeout.cancel(timer);
-  }
-  
-}
-
-autoUpdate();
+    autoUpdate();
 
 
     /*var watchID;
@@ -467,10 +459,6 @@ autoUpdate();
         }
     }*/
 
-
-
-
-    
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {
@@ -500,7 +488,7 @@ autoUpdate();
         }).success(function(data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            ASUpdateToken(email);
+            //ASUpdateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
             $rootScope.hide();
@@ -887,8 +875,6 @@ autoUpdate();
     if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
-
-
 
     if ($rootScope.offer.location) $scope.locationInput = $rootScope.offer.location.lat + " " + $rootScope.offer.location.lng;
 
@@ -1375,11 +1361,11 @@ autoUpdate();
 })
 
 .controller('NotificationsCtrl',function ($rootScope, $scope) {
-    $scope.getToken = function () {
+    /*$scope.getToken = function () {
         //if ( !USGetToken() ){
             console.log("hola desde NotificationsCtrl");
             return $rootScope.getToken()
         //}
-    }
+    }*/
 })
 ;
