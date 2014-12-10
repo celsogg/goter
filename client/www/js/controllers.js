@@ -15,7 +15,7 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.search = function() {
 
         var search_word = this.search_word;
-        var email = $scope.name;
+        var email = $rootScope.getToken();
         var radio = $scope.radio;
         var search_pins = this.search_pins;
       
@@ -90,7 +90,7 @@ angular.module('goter.controllers', ['goter.services'])
 
     $scope.searchType = function(type) {
 
-        var email = $scope.name;
+        var email = $rootScope.getToken();
         var radio = $scope.radio;
         var search_word = type;
 
@@ -141,7 +141,11 @@ angular.module('goter.controllers', ['goter.services'])
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
-    $scope.name = $window.localStorage.token;
+    if (!$rootScope.getName() || $rootScope.getName()=="")
+        $scope.name = $window.localStorage.token;
+    else
+        $scope.name = $rootScope.getName();
+
     $scope.search_word = $rootScope.search_word;
     $scope.radio = $rootScope.radio;
     $scope.search_pins = $rootScope.search_pins;
@@ -154,7 +158,7 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.getOffer = function(offer) {
         var idOffer = offer._id;
         if($scope.search_pins == false){
-            API.getOffer(idOffer, $scope.name).success(function(data) {
+            API.getOffer(idOffer, $rootScope.getToken()).success(function(data) {
                 $scope.offer = data;
                 $rootScope.search_word = $scope.search_word;
                 $rootScope.radio = $scope.radio;
@@ -165,7 +169,7 @@ angular.module('goter.controllers', ['goter.services'])
                 $rootScope.hide();
             });
         }else{
-            API.getPinSearch(idOffer, $scope.name).success(function(data) {
+            API.getPinSearch(idOffer, $rootScope.getToken()).success(function(data) {
                 $scope.offer = data;
                 $rootScope.search_word = $scope.search_word;
                 $rootScope.radio = $scope.radio;
@@ -188,10 +192,9 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.search = function() {
 
         var search_word = this.search_word;
-        var email = $scope.name;
+        var email = $rootScope.getToken();
         var radio = $scope.radio;
         var search_pins = this.search_pins;
-
 
         var options = { timeout: 30000, enableHighAccuracy: true, maximumAge: 10000 };
         navigator.geolocation.getCurrentPosition(function(pos) {
@@ -201,9 +204,7 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-
             if(search_pins == false){
-                
                 
                 API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
 
@@ -213,6 +214,42 @@ angular.module('goter.controllers', ['goter.services'])
                     $rootScope.hide();
 
                 }).error(function(error) {
+                    //fake
+                    console.log("buscando falso ");
+                    var res = [{
+                        "_id" : ObjectId("5487652bb6989c0200940b7b"),
+                        "likes" : 1,
+                        "user" : "rodrigo@tuapp.org",
+                        "type" : "event",
+                        "title" : "Torneo Universitario de Apps",
+                        "description" : "El  10 de diciembre se realizara en Santiago de Chile la final de la segunda versión del Torneo Universitario de Apps. Se trata de una competencia que reúne a 26 equipos de Latinoamérica, y donde los participantes deben crear aplicaciones móviles bajo el tema “Smart City: inteligencia Colectiva”",
+                        "tags" : "Servicio",
+                        "length" : "2",
+                        "location" : {
+                            "lat" : -33.439248,
+                            "lng" : -70.63977999999997
+                        },
+                        "liked" : true,
+                        "likeStyle" : "assertive",
+                        "likeState" : true
+                    },
+                    {
+                        "_id" : ObjectId("54876f9db6989c0200940b81"),
+                        "likes" : 0,
+                        "user" : "welcome@santiago.cl",
+                        "type" : "service",
+                        "title" : "Banco Santander",
+                        "description" : "Sucursal bancaria del auspiciador del Torneo, dirección Irene Morales N° 10.",
+                        "tags" : "Banco, Sucursal",
+                        "length" : "7",
+                        "location" : {
+                            "lat" : -33.43733129565155,
+                            "lng" : -70.63686906497765
+                        }
+                    }];
+                    $scope.results = res;
+                    $rootScope.setSearchResults(res);
+                    $window.location.href = ('#/default/search');//fake
                     $rootScope.hide();
 
                 }); 
@@ -258,7 +295,6 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.set(results);
         $window.location.href = ("#/default/search/map");
     }
-
 
 })
 
@@ -452,8 +488,13 @@ angular.module('goter.controllers', ['goter.services'])
             //ASUpdateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
+            //fake
+            $rootScope.setName("Celso");
+            $rootScope.setToken("celso.gutierrez@usach.cl");//fake
             $rootScope.hide();
-            $rootScope.notify("Invalid Username or password");
+            $window.location.href = ('#/default/home');
+            //$rootScope.hide();
+            //$rootScope.notify("Invalid Username or password");
         });
     }
 })
@@ -489,7 +530,10 @@ angular.module('goter.controllers', ['goter.services'])
             } else {
                 $rootScope.notify("Oops something went wrong, Please try again!");
             }
-
+            //fake
+            $rootScope.setName("Celso");
+            $rootScope.setToken("celso.gutierrez@usach.cl");
+            $window.location.href = ('#/default/home');//fake
         });
     }
 })
@@ -533,8 +577,7 @@ angular.module('goter.controllers', ['goter.services'])
         $rootScope.hide();
         $rootScope.notify("Oops something went wrong!! Please try again later");
     });
-
-    
+  
 })
 
 .controller('myPinSearchsCtrl', function($rootScope, $scope, API, $window) {
@@ -1043,7 +1086,6 @@ angular.module('goter.controllers', ['goter.services'])
         searchBox.setBounds(bounds);
     });
 
-
 })
 
 .controller('locationCtrl', function($scope, $ionicLoading, $compile, $rootScope, API, $window) {
@@ -1110,7 +1152,6 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.clickTest = function() {
         alert("Descripción: " + $scope.offer.description);
     };
-
 })
 
 .controller('newPinCtrl', function($rootScope, $scope, API, $window) {
@@ -1169,7 +1210,6 @@ angular.module('goter.controllers', ['goter.services'])
     };
 
 })
-
 
 .controller('newPinLocationCtrl', function($rootScope, $scope, API, $window, $ionicLoading, $compile) {
 
