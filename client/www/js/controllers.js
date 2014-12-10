@@ -4,7 +4,10 @@ angular.module('goter.controllers', ['goter.services'])
 
 .controller('HomeController', function($rootScope, $scope, $window, API, $ionicModal) {
 
-    $scope.name = $window.localStorage.token;
+    if (!$rootScope.getName() || $rootScope.getName()=="")
+        $scope.name = $window.localStorage.token;
+    else
+        $scope.name = $rootScope.getName();
 
     $scope.search_word = "";
     $scope.search_pins = "";
@@ -442,6 +445,8 @@ angular.module('goter.controllers', ['goter.services'])
             email: email,
             password: password
         }).success(function(data) {
+            //console.log("data "+JSON.stringify(data));
+            $rootScope.setName(data.name)
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
             //ASUpdateToken(email);

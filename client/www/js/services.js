@@ -19,6 +19,7 @@ angular.module('goter.services', [])
 
         var savedData = {}
         var searchResults = {}
+        var name;
 
         $rootScope.set = function (data) { 
            savedData = data;
@@ -30,6 +31,9 @@ angular.module('goter.services', [])
 
         $rootScope.setSearchResults = function(data) { searchResults = data }
         $rootScope.getSearchResults = function()     { return searchResults }
+
+        $rootScope.setName = function(data) { name = data }
+        $rootScope.getName = function()     { return name }
 
         $rootScope.hide = function () {
             $ionicLoading.hide();
