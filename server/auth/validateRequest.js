@@ -9,6 +9,7 @@ var isEmailValid = function (db, email, callback) {
 module.exports.validate = function (req, res, db, callback) {
     // if the request dosent have a  header with email, reject the request
     if (!req.params.token) {
+        console.log("hola");
         res.writeHead(403, {
             'Content-Type': 'application/json; charset=utf-8'
         });

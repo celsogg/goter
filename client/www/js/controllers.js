@@ -24,36 +24,63 @@ angular.module('goter.controllers', ['goter.services'])
                 lng: pos.coords.longitude
             };
 
-            if(search_pins == false){
-                
-                API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
+           
 
-                    $rootScope.set(data);
-                    $window.location.href = ('#/default/search');
-                    $rootScope.search_word = search_word;
-                    $rootScope.radio = radio;
-                    $rootScope.search_pins = search_pins;
+            if(search_word == ''){
 
-                }).error(function(error) {
-                    $rootScope.hide();
 
-                }); 
-            } 
+                API.getAllOffers(email, my_location, radio).success(function(data) {
 
-            else{
-                
-                console.log(search_pins);
-                API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
-                    $rootScope.set(data);
-                    $window.location.href = ('#/default/search');
-                    $rootScope.search_word = search_word;
-                    $rootScope.radio = radio;
-                    $rootScope.search_pins = search_pins;
+                        $rootScope.set(data);
+                        $window.location.href = ('#/default/search');
+                        $rootScope.radio = radio;
+                        $rootScope.search_pins = search_pins;
 
-                }).error(function(error) {
-                    $rootScope.hide();
-                }); 
+                    }).error(function(error) {
+
+                        $rootScope.hide();
+
+                    });
             }
+            else{
+
+                if(search_pins == false){
+
+                    API.getSearchResults(email, search_word, my_location, radio).success(function(data) {
+
+
+                        $rootScope.set(data);
+                        $window.location.href = ('#/default/search');
+                        $rootScope.search_word = search_word;
+                        $rootScope.radio = radio;
+                        $rootScope.search_pins = search_pins;
+
+                    }).error(function(error) {
+
+                        $rootScope.hide();
+
+                    }); 
+                } 
+
+                else{
+
+                   
+                    API.getSearchPinsResults(email, search_word, my_location, radio).success(function(data) {
+                        $rootScope.set(data);
+                        $window.location.href = ('#/default/search');
+                        $rootScope.search_word = search_word;
+                        $rootScope.radio = radio;
+                        $rootScope.search_pins = search_pins;
+
+                    }).error(function(error) {
+                        $rootScope.hide();
+                    }); 
+                }
+            }
+
+
+
+            
 
         }, function(error) {
             alert('Unable to get location: ' + error.message);
@@ -244,7 +271,7 @@ angular.module('goter.controllers', ['goter.services'])
    var marker = null;
 
    var mapOptions = {
-        zoom: 17,
+        zoom: 15,
         zoomControl : false,
         streetViewControl: false,
         panControl: false,
@@ -258,16 +285,48 @@ angular.module('goter.controllers', ['goter.services'])
 
    results.forEach(function(entry){
 
-        console.log(entry);
 
         var point = new google.maps.LatLng(entry.location.lat,entry.location.lng);
 
-        markers.push(new google.maps.Marker({
-            position: point,
-            map: map,
-            animation: google.maps.Animation.BOUNCE,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-      }));
+        if(entry.type == 'product'){
+            markers.push(new google.maps.Marker({
+                position: point,
+                map: map,
+                animation: google.maps.Animation.BOUNCE,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            }));
+        }
+
+        else if (entry.type == 'event'){
+            markers.push(new google.maps.Marker({
+                position: point,
+                map: map,
+                animation: google.maps.Animation.BOUNCE,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+            }));
+
+
+        }
+
+        else if (entry.type == 'service'){
+            markers.push(new google.maps.Marker({
+                position: point,
+                map: map,
+                animation: google.maps.Animation.BOUNCE,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+            }));
+
+        }
+
+        else{
+            markers.push(new google.maps.Marker({
+                position: point,
+                map: map,
+                animation: google.maps.Animation.BOUNCE,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+            }));
+
+        }
 
         var contentString = "<div>"+entry.title+"</div>";
         var compiled = $compile(contentString)($scope);

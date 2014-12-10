@@ -3,8 +3,8 @@ angular.module('goter.services', [])
 
 
        //var base = "http://10.0.2.2:9804";
-       //var base = "http://localhost:9804";
-       var base = "http://goter.herokuapp.com";
+       var base = "http://localhost:9804";
+       //var base = "http://goter.herokuapp.com";
 
        
         $rootScope.show = function (text) {
@@ -180,6 +180,20 @@ angular.module('goter.services', [])
                     
                 });
             },
+
+            getAllOffers: function(email,loc,radio){
+                return $http.get(base+'/api/v1/goter/search-offers', {
+                    method: 'GET',
+                    params: {
+                        token: email,
+                        lat:loc.lat,
+                        lng:loc.lng,
+                        radio:radio
+                    }
+                    
+                });
+            },
+
             getSearchResultsByType: function(email,type,loc,radio){
                 return $http.get(base+'/api/v1/goter/search/type/' + type, {
                     method: 'GET',
