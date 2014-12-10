@@ -55,6 +55,22 @@ angular.module('goter.controllers', ['goter.services'])
 
                         }
 
+                        if (entry.title == "Parque Forestal"){
+
+                            entry.image = "parque.jpg";
+                        }
+                        else if(entry.title == "Barrio Lastarria"){
+
+                            entry.image = "barrio.jpg"; 
+                        }
+                        else if(entry.title == "Torneo Universitario de Apps"){
+                            entry.image = "torneo.png"; 
+                        }
+                        else{
+                            entry.image = "no-image.png"; 
+
+                        }
+
                         });
 
 
@@ -94,6 +110,24 @@ angular.module('goter.controllers', ['goter.services'])
                         }
                         else{
                             entry.icon = "icon ion-alert"; 
+
+                        }
+
+        
+
+                        if (entry.title == "Parque Forestal"){
+
+                            entry.image = "parque.jpg";
+                        }
+                        else if(entry.title == "Barrio Lastarria"){
+
+                            entry.image = "barrio.jpg"; 
+                        }
+                        else if(entry.title == "Torneo Universitario de Apps"){
+                            entry.image = "torneo.png"; 
+                        }
+                        else{
+                            entry.image = "no-image.png"; 
 
                         }
 
@@ -219,6 +253,7 @@ angular.module('goter.controllers', ['goter.services'])
     $scope.results = results;
 
     $scope.getOffer = function(offer) {
+
         var idOffer = offer._id;
         if($scope.search_pins == false){
             API.getOffer(idOffer, $rootScope.getToken()).success(function(data) {
@@ -228,6 +263,9 @@ angular.module('goter.controllers', ['goter.services'])
                 $rootScope.search_pins = $scope.search_pins;
                 $rootScope.set(data);
                 $window.location.href = ('#/default/offer');
+
+                data.image = offer.image;
+
             }).error(function(error) {
                 $rootScope.hide();
             });
@@ -293,6 +331,25 @@ angular.module('goter.controllers', ['goter.services'])
                             entry.icon = "icon ion-alert"; 
 
                         }
+
+                        if (entry.title == "Parque Forestal"){
+
+                            entry.image = "parque.jpg";
+                        }
+                        else if(entry.title == "Barrio Lastarria"){
+
+                            entry.image = "barrio.jpg"; 
+                        }
+                        else if(entry.title == "Torneo Universitario de Apps"){
+                            entry.image = "torneo.png"; 
+                        }
+                        else{
+                            entry.image = "no-image.png"; 
+
+                        }
+
+
+
 
                         });
 
