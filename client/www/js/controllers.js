@@ -206,7 +206,7 @@ angular.module('goter.controllers', ['goter.services'])
 
                         }
 
-                         if (entry.title == "Parque Forestal"){
+                        if (entry.title == "Parque Forestal"){
 
                             entry.image = "parque.jpg";
                         }
@@ -221,8 +221,6 @@ angular.module('goter.controllers', ['goter.services'])
                             entry.image = "no-image.png"; 
 
                         }
-
-                     
 
                         });
 
@@ -489,7 +487,8 @@ angular.module('goter.controllers', ['goter.services'])
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                customInfo: entry._id
+                customInfo: entry._id,
+                imageInfo: entry.image
             }));
         }
 
@@ -499,7 +498,8 @@ angular.module('goter.controllers', ['goter.services'])
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
-                customInfo: entry._id
+                customInfo: entry._id,
+                imageInfo: entry.image
             }));
 
 
@@ -511,7 +511,8 @@ angular.module('goter.controllers', ['goter.services'])
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-                customInfo: entry._id
+                customInfo: entry._id,
+                imageInfo: entry.image
             }));
 
         }
@@ -522,7 +523,8 @@ angular.module('goter.controllers', ['goter.services'])
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-                customInfo: entry._id
+                customInfo: entry._id,
+                imageInfo: entry.image
             }));
 
         }
@@ -547,13 +549,16 @@ angular.module('goter.controllers', ['goter.services'])
             
         var idOffer = this.customInfo;
         var email = $window.localStorage.token;
+        var image = this.imageInfo;
 
        API.getOffer(idOffer, email).success(function(data) {
 
+            data.image = image;
             $scope.offer = data;
-            // console.log("data "+JSON.stringify(data));
+            
             $rootScope.set(data);
             $window.location.href = ('#/default/offer');
+            
 
         }).error(function(error) {
             $rootScope.hide();
@@ -748,6 +753,23 @@ angular.module('goter.controllers', ['goter.services'])
         var email = $window.localStorage.token;
 
         API.getOffer(idOffer, email).success(function(data) {
+
+            if (data.title == "Parque Forestal"){
+
+                            data.image = "parque.jpg";
+                        }
+                        else if(data.title == "Barrio Lastarria"){
+
+                            data.image = "barrio.jpg"; 
+                        }
+                        else if(data.title == "Torneo Universitario de Apps"){
+                            data.image = "torneo.png"; 
+                        }
+                        else{
+                            data.image = "no-image.png"; 
+
+                        }
+
 
             $scope.offer = data;
             // console.log("data "+JSON.stringify(data));
