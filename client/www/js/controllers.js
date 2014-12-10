@@ -206,6 +206,24 @@ angular.module('goter.controllers', ['goter.services'])
 
                         }
 
+                         if (entry.title == "Parque Forestal"){
+
+                            entry.image = "parque.jpg";
+                        }
+                        else if(entry.title == "Barrio Lastarria"){
+
+                            entry.image = "barrio.jpg"; 
+                        }
+                        else if(entry.title == "Torneo Universitario de Apps"){
+                            entry.image = "torneo.png"; 
+                        }
+                        else{
+                            entry.image = "no-image.png"; 
+
+                        }
+
+                     
+
                         });
 
 
