@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import android.util.Log;
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.loopj.android.http.*;
+import org.apache.http.Header;
 
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundService;
 
@@ -36,6 +38,8 @@ public class GoterService extends BackgroundService {
 	private String token = "";
 	private String mHelloTo = "World";
 	private Integer notCounter = 0;
+
+	private String urlBase = "http://goter.herokuapp.com/";
 
 	final static String GROUP_KEY_GOTER = "group_key_goter";
 
@@ -77,29 +81,71 @@ public class GoterService extends BackgroundService {
 			Log.d(TAG, msg);
 		} catch (JSONException e) {}*/
 
+		
 		RequestParams params = new RequestParams();
+		Log.d(TAG, "token: " + this.token);
 
+		params.put("token", this.token);
+
+
+		SyncHttpClient client = new SyncHttpClient();
+		client.get(urlBase + "/api/v1/goter/pin-searchs", params, new JsonHttpResponseHandler() {
+
+		    @Override
+		    public void onStart() {
+		        // called before request is started
+		    }
+
+		    @Override
+		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+		        // called when response HTTP status is "200 OK"
+		        Log.d(TAG, "Funciono la wa");
+		    }
+
+		    @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray searches) {
+                // Pull out the first event on the public timeline
+                /*JSONObject firstEvent = timeline.get(0);
+                String tweetText = firstEvent.getString("text");
+
+                // Do something with the response
+                System.out.println(tweetText);*/
+            	Log.d(TAG, "Funciono la wa en el jsonarray");
+            }
+
+		    @Override
+		    public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse ) {
+		        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+		        Log.d(TAG, "NOOO funciono la wa "+errorResponse);
+		    }
+
+		    @Override
+		    public void onRetry(int retryNo) {
+		        // called when request is retried
+			}
+		});
 		return result;
 	}
 
 	@Override
 	protected JSONObject getConfig() {
 		JSONObject result = new JSONObject();
-
 		try {
-			result.put("HelloTo", this.mHelloTo);
+			result.put("token", this.token);
+			//result.put()
 		} catch (JSONException e) {}
-
 		return result;
 	}
 
 	@Override
 	protected void setConfig(JSONObject config) {
 		try {
-			if (config.has("token")) this.token = config.getString("token");
-			System.out.println("conf set");
+			if (config.has("token")){
+				this.token = config.getString("token");
+			}else{
+				System.out.println("----------------------->>>> no se pudo setear");	
+			}
 		} catch (JSONException e) {}
-
 	}
 
 	@Override

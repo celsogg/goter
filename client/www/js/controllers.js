@@ -135,6 +135,7 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.radio = 10;
+    ASUpdateToken($scope.name);
 })
 
 .controller('searchCtrl', function($rootScope, $scope, $window, API, $ionicModal) {
@@ -457,7 +458,7 @@ autoUpdate();
         }).success(function(data) {
             $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
-            updateToken(email);
+            ASUpdateToken(email);
             $window.location.href = ('#/default/home');
         }).error(function(error) {
             $rootScope.hide();
@@ -1332,8 +1333,11 @@ autoUpdate();
 })
 
 .controller('NotificationsCtrl',function ($rootScope, $scope) {
-    $scope.hola = function () {
-        console.log("hola desde NotificationsCtrl");
+    $scope.getToken = function () {
+        //if ( !USGetToken() ){
+            console.log("hola desde NotificationsCtrl");
+            return $rootScope.getToken()
+        //}
     }
 })
 ;
