@@ -45,20 +45,17 @@
 		</a>
 	</div>
 
-	
-	<a class="button button-full button-dark icon-left ion-location" ng-click="getMap(results)">
-		Ver resultados en mapa
-	</a>
-	
-
 </div>
 
 <div class="list">	
 	
 	<div class="item item-divider" align="center">
-    Resultados
-  	</div>	
+    	Resultados
+  	</div>
 
+  	<a class="button button-full button-dark icon-left ion-location" ng-click="getMap(results)">
+		Ver resultados en mapa
+	</a>
 
 	<a class="row item item-avatar" ng-repeat="result in results" hrerf = "" ng-click="getOffer({{result}})">
 		<img  src="img/no-mini-image.jpg"><img/>
@@ -70,8 +67,7 @@
 		</div>
 		<div class="col" align="center">
 			<h2 style="margin-top:15px">{{result.distance.distance}} {{result.distance.unit}}</h2>
-		</div>
-		
+		</div>		
 	</a>
 </div>
 
