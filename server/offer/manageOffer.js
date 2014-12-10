@@ -457,13 +457,8 @@ server.get('/api/v1/goter/search-offers', function (req, res, next) {
                             }
 
                             var dist = distance.between(search_point,offer_point);
-
-            
-
                             entry.distance = dist.human_readable();
                             entry.radians = entry.distance.distance_earth_radians;
-
-
 
                             if(entry.distance.unit == 'km'){
 
@@ -483,9 +478,6 @@ server.get('/api/v1/goter/search-offers', function (req, res, next) {
                             }
                         });
     
-                        //console.log(result_km);
-
-                        //result.concat(result_km);
                         result.sort(sort_by('radians', true, parseFloat));
                         
                         res.end(JSON.stringify(result));
