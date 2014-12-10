@@ -28,8 +28,13 @@ angular.module('goter.services', [])
           return savedData;
         }
 
+
+        $rootScope.setMapResults = function(data) { mapResults = data }
+        $rootScope.getMapResults = function()     { return mapResults }
+
         $rootScope.setSearchResults = function(data) { searchResults = data }
         $rootScope.getSearchResults = function()     { return searchResults }
+
 
         $rootScope.hide = function () {
             $ionicLoading.hide();
@@ -71,7 +76,6 @@ angular.module('goter.services', [])
         }
 
         return {
-
             signin: function (form) {
                 return $http.post(base+'/api/v1/goter/auth/login', form);
             },

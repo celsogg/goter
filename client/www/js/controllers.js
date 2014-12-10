@@ -234,6 +234,8 @@ angular.module('goter.controllers', ['goter.services'])
         },options);
     }
 
+
+
     $scope.getLocation = function(offer) {
 
         $rootScope.set(offer);
@@ -252,17 +254,19 @@ angular.module('goter.controllers', ['goter.services'])
     }
 
     $scope.getMap = function(results){
-        $rootScope.set(results);
+        //$rootScope.set(results);
+        $rootScope.setMapResults(results);
         $window.location.href = ("#/default/search/map");
     }
 
 
 })
 
-.controller('searchMapCtrl', function($rootScope, $scope, $window, $timeout, $compile) {
+.controller('searchMapCtrl', function($rootScope, $scope, $window, $timeout, $compile, API) {
 
-
-   var results = $rootScope.get();
+    
+   //var results = $rootScope.get();
+   var results = $rootScope.getMapResults();
 
    var marker = null;
 
@@ -274,13 +278,11 @@ angular.module('goter.controllers', ['goter.services'])
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-
    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
    var markers = [];
 
    results.forEach(function(entry){
-
 
         var point = new google.maps.LatLng(entry.location.lat,entry.location.lng);
 
@@ -289,7 +291,8 @@ angular.module('goter.controllers', ['goter.services'])
                 position: point,
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                customInfo: entry._id
             }));
         }
 
@@ -298,7 +301,8 @@ angular.module('goter.controllers', ['goter.services'])
                 position: point,
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+                customInfo: entry._id
             }));
 
 
@@ -309,7 +313,8 @@ angular.module('goter.controllers', ['goter.services'])
                 position: point,
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                customInfo: entry._id
             }));
 
         }
@@ -319,10 +324,14 @@ angular.module('goter.controllers', ['goter.services'])
                 position: point,
                 map: map,
                 animation: google.maps.Animation.BOUNCE,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                customInfo: entry._id
             }));
 
         }
+
+        //var contentString = "<div><a ng-click='clickTest()'>{{offer.title}}</a></div>";
+       // var contentString = "<div ng-click='getOffer(1)>"+entry.title+"</div>";
 
         var contentString = "<div>"+entry.title+"</div>";
         var compiled = $compile(contentString)($scope);
@@ -335,50 +344,77 @@ angular.module('goter.controllers', ['goter.services'])
         //google.maps.event.addListener(last, 'click', function() {
            infowindow.open(map, last);
         //});
+
+        
+        google.maps.event.addListener(last, 'click', function() {
+            
+        var idOffer = this.customInfo;
+        var email = $window.localStorage.token;
+
+       API.getOffer(idOffer, email).success(function(data) {
+
+            $scope.offer = data;
+            // console.log("data "+JSON.stringify(data));
+            $rootScope.set(data);
+            $window.location.href = ('#/default/offer');
+
+        }).error(function(error) {
+            $rootScope.hide();
+            $rootScope.notify("Invalid Username or password");
+        });
+
+            
+
+   
+
+
+        });
     
    });
 
-
-
-
-   function autoUpdate() {
-      navigator.geolocation.getCurrentPosition(function(position) {  
-        var newPoint = new google.maps.LatLng(position.coords.latitude, 
-          position.coords.longitude);
-
-       
-        if (marker) {
-      // Marker already created - Move it
-      marker.setPosition(newPoint);
-  }
-  else {
-    // Center the map on the new position
-    map.setCenter(newPoint);
-      // Marker does not exist - Create it
-      marker = new google.maps.Marker({
-        position: newPoint,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-    });
-  }
+            
 
     
-}); 
+/*
+    $scope.getOffer = function(offer) {
+        console.log(offer);
+        alert(offer.description);
+    };*/
 
-  // Call the autoUpdate() function every 1 seconds
-  var timer = $timeout(autoUpdate, 1000);
+   function autoUpdate() {
+        navigator.geolocation.getCurrentPosition(function(position) {  
+            var newPoint = new google.maps.LatLng(position.coords.latitude, 
+              position.coords.longitude);
 
-  if(window.location.href == 'http://localhost:8100/#/default/search/map'){
-  }
-  else{
+           
+            if (marker) {
+                // Marker already created - Move it
+                marker.setPosition(newPoint);
+            }
+            else {
+                // Center the map on the new position
+                map.setCenter(newPoint);
+                // Marker does not exist - Create it
+                marker = new google.maps.Marker({
+                    position: newPoint,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                });
+            }
+        }); 
 
-    $timeout.cancel(timer);
-  }
-  
-}
+        // Call the autoUpdate() function every 1 seconds
+        var timer = $timeout(autoUpdate, 1000);
 
-autoUpdate();
+        if(window.location.href == 'http://localhost:8100/#/default/search/map'){
+        }
+        else{
+            $timeout.cancel(timer);
+        }
+    }
+
+    autoUpdate();
 
 
     /*var watchID;
@@ -423,7 +459,6 @@ autoUpdate();
         }
     }*/
 
-    
 })
 
 .controller('OfferNewTypeCtrl', function($scope) {
@@ -840,8 +875,6 @@ autoUpdate();
     if (!$rootScope.offer) $rootScope.offer = {"likes": 0};
     $rootScope.offer.user = $window.localStorage.token;
     $scope.offer = $rootScope.offer;
-
-
 
     if ($rootScope.offer.location) $scope.locationInput = $rootScope.offer.location.lat + " " + $rootScope.offer.location.lng;
 
